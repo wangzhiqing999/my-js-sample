@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>reduce</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+
+<body>
+
+	<p>
+	F12 看控制台的输出！
+
+	<br/>
+
+	reduce()方法需要两个参数。
+
+
+	<br/>
+	第一个是执行化简操作的函数。化简函数的任务就是用某种方法把两个值组合或化简为一个值，并返回化简后的值。
+
+	<br/>
+	化简函数接受四个参数，分别是：
+	<ul>
+		<li> 【1】初始变量，默认为数组的第一个元素值。函数第一次执行后的返回值作为函数第二次执行的初始变量，依次类推 </li>
+		<li> 【2】当前变量，如果指定了第二个参数，则该变量为数组的第一个元素的值，否则，为第二个元素的值 </li>
+		<li> 【3】当前变量对应的元素在数组中的索引(从0开始) </li>
+		<li> 【4】原数组对象 </li>
+	</ul>
+	化简函数的这四个参数之中，只有前两个是必须的，后两个则是可选的
+
+	<br/>
+	reduce()方法第二个(可选)的参数是一个传递给函数的初始值
+
+	</p>
+
+
+	<script type="text/javascript">
+
+		var test1 = [1,2,3,4,5];
+
+		// 数组求和.
+		var sum = test1.reduce(function(x,y){return x+y}, 0);
+		console.log("数组求和:", sum);
+
+
+		// 数组求积.
+		var product = test1.reduce(function(x,y){return x*y},1);
+		console.log("数组求积:", product);
+
+
+		// 最大值
+		var max = test1.reduce(function(x,y){return (x>y)?x:y;});
+		console.log("最大值:", max);
+
+
+
+		console.group("没有第二个参数.");
+		// 数组求和
+		var sum2 = test1.reduce(function(prev, cur){
+			console.log("求和过程中：", prev, cur)
+			return prev + cur;
+		});
+		console.log("最终求和结果:", sum2);
+		console.groupEnd();
+
+
+
+		console.group("有第二个参数.");
+		// 数组求和
+		var sum3 = test1.reduce(function(prev, cur){
+			console.log("求和过程中：", prev, cur)
+			return prev + cur;
+		}, 0);
+		console.log("最终求和结果:", sum3);
+		console.groupEnd();
+
+
+	</script>
+
+</body>
+</html>

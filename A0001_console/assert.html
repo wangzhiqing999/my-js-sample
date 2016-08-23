@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>判断变量是否是真</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+
+<body>
+	<p>
+	F12 看控制台的输出！
+
+	<br/>
+	此处理，在 IE 上， 好像有点问题， 当非 True 的时候， 会报 undefined 错误.
+
+	</p>
+
+	<script type="text/javascript">
+
+
+		console.log('测试一个 1 的处理...');
+		var result = 1;
+		console.assert(result);
+
+
+		console.log('测试一个 非 True 的处理...');
+		console.assert(result == 2);
+
+	</script>
+
+</body>
+</html>

@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>splice</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+
+<body>
+
+	<p>
+	F12 看控制台的输出！
+
+	<br/>
+
+
+	splice()方法用于删除原数组的一部分成员，并可以在被删除的位置添加入新的数组成员，该方法会改变原数组
+
+	<br/>
+
+	splice()返回一个由删除元素组成的数组，或者如果没有删除元素就返回一个空数组
+
+	<br/>
+
+	splice()的第一个参数start指定了插入或删除的起始位置。如果start是负数，则start = max(length + start,0)；如果start是NaN，则相当于start = 0
+
+	<br/>
+
+	如果只提供一个元素，相当于将原数组在指定位置拆分成两个数组
+
+	<br/>
+
+	第二个参数number指定了应该从数组中删除的元素的个数。如果省略第二个参数，从起始点开始到数组结尾的所有元素都将被删除。如果number是负数或NaN或undefined，则number=0，因此不删除元素
+
+	</p>
+
+
+
+
+	<script type="text/javascript">
+
+		var test1 = [1,2,3,4,5,6,7,8,9];
+		var test2 = test1.splice();
+
+		console.group("无参数.");
+		console.log(test1);
+		console.log(test2);
+		console.groupEnd();
+
+
+
+		test1 = [1,2,3,4,5,6,7,8,9];
+		test2 = test1.splice(4);
+
+		console.group("一个正数的参数.");
+		console.log(test1);
+		console.log(test2);
+		console.groupEnd();
+
+
+
+
+		test1 = [1,2,3,4,5,6,7,8,9];
+		test2 = test1.splice(-4);
+
+		console.group("一个负数的参数.");
+		console.log(test1);
+		console.log(test2);
+		console.groupEnd();
+
+
+
+
+		test1 = [1,2,3,4,5,6,7,8,9];
+		test2 = test1.splice(3, 4);
+
+		console.group("两个参数.start是正数， number是正数");
+		console.log(test1);
+		console.log(test2);
+		console.groupEnd();
+
+
+		test1 = [1,2,3,4,5,6,7,8,9];
+		test2 = test1.splice(-3, 2);
+
+		console.group("两个参数.start是负数， number是正数");
+		console.log(test1);
+		console.log(test2);
+		console.groupEnd();
+
+
+
+		test1 = [1,2,3,4,5,6,7,8,9];
+		test2 = test1.splice(3, -2);
+
+		console.group("两个参数.start是正数，number是负数");
+		console.log(test1);
+		console.log(test2);
+		console.groupEnd();
+
+
+
+		test1 = [1,2,3,4,5,6,7,8,9];
+		test2 = test1.splice(3, undefined);
+
+		console.group("两个参数.start是正数， number是 undefined");
+		console.log(test1);
+		console.log(test2);
+		console.groupEnd();
+
+
+
+		test1 = [1,2,3,4,5,6,7,8,9];
+		test2 = test1.splice(3, 3, 'x', 'y', 'z');
+
+		console.group("多个参数.start是正数，number是正数，后续是需要替换的数据。");
+		console.log(test1);
+		console.log(test2);
+		console.groupEnd();
+
+	</script>
+
+</body>
+</html>

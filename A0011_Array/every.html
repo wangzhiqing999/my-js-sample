@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>every</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+
+<body>
+
+	<p>
+	F12 看控制台的输出！
+
+	<br/>
+
+	every()方法对数组中的每一项运行给定函数，
+	如果该函数对每一项都返回true，则返回true；只要有一项返回false，则返回false
+
+	</p>
+
+
+	<script type="text/javascript">
+
+		var test1 = [1,2,3,4,5];
+
+		var test2 = test1.every(
+			function (item,index,arr) {
+				console.log("Check :", item);
+				return (item % 2 == 0);
+			}
+		);
+		console.log("是否全部是偶数的处理.", test1, test2);
+
+
+
+		var test3 = test1.every(function (item,index,arr) {
+				console.log("Check :", item);
+				return isNaN(item);
+			}
+		);
+		console.log("是否全部是非数字的处理.", test1, test3);
+
+
+
+		var test4 = test1.every(
+			function (item,index,arr) {
+				console.log("Check :", item);
+				return (item > 0);
+			}
+		);
+		console.log("是否全部大于零的处理.", test1, test4);
+
+
+	</script>
+
+</body>
+</html>

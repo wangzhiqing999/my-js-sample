@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>apply / call</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+
+<body>
+
+	<p>
+	F12 看控制台的输出！
+
+	<br/>
+
+
+	apply() 合并两个数组
+
+	<br/>
+
+	call() 合并两个数组 (但是将参数2整体看成一个参数 )
+
+	</p>
+
+
+
+	<script type="text/javascript">
+
+		var a = [1, 2, 3];
+		var b = [4, 5, 6];
+
+
+		console.group("apply 操作.");
+		Array.prototype.push.apply(a, b);
+		console.log(a);
+		console.log(b);
+		console.groupEnd();
+
+
+
+
+		var x = [1, 2, 3];
+		var y = [4, 5, 6];
+
+		console.group("call 操作.");
+		Array.prototype.push.call(x, y);
+		console.log(x);
+		console.log(y);
+		console.groupEnd();
+
+
+	</script>
+
+</body>
+</html>

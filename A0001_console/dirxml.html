@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>显示某个节点的内容</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+
+<body>
+	<p id="testItem">
+	F12 看控制台的输出！
+	</p>
+
+	<script type="text/javascript">
+
+		var info = document.getElementById('testItem');
+		console.dirxml(info);
+
+	</script>
+
+</body>
+</html>

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>map</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+
+<body>
+
+	<p>
+	F12 看控制台的输出！
+
+	<br/>
+
+	map()方法对数组的每一项运行给定函数，返回每次函数调用的结果组成的数组
+
+	</p>
+
+
+	<script type="text/javascript">
+
+		var test1 = [1,2,3];
+
+		var test2 = test1.map(
+			function(item,index,arr){return item*item}
+		);
+		console.log("平方的处理.", test1, test2);
+
+
+
+
+
+		var testArr = ['A','B','C','D','E'];
+
+		var test3 = test1.map(
+			function(item,index,arr){
+				return this[item];
+			},
+			testArr
+		);
+		console.log("map()方法的第二个参数.", test1, test3);
+
+
+
+	</script>
+
+</body>
+</html>

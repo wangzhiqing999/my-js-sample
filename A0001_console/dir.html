@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>查看对象的信息</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+
+<body>
+	<p>
+	F12 看控制台的输出！
+	</p>
+
+	<script type="text/javascript">
+
+
+		var testData = {
+			result : true,
+			message : "处理成功",
+			data : [{"BannerText":"AppPopTest","BannerImage":"banner1.jpg","BannerUrl":"#"},
+					{"BannerText":"AppPopTest","BannerImage":"banner2.jpg","BannerUrl":"#"}]
+		};
+
+
+		// 使用 log 的输出.
+		console.log(testData);
+
+		// 使用 info 的输出
+		console.info(testData);
+
+		// 使用 dir 的输出.
+		console.dir(testData);
+
+	</script>
+
+</body>
+</html>

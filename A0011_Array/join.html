@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>join</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+
+<body>
+
+	<p>
+	F12 看控制台的输出！
+
+	<br/>
+
+	join()方法可以使用不同的分隔符来构建字符串，
+	join()方法只接收一个参数，用作分隔符的字符串，然后返回包含所有数组项的字符串。
+	如果不给join()方法传入任何值，则使用逗号作为分隔符。
+
+	</p>
+
+
+	<script type="text/javascript">
+
+		var test1 = [1,2,3];
+		console.log(test1.join());
+		console.log(test1.join(' '));
+		console.log(test1.join(''));
+
+
+		// 如果数组中的某一项的值是null或者undefined，则该值在join()方法返回的结果中以空字符串表示
+		var test2 = [1,undefined,2,null,3];
+		console.log(test2.join());
+
+
+
+	</script>
+
+</body>
+</html>

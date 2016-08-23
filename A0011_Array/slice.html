@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>slice</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+
+<body>
+
+	<p>
+	F12 看控制台的输出！
+
+	<br/>
+
+	slice()方法基于当前数组中的一个或多个项创建一个新数组，接受一个或两个参数，即要返回项的起始和结束位置，最后返回新数组，所以slice()不影响原数组
+
+	<br/>
+
+	slice(start,end)方法需要两个参数start和end，返回这个数组中从start位置到(但不包含)end位置的一个子数组；如果end为undefined或不存在，则返回从start位置到数组结尾的所有项
+
+	<br/>
+
+	如果start是负数，则start = max(length + start,0)
+
+	<br/>
+
+	如果end是负数，则end = max(length + end,0)
+
+	<br/>
+
+	start和end无法交换位置
+
+	<br/>
+
+	如果没有参数，则返回原数组
+
+	</p>
+
+
+	<script type="text/javascript">
+
+		var test1 = [1,2,3,4,5,6,7,8,9];
+
+
+		console.group("正数的 start/end");
+
+		// 一个参数.
+		console.log(test1.slice(3));
+
+		// 两个参数 end为 undefined
+		console.log(test1.slice(3, undefined));
+
+		// 两个参数
+		console.log(test1.slice(3, 5));
+
+		console.groupEnd();
+
+
+
+
+
+
+		console.group("负数的 start/end");
+
+		// 一个参数.
+		console.log(test1.slice(-5));
+
+		// 两个参数 end为 undefined
+		console.log(test1.slice(-5, undefined));
+
+		// 两个参数
+		console.log(test1.slice(-5, -3));
+
+		console.groupEnd();
+
+
+	</script>
+
+</body>
+</html>

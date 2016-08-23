@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>计时功能</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+
+<body>
+	<p>
+	F12 看控制台的输出！
+
+	<br/>
+
+
+	</p>
+
+	<script type="text/javascript">
+
+
+		var iCount = 0;
+
+		console.time("控制台计时器一");
+
+		for(var i=0;i<1000;i++){
+			for(var j=0;j<1000;j++){
+				iCount = iCount + j;
+			}
+		}
+
+		console.timeEnd("控制台计时器一");
+
+	</script>
+
+</body>
+</html>

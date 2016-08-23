@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title> 分组 </title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+
+<body>
+	<p>
+	F12 看控制台的输出！
+	</p>
+
+
+	<script type="text/javascript">
+
+
+		// 分组： 以 group("组信息") 开始， 以 groupEnd() 结束.
+		console.group("我是第一组");
+
+		console.log('第一组log 输出信息...');
+		console.info('第一组info 输出信息...');
+		console.warn('第一组warn 输出信息...');
+		console.error('第一组error 输出信息...');
+
+		console.groupEnd(); 
+
+
+
+		console.group("我是第二组"); 
+
+		console.log('第二组log 输出信息...');
+		console.info('第二组info 输出信息...');
+		console.warn('第二组warn 输出信息...');
+		console.error('第二组error 输出信息...');
+		
+		console.groupEnd();
+
+
+	</script>
+
+</body>
+</html>

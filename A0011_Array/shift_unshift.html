@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>shift / unshift</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+
+<body>
+
+	<p>
+	F12 看控制台的输出！
+
+	<br/>
+
+	队列数据结构的访问规则是FIFO(first-in-first-out，先进先出)。
+	队列在列表的末端添加项，从列表的前端移除项。
+	结合使用shift()和push()方法，可以像使用队列一样使用数组。
+
+	</p>
+
+
+	<p>
+	shift()方法移除数组中的第一个项并返回该项，同时数组的长度减1。所以，该数组会改变原数组。
+	对空数组使用shift()方法，不会报错，而是返回undefined
+	<br/>
+	unshift()方法在数组前端添加任意个项并返回新数组长度。所以，该数组会改变原数组。
+	当使用多个参数调用unshift()时，参数是一次性插入的而非一次一个地插入。这意味着最终的数组中插入的元素的顺序和它们在参数列表中的顺序一致。
+	</p>
+
+
+
+	<script type="text/javascript">
+
+
+		var test1 = [];
+
+
+		console.group("push 操作.");
+		for(var i = 0; i < 5; i ++) {
+			test1.push(i);
+			console.log(test1);
+		}
+		console.groupEnd();
+
+
+
+		console.group("shift 操作.");
+		for(var i = 0; i < 6; i ++) {
+			var item = test1.shift();
+			console.log(item);
+			console.log(test1);
+		}
+		console.groupEnd();
+
+
+
+		console.group("unshift 操作.");
+		for(var i = 0; i < 5; i ++) {
+			test1.unshift(i);
+			console.log(test1);
+		}
+
+
+		// 当使用多个参数调用unshift()时，参数是一次性插入的而非一次一个地插入。这意味着最终的数组中插入的元素的顺序和它们在参数列表中的顺序一致。
+		test1.unshift('a','b','c');
+		console.log(test1);
+
+		console.groupEnd();
+
+
+
+	</script>
+
+</body>
+</html>

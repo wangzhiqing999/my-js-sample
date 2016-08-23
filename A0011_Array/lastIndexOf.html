@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>lastIndexOf</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+
+<body>
+
+	<p>
+	F12 看控制台的输出！
+
+	<br/>
+
+	lastIndexOf(search,start)方法接收search和start两个参数，返回search第一次出现的位置，如果没有找到则返回-1
+	<br/>
+	search参数表示要搜索的项；使用严格相等运算符（===）进行比较
+
+	<br/>
+	start表示该搜索的开始位置，该方法会隐式调用Number()转型函数，将start非数字值(undefined除外)转换为数。若忽略该参数或该参数为undefined或NaN时，start = 0
+
+	<br/>
+	与字符串的lastIndexOf()方法不同，当search方法为负数时，search = max(0,length+search)
+
+	</p>
+
+
+	<script type="text/javascript">
+
+		console.group("一个参数的测试.");
+		var arr = [1,2,3,'1','2','3'];
+		console.log(arr.lastIndexOf('2'));//4
+		console.log(arr.lastIndexOf(3));//2
+		console.log(arr.lastIndexOf(0));//-1
+		console.groupEnd();
+
+
+
+		console.group("两个参数的测试.");
+
+		arr = ['a','b','c','d','e','a','b'];
+		console.log(arr.lastIndexOf('b'));//6
+		console.log(arr.lastIndexOf('b',undefined));//-1
+		console.log(arr.lastIndexOf('a',undefined));//0
+		console.log(arr.lastIndexOf('b',NaN));//-1
+		console.log(arr.lastIndexOf('b',1));//1
+		console.log(arr.lastIndexOf('b',-1));//max(0,-1+7)=6; 6
+		console.log(arr.lastIndexOf('b',-5));//max(0,-5+7)=2; 1
+		console.log(arr.lastIndexOf('b',-50));//max(0,-50+7)=0; -1
+		console.groupEnd();
+
+	</script>
+
+</body>
+</html>

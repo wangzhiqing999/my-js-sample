@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>filter</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+
+<body>
+
+	<p>
+	F12 看控制台的输出！
+
+	<br/>
+
+	filter()方法对数组中的每一项运行给定函数，返回该函数会返回true的项组成的数组。该方法常用于查询符合条件的所有数组项
+
+	</p>
+
+
+	<script type="text/javascript">
+
+		var test1 = [1,2,3,4,5,6,7,8,9];
+
+		var test2 = test1.filter(
+			function (item,index,arr) {
+				return (item % 2 == 0);
+			}
+		);
+
+		console.log("获取偶数的处理.", test1, test2);
+
+
+
+
+		var Obj = function () {
+			this.DIV = 2;
+		};
+
+		var test3 = test1.filter(
+			function(item,index,arr){
+				return (item % this.DIV == 0);
+			},
+			new Obj()
+		);
+
+		console.log("获取偶数的处理.", test1, test3);
+
+
+	</script>
+
+</body>
+</html>

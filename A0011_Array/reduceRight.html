@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>reduceRight</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+
+<body>
+
+	<p>
+	F12 看控制台的输出！
+
+	<br/>
+
+	reduceRight()的工作原理和reduce()一样，不同的是它按照数组索引从高到低（从右到左）处理数组，而不是从低到高
+
+	</p>
+
+
+	<script type="text/javascript">
+
+		var test1 = [1,2,3,4,5];
+
+		// 数组求和.
+		var sum = test1.reduceRight(function(x,y){return x+y}, 0);
+		console.log("数组求和:", sum);
+
+
+		// 数组求积.
+		var product = test1.reduceRight(function(x,y){return x*y},1);
+		console.log("数组求积:", product);
+
+
+		// 最大值
+		var max = test1.reduceRight(function(x,y){return (x>y)?x:y;});
+		console.log("最大值:", max);
+
+
+
+		console.group("没有第二个参数.");
+		// 数组求和
+		var sum2 = test1.reduceRight(function(prev, cur){
+			console.log("求和过程中：", prev, cur)
+			return prev + cur;
+		});
+		console.log("最终求和结果:", sum2);
+		console.groupEnd();
+
+
+
+		console.group("有第二个参数.");
+		// 数组求和
+		var sum3 = test1.reduceRight(function(prev, cur){
+			console.log("求和过程中：", prev, cur)
+			return prev + cur;
+		}, 0);
+		console.log("最终求和结果:", sum3);
+		console.groupEnd();
+
+
+	</script>
+
+</body>
+</html>

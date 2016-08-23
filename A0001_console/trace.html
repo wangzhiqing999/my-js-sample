@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>追踪函数的调用轨迹</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+
+<body>
+	<p>
+	F12 看控制台的输出！
+
+	<br/>
+
+
+	</p>
+
+	<script type="text/javascript">
+
+
+		function add(a,b){
+			// 这行代码，写在那些， 你需要检测，这个方法，都被那些代码调用了的地方.
+			console.trace();
+			return a+b;
+		}
+
+
+
+
+		function add3(a,b){
+			return add2(a,b);
+		}
+
+		function add2(a,b){
+			return add1(a,b);
+		}
+
+		function add1(a,b){
+			return add(a,b);
+		}
+
+
+		var x = add3(1,1);
+
+	</script>
+
+</body>
+</html>

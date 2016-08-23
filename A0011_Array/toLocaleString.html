@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>toLocaleString</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+
+<body>
+
+	<p>
+	F12 看控制台的输出！
+
+	<br/>
+
+	toLocaleString()是toString()方法的本地化版本，它经常也会返回与toString()方法相同的值，但也不总是如此。
+	因为，它调用元素的是toLocaleString()方法将每个数组元素转化为字符串
+
+	</p>
+
+
+	<script type="text/javascript">
+
+		var week1 = {
+			toLocaleString: function(){
+				return '星期一';
+			},
+			toString: function(){
+				return 'Monday';
+			}
+		};
+
+		var week2 = {
+			toLocaleString: function(){
+				return '星期二';
+			},
+			toString: function(){
+				return 'Tuesday';
+			}
+		};
+
+		var week3 = {
+			toLocaleString: function(){
+				return '星期三';
+			},
+			toString: function(){
+				return 'Wednesday';
+			}
+		};
+
+		var week4 = {
+			toLocaleString: function(){
+				return '星期四';
+			},
+			toString: function(){
+				return 'Thursday';
+			}
+		};
+
+		var week5 = {
+			toLocaleString: function(){
+				return '星期五';
+			},
+			toString: function(){
+				return 'Friday';
+			}
+		};
+
+		var week6 = {
+			toLocaleString: function(){
+				return '星期六';
+			},
+			toString: function(){
+				return 'Saturday';
+			}
+		};
+
+		var week7 = {
+			toLocaleString: function(){
+				return '星期日';
+			},
+			toString: function(){
+				return 'Sunday';
+			}
+		};
+
+
+		var weekArray = [week1, week2, week3, week4, week5, week6, week7];
+
+		console.log(weekArray.toString());
+		console.log(weekArray.toLocaleString());
+
+	</script>
+
+</body>
+</html>

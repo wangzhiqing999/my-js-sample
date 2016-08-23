@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>性能分析</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+
+<body>
+	<p>
+	F12 看控制台的输出！
+
+
+	<br/>
+	在 Profiles / 性能 选项卡中，观察每一个步骤的耗时.
+
+
+
+	</p>
+
+	<script type="text/javascript">
+
+
+		function All(){
+			alert("Test!");
+
+			for(var i=0;i<10;i++){
+				funcA(1000);
+			}
+
+			funcB(10000);
+		}
+
+
+		function funcA(count){
+			for(var i=0;i<count;i++){
+			}
+		}
+
+
+		function funcB(count){
+			for(var i=0;i<count;i++){
+			}
+		}
+
+
+
+		console.profile('性能分析器');
+		All();
+		console.profileEnd();
+
+	</script>
+
+</body>
+</html>
