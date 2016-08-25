@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>命名空间 - 静态命名空间 - 使用对象字面量</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+
+<body>
+	<p>
+	F12 看控制台的输出！
+	</p>
+
+	<p>
+	使用对象字面量
+	只需要引用命名空间名一次.
+	</p>
+
+
+
+	<!-- 定义的代码. -->
+	<script type="text/javascript">
+		// 这里仅使用一次  myApp.
+		var myApp = {
+			id: 0,
+			next: function() {
+				return this.id++;
+			},
+			reset: function() {
+				this.id = 0;
+			}
+		}
+		
+		
+		// 这种写法， 是在全局环境中创建了一个对象，它是用于查看另外的某个对象是否已经存在，如果已经存在了，那么我们就可以直接使用；
+		// 不然就需要用'{}’来创建一个新的对象。
+		myApp = myApp || {};
+		myApp.someFunction = function(){
+			console.log("some func code.");
+		};
+	</script>
+
+
+
+	<!-- 测试的代码. -->
+	<script type="text/javascript">
+		window.console && console.log(
+			myApp.next(),
+			myApp.next(),
+			myApp.reset(),
+			myApp.next()
+		);
+		
+		
+		myApp.someFunction();
+	</script>
+
+</body>
+</html>

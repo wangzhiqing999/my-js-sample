@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>命名空间 - 静态命名空间 - 通过直接分配</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+
+<body>
+	<p>
+	F12 看控制台的输出！
+	</p>
+
+	<p>
+	通过直接分配
+	最基础的方法。这样非常冗长，并且如果你还想重命名这些命名空间，你就有得活儿干了。
+	不过它是安全和清楚明白的。
+	</p>
+
+
+
+	<!-- 定义的代码. -->
+	<script type="text/javascript">
+		// 这里多次使用了  myApp.
+		// 如果需要将 myApp 更名的话，将替换很多地方。
+		var myApp = {}
+
+		myApp.id = 0;
+
+		myApp.next = function() {
+			return myApp.id++;
+		}
+		myApp.reset = function() {
+			myApp.id = 0;
+		}
+		
+		
+		
+		// 这种写法， 是在全局环境中创建了一个对象，它是用于查看另外的某个对象是否已经存在，如果已经存在了，那么我们就可以直接使用；
+		// 不然就需要用'{}’来创建一个新的对象。
+		myApp = myApp || {};
+		myApp.someFunction = function(){
+			console.log("some func code.");
+		};
+	</script>
+
+
+
+	<!-- 测试的代码. -->
+	<script type="text/javascript">
+		window.console && console.log(
+			myApp.next(),
+			myApp.next(),
+			myApp.reset(),
+			myApp.next()
+		);
+		
+		myApp.someFunction();
+	</script>
+
+</body>
+</html>

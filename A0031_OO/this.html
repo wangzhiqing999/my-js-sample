@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>面向对象 - this</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+
+<body>
+	<p>
+	F12 看控制台的输出！
+	</p>
+
+	<p>
+
+this 对象是在运行时基于函数的执行环境绑定的：
+
+全局函数中， this 等于 window
+函数被作为某个对象的方法调用时， this 等于那个对象
+匿名函数的执行环境具有全局性， this 指向 window
+通过 call() 或 apply() 改变函数执行环境的情况下， this 就会指向其他对象。
+
+
+	</p>
+
+
+	<script type="text/javascript">
+		function test1() {
+			console.log(this);
+		}
+
+		console.group("全局函数中， this 等于 window");
+		test1();
+		console.groupEnd();
+	</script>
+
+
+
+	<script type="text/javascript">
+		var person = {
+			name: "张三",
+			age: 26,
+			gender: "男",
+			testFunc: function() {
+				console.log(this);
+			}
+		};
+
+		console.group("函数被作为某个对象的方法调用时， this 等于那个对象. ");
+		person.testFunc();
+
+
+		// 注意：this永远指向的是最后调用它的对象，也就是看它执行的时候是谁调用的。
+		var tempFunc1 = person.testFunc;
+		tempFunc1();
+
+		console.groupEnd();
+	</script>
+
+
+
+	<script type="text/javascript">
+		var personPlus = {
+			name: "张三",
+			age: 26,
+			gender: "男",
+
+			testFunc: function(x, y) {
+				console.log("testFunc this = ", this);
+
+				var that = this;
+
+				// 内部函数
+				var moveX = function(x) {
+					console.log("moveX this =", this);
+					console.log("moveX that =", that);
+				};
+
+				// 内部函数
+				var moveY = function(y) {
+					console.log("moveY this =", this);
+					console.log("moveY that =", that);
+				};
+
+				moveX(x);
+				moveY(y);
+			}
+		};
+
+		console.group("内部函数，存在一定的特殊性。");
+		personPlus.testFunc(1, 2);
+
+		console.groupEnd();
+	</script>
+
+
+
+
+
+	<script type="text/javascript">
+
+		console.group("匿名函数的执行环境具有全局性， this 指向 window.");
+
+		// 普通调用.
+		void function () {
+			console.log(this);
+		}();
+
+		// 链式调用
+		(function(o) {
+			console.log(o, this);
+			return arguments.callee;
+		})('Step1.')('Step2.');
+
+		console.groupEnd();
+
+	</script>
+
+
+
+
+	<script type="text/javascript">
+
+		console.group("通过 call() 或 apply() 改变函数执行环境的情况下， this 就会指向其他对象。");
+
+		var myfunc = function(x){
+			console.log(x, this);
+		}
+
+
+		myfunc("普通调用");
+		myfunc.call(test1, "test1");
+		myfunc.call(person.testFunc, "person.testFunc");
+		myfunc.call(this, "this");
+
+
+		console.groupEnd();
+
+	</script>
+
+
+
+
+
+	<script type="text/javascript">
+
+		console.group("闭包");
+
+		var person2 = {
+			name: "张三",
+			age: 26,
+			gender: "男",
+			testFunc: function() {
+				return function(){
+					console.log(this);
+				};
+			}
+		};
+
+
+		person2.testFunc()();
+
+		console.groupEnd();
+
+	</script>
+
+</body>
+</html>

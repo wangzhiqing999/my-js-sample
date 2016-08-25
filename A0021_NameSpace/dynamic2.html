@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>命名空间 - 动态命名空间 - 用this作为命名空间代理</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+
+<body>
+	<p>
+	F12 看控制台的输出！
+	</p>
+
+	<p>
+	用this作为命名空间代理
+	因为命名空间是通过this关键字（它在给定的执行上下文中是不变的）注入的，它不可能被意外修改。
+	</p>
+
+
+
+	<!-- 定义的代码. -->
+	<script type="text/javascript">
+
+		var myApp = {};
+
+		(function() {
+			var id = 0;
+
+			this.next = function() {
+				return id++;
+			};
+
+			this.reset = function() {
+				id = 0;
+			}
+		}).apply(myApp);
+
+	</script>
+
+
+
+	<!-- 测试的代码. -->
+	<script type="text/javascript">
+		window.console && console.log(
+			myApp.next(),
+			myApp.next(),
+			myApp.reset(),
+			myApp.next()
+		);
+	</script>
+
+</body>
+</html>

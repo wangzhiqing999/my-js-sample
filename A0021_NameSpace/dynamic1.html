@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>命名空间 - 动态命名空间 - 提供命名空间参数</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+
+<body>
+	<p>
+	F12 看控制台的输出！
+	</p>
+
+	<p>
+	提供命名空间参数
+	命名空间由一个直接引用方法包装内部的代理代表 – 这意味着我们不再需要打包分配给命名空间的返回值。
+	这让命名空间定义变得更灵活并且让拥有多个存在于独立命名空间中（或者甚至在全局上下文中）的模块的独立实例。
+	动态命名空间支持模块模式的全部特征并附加直观和可读性强的优势。
+	</p>
+
+
+
+	<!-- 定义的代码. -->
+	<script type="text/javascript">
+
+		var myApp = {};
+
+		// 在这里我们只是将命名空间作为参数传给自调用方法。变量id是私有的，因为他并没有被分配给context。
+		(function(context) {
+			var id = 0;
+			context.next = function() {
+				return id++;
+			};
+			context.reset = function() {
+				id = 0;
+			}
+		})(myApp);
+
+	</script>
+
+
+
+	<!-- 测试的代码. -->
+	<script type="text/javascript">
+		window.console && console.log(
+			myApp.next(),
+			myApp.next(),
+			myApp.reset(),
+			myApp.next()
+		);
+	</script>
+
+</body>
+</html>

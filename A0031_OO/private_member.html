@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>面向对象 - 私有成员实现</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+
+<body>
+	<p>
+	F12 看控制台的输出！
+	</p>
+
+	<p>
+私有成员实现
+	</p>
+
+
+
+
+	<script type="text/javascript">
+
+
+		// 声明 User 构造器
+		function User( pwd ) {
+			// 定义私有属性
+			var password = pwd;
+
+			// 定义私有方法
+			function getPassword() {
+				// 返回了闭包中的 password
+				return password;
+			}
+
+			// 特权函数声明，用于该对象其他公有方法能通过该特权方法访问到私有成员
+			this.passwordService = function() {
+				return getPassword();
+			}
+		}
+
+		// 公有成员声明
+		User.prototype.checkPassword = function( pwd ) {
+			return this.passwordService() === pwd;
+		};
+
+
+
+		// 验证隐藏性
+		var u1 = new User( "123456" );
+		var u2 = new User( "888888" );
+
+		// 打印 true
+		console.log( u1.passwordService(), u1.checkPassword( "123456" ) );
+		console.log( u2.passwordService(), u2.checkPassword( "888888" ) );
+
+
+		// 打印 undefined
+		console.log( u1.password );
+		console.log( u2.password );
+
+
+		// 打印 true
+		console.log( typeof u1.getPassword === "undefined" );
+		console.log( typeof u2.getPassword === "undefined" );
+
+
+
+
+
+	</script>
+
+
+
+
+
+</body>
+</html>

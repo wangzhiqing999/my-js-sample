@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>面向对象 - 对象声明</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+
+<body>
+	<p>
+	F12 看控制台的输出！
+	</p>
+
+	<p>
+
+	</p>
+
+
+
+
+	<script type="text/javascript">
+
+		console.log("字面式 (literal notation) 对象声明");
+
+		// 字面式 (literal notation) 对象声明
+		var person = {
+			name: "张三",
+			age: 26,
+			gender: "男",
+			eat: function(stuff) {
+				alert( "我在吃" + stuff );
+			}
+		};
+		console.group("初始定义后");
+
+		console.log("person.name = ", person.name);
+		console.log("person.age = ", person.age);
+		console.log("person.gender = ", person.gender);
+		console.log("person.height = ", person.height);
+
+		console.groupEnd();
+
+
+
+
+		// 为 对象增加 属性.
+		person.height = 176;
+		console.group("动态新增后");
+
+		console.log("person.name = ", person.name);
+		console.log("person.age = ", person.age);
+		console.log("person.gender = ", person.gender);
+		console.log("person.height = ", person.height);
+
+		console.groupEnd();
+
+
+
+
+		// 删除对象的属性.
+		delete person[ "age" ];
+		console.group("动态删除后");
+
+		console.log("person.name = ", person.name);
+		console.log("person.age = ", person.age);
+		console.log("person.gender = ", person.gender);
+		console.log("person.height = ", person.height);
+
+		console.groupEnd();
+
+
+
+	</script>
+
+
+
+
+
+
+	<script type="text/javascript">
+
+		console.log("使用构造器 (constructor) 创建对象");
+
+		// 构造器 Person 本身是一个函数对象
+		function Person(name,  age) {
+			// 此处可做一些初始化工作
+			console.info("Person 初始化！");
+
+			this.name = name,
+			this.age = age;
+		}
+
+        // 它有一个名叫 prototype 的属性
+		/*
+		Person.prototype = {
+			gender: "男",
+			eat: function( stuff ) {
+				alert( "我在吃" + stuff );
+			}
+		}
+		*/
+		Person.prototype.gender = "男";
+		Person.prototype.eat = function( stuff ) {
+				alert( "我在吃" + stuff );
+			};
+
+
+		// 使用 new 关键字构造对象
+		var p1 = new Person("张三", 23);
+		var p2 = new Person("李四", 25);
+
+
+		console.group("初始定义后");
+		console.log("p1.name =",  p1.name);
+		console.log("p1.age = ",  p1.age);
+		console.log("p1.gender = ",  p1.gender);
+
+		console.log("p2.name =",  p2.name);
+		console.log("p2.age = ",  p2.age);
+		console.log("p2.gender = ",  p2.gender);
+		console.groupEnd();
+
+
+		p1.gender = "女";
+		p2.age = 35;
+
+
+		console.group("修改属性后");
+		console.log("p1.name =",  p1.name);
+		console.log("p1.age = ",  p1.age);
+		console.log("p1.gender = ",  p1.gender);
+
+		console.log("p2.name =",  p2.name);
+		console.log("p2.age = ",  p2.age);
+		console.log("p2.gender = ",  p2.gender);
+		console.groupEnd();
+
+
+
+
+
+		console.group("验证 constructor / Prototype");
+
+
+		// constructor属性，指向它们的构造函数。
+		console.log("p1.constructor == Person ：",  p1.constructor == Person);
+
+
+		// instanceof运算符，验证原型对象与实例对象之间的关系。
+		console.log("p1 instanceof  Person ：",  p1 instanceof Person);
+
+
+		// isPrototypeOf() 这个方法用来判断，某个proptotype对象和某个实例之间的关系。
+		console.log("Person.prototype.isPrototypeOf(p1) ：",  Person.prototype.isPrototypeOf(p1));
+
+
+		// hasOwnProperty() 每个实例对象都有一个hasOwnProperty()方法，用来判断某一个属性到底是本地属性，还是继承自prototype对象的属性。
+		console.log("p1.hasOwnProperty('name') ：",  p1.hasOwnProperty('name'));
+		console.log("p1.hasOwnProperty('gender') ：",  p1.hasOwnProperty('gender'));
+		console.log("p1.hasOwnProperty('toString') ：",  p1.hasOwnProperty('xyz'));
+		console.log("p1.hasOwnProperty('xyz') ：",  p1.hasOwnProperty('xyz'));
+
+
+		// in运算符可以用来判断，某个实例是否含有某个属性，不管是不是本地属性。
+
+		console.log("'name' in p1 ：",  'name' in p1);
+		console.log("'gender' in p1 ：",  'gender' in p1);
+		console.log("'toString' in p1 ：",  'xyz' in p1);
+		console.log("'xyz' in p1 ：",  'xyz' in p1);
+
+
+		console.groupEnd();
+
+
+	</script>
+
+
+
+
+
+
+
+
+	<script type="text/javascript">
+		"use strict";
+
+		console.group("禁止修改对象");
+
+
+		// Object.preventExtensions(obj)：创建不可扩展的obj对象，可以利用Object.isExtensible(obj)来检测obj是否可以扩展。
+		// 严格模式下给不扩展对象添加属性会报错，非严格模式下则添加失败。
+
+		// Object.seal(obj)：封印对象，此时obj的属性变成只读，不能添加、改变或删除属性（所有属性都不可配置），其[[Extensible]]值为false,[[Configurable]]值为false。
+		// 可以利用Object.isSealed(obj)来检测obj是否被封印。
+
+		// Object.freeze(obj)：冻结对象，不能在冻结对象上添加或删除属性，不能改变属性类型，也不能写入任何数据类型。
+		// 可以利用Object.isFrozen(obj)来检测obj是否被冻结。
+		// 注意：冻结对象和封印对象均要在严格模式下使用。
+
+
+		function Person(name){
+			this.name = name;
+		}
+
+		var per5 = new Person("Pomy");
+
+
+		console.log("Object.isExtensible(per5) : ", Object.isExtensible(per5));   //true
+		console.log("Object.isSealed(per5) : ", Object.isSealed(per5));         //false
+		console.log("Object.isFrozen(per5) : ", Object.isFrozen(per5));       //false
+
+		// 冻结对象
+		Object.freeze(per5);
+
+		console.log("Object.isExtensible(per5) : ", Object.isExtensible(per5));   //false
+		console.log("Object.isSealed(per5) : ", Object.isSealed(per5));       //true
+		console.log("Object.isFrozen(per5) : ", Object.isFrozen(per5));       //true
+
+
+		/*
+		// 注释区域的代码， 运行过程中会抱错.
+		per5.name="dwqs";
+		console.log("per5.name : " , per5.name);   //"Pomy"
+
+		per5.Hi = function(){
+			console.log("Hi");
+		};
+		console.log("'Hi' in per5 : ",  'Hi' in per5);  //false
+
+
+		delete per5.name;
+		console.log("per5.name : " , per5.name);  //"Pomy"
+		*/
+
+		var desc = Object.getOwnPropertyDescriptor(per5,"name");
+		console.log("desc.configurable : ", desc.configurable);  //false
+		console.log("desc.writable : ", desc.writable);  //false
+
+
+
+
+
+		// 注意，禁止修改对象的三个方法只对对象的自有属性有效，对原型对象的属性无效，仍然可以在原型上添加或修改属性。
+
+		Person.prototype.Hi = function(){
+			console.log("Hi %s !",this.name);
+		};
+
+		per5.Hi();
+
+
+		console.groupEnd();
+
+	</script>
+
+
+</body>
+</html>

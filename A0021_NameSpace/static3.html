@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>命名空间 - 静态命名空间 - 模块模式</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+
+<body>
+	<p>
+	F12 看控制台的输出！
+	</p>
+
+	<p>
+	模块模式
+	逻辑被一个方法包装从全局域隔离开了（通常是自调用的），它返回一个代表这个模块公开接口的对象。
+	通过立即调用这个方法并分配结果给一个命名空间变量，我们就锁住了这个命名变量中模块的 API。
+	此外，任何没有包括在返回值中的变量将永远保持私有，只对引用他们的公开方法可见。.
+	</p>
+
+
+
+	<!-- 定义的代码. -->
+	<script type="text/javascript">
+		var myApp = (function() {
+			var id= 0;
+			return {
+				next: function() {
+					return id++;
+				},
+				reset: function() {
+					id = 0;
+				}
+			};
+		})();
+
+
+		// 这种写法， 是在全局环境中创建了一个对象，它是用于查看另外的某个对象是否已经存在，如果已经存在了，那么我们就可以直接使用；
+		// 不然就需要用'{}’来创建一个新的对象。
+		myApp = myApp || {};
+		myApp.someFunction = function(){
+			console.log("some func code.");
+		};
+	</script>
+
+
+
+	<!-- 测试的代码. -->
+	<script type="text/javascript">
+		window.console && console.log(
+			myApp.next(),
+			myApp.next(),
+			myApp.reset(),
+			myApp.next()
+		);
+		
+		myApp.someFunction();
+	</script>
+
+</body>
+</html>
