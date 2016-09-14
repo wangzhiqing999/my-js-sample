@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title> 判断是否是微信页面，判断PC和手机操作系统（ios或android） </title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+
+<body>
+	<p>
+看js的输出！
+	</p>
+
+
+
+
+
+<script type="text/javascript">
+
+// 是否是微信.
+function isWeixin() {
+	var ua = window.navigator.userAgent.toLowerCase();
+	if (ua.match(/MicroMessenger/i) == 'micromessenger') {
+		return true;
+	} else {
+		return false;
+	}
+}
+
+// 是否是 IOS 设备.
+function isIos() {
+	var u = navigator.userAgent;
+	var isIosResult = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
+	return isIosResult;
+}
+
+
+// 是否是 安卓设备.
+function isAndroid() {
+	var u = navigator.userAgent;
+	var isAndroidResult = u.indexOf('Android') > -1 || u.indexOf('Linux') > -1;
+	return isAndroidResult;
+}
+
+// 是否是 PC .
+function isPC() {
+	var userAgentInfo = navigator.userAgent;
+	var Agents = ["Android", "iPhone",
+	"SymbianOS", "Windows Phone",
+	"iPad", "iPod"];
+	
+	var flag = true;
+	
+	for (var v = 0; v < Agents.length; v++) {
+		if (userAgentInfo.indexOf(Agents[v]) > 0) {
+			flag = false;
+			break;
+		}
+	}
+	return flag;
+}
+
+
+document.write("isWeixin()  = " + isWeixin() );
+document.write("<br/>isIos() = " + isIos());
+document.write("<br/>isAndroid() = " + isAndroid());
+document.write("<br/>isPC() = " + isPC());
+
+
+</script>
+
+
+
+
+</body>
+</html>
