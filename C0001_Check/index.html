@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>  数据输入检查.  </title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+	<script type="text/javascript" src="myInputCheck.js"></script>
+
+</head>
+
+<body>
+	<p>
+看js的输出！
+	</p>
+
+
+
+
+
+<script type="text/javascript">
+
+
+document.write('<h3> myInputCheck.isLike123456 </h3>');
+document.write('<br/>myInputCheck.isLike123456("123456") = ' + myInputCheck.isLike123456("123456"));
+document.write('<br/>myInputCheck.isLike123456("654321") = ' + myInputCheck.isLike123456("654321"));
+
+document.write('<br/>myInputCheck.isLike123456("345678") = ' + myInputCheck.isLike123456("345678"));
+document.write('<br/>myInputCheck.isLike123456("987654") = ' + myInputCheck.isLike123456("987654"));
+
+document.write('<br/>myInputCheck.isLike123456("135799") = ' + myInputCheck.isLike123456("135799"));
+document.write('<br/>myInputCheck.isLike123456("246800") = ' + myInputCheck.isLike123456("246800"));
+
+
+
+
+
+document.write('<br/><hr/>');
+document.write('<h3> myInputCheck.isSame3Number </h3>');
+
+document.write('<br/>myInputCheck.isSame3Number("111111") = ' + myInputCheck.isSame3Number("111111"));
+document.write('<br/>myInputCheck.isSame3Number("111222") = ' + myInputCheck.isSame3Number("111222"));
+
+document.write('<br/>myInputCheck.isSame3Number("123123") = ' + myInputCheck.isSame3Number("123123"));
+document.write('<br/>myInputCheck.isSame3Number("456456") = ' + myInputCheck.isSame3Number("456456"));
+
+document.write('<br/>myInputCheck.isSame3Number("008800") = ' + myInputCheck.isSame3Number("008800"));
+document.write('<br/>myInputCheck.isSame3Number("090090") = ' + myInputCheck.isSame3Number("090090"));
+
+
+
+
+
+var vCheckInputValue = [
+	"111222333",
+	"aaabbbccc",
+	"aAabBbcCc",
+	"123!!!456",
+	"123@@@abc",
+	"123###XYZ",
+	"123abc456",
+	"123XYZ456",
+	"1Aa2Bb3Cc"
+];
+
+var vCheckInputValueLenrth = vCheckInputValue.length;
+
+
+document.write('<br/><hr/>');
+document.write('<h3> myInputCheck.isNumberOnly </h3>');
+for(var i = 0; i < vCheckInputValueLenrth; i ++) {
+	document.write('<br/>myInputCheck.isNumberOnly("' + vCheckInputValue[i] + '") = ' + myInputCheck.isNumberOnly(vCheckInputValue[i]));
+}
+
+
+
+
+
+
+document.write('<br/><hr/>');
+document.write('<h3> myInputCheck.isNumberOrLetterOnly </h3>');
+for(var i = 0; i < vCheckInputValueLenrth; i ++) {
+	document.write('<br/>myInputCheck.isNumberOrLetterOnly("' + vCheckInputValue[i] + '") = ' + myInputCheck.isNumberOrLetterOnly(vCheckInputValue[i]));
+}
+
+
+
+
+document.write('<br/><hr/>');
+document.write('<h3> myInputCheck.isNumberAndLetterOnly </h3>');
+for(var i = 0; i < vCheckInputValueLenrth; i ++) {
+	document.write('<br/>myInputCheck.isNumberAndLetterOnly("' + vCheckInputValue[i] + '") = ' + myInputCheck.isNumberAndLetterOnly(vCheckInputValue[i]));
+}
+
+
+
+
+
+var vCheckEmail = [
+	"test@test.com",
+	"test@test.com.cn",
+	"test@test.co.jp",
+	"fox.test@test.co.jp",
+	"test@localhost",
+	"@test.com",
+	"test@",
+	"@",
+	"test.com",
+	"test＠test.com.cn"
+];
+
+document.write('<br/><hr/>');
+document.write('<h3> myInputCheck.isEmail </h3>');
+for(var i = 0; i < vCheckEmail.length; i ++) {
+	document.write('<br/>myInputCheck.isEmail("' + vCheckEmail[i] + '") = ' + myInputCheck.isEmail(vCheckEmail[i]));
+}
+
+
+
+
+
+
+var vCheckInputIdNumber = [
+	"42010619510609483X",
+	// 省代码不正确.
+	"99010619510609483X",
+	// 出生早于1900.
+	"42010618510609483X",
+	// 出生太晚2200+.
+	"42010622510609483X",
+	// 月份与日期有误.
+	"42010619511609483X",
+	"42010619510639483X",
+	// 校验位错误.
+	"420106195106094830",
+	// 19位.
+	"4201061951060948300",
+	// 17位.
+	"42010619510609483"
+];
+
+document.write('<br/><hr/>');
+document.write('<h3> myInputCheck.isIDNumber </h3>');
+for(var i = 0; i < vCheckInputIdNumber.length; i ++) {
+	document.write('<br/>myInputCheck.isIDNumber("' + vCheckInputIdNumber[i] + '") = ' + myInputCheck.isIDNumber(vCheckInputIdNumber[i]) + ',  ResultMessage = ' + myInputCheck.checkResult );
+}
+
+
+
+
+</script>
+
+
+
+
+
+</body>
+</html>
