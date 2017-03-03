@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>  vue.js  模板语法  </title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<script type="text/javascript" src="js/vue.js"></script>
+
+
+
+
+</head>
+
+
+<body>
+
+	<h1> 模板语法 </h1>
+
+	<hr/>
+	<h3> Mustache，v-once 指令 </h3>
+
+	<div id="app-1">
+		<span> Mustache 消息: {{ msg }}</span>
+
+		<br/>
+
+		<p> 通过使用 v-once 指令，执行一次性地插值，当数据改变时，插值处的内容不会更新。 </p>
+		<span v-once> v-once 指令消息: {{ msg }} </span>
+	</div>
+
+
+	<p>
+	在浏览器中，按 F12，在控制台输入：
+	<br/>
+	app1.msg = "测试消息456";
+	<br/>
+	观察页面的数据， 是否发生变化。
+	</p>
+
+
+
+	<script type="text/javascript">
+
+		var app1 = new Vue({
+			el: '#app-1',
+			data: {
+				msg: "测试消息123"
+			}
+		})
+	</script>
+
+
+
+
+	<hr/>
+	<h3> v-html 指令 </h3>
+
+	<div id="app-2">
+
+		<p> Mustache 方式 </p>
+		<div> {{ rawHtml }}</div>
+
+		<br/>
+
+		<p> v-html 方式 </p>
+		<div v-html="rawHtml"></div>
+
+	</div>
+
+
+	<script type="text/javascript">
+
+		var app2 = new Vue({
+			el: '#app-2',
+			data: {
+				rawHtml: "<div> Test Raw Html </div>"
+			}
+		})
+	</script>
+
+
+
+
+
+
+	<hr/>
+	<h3>  v-bind 指令 </h3>
+	<p> Mustache 不能在 HTML 属性中使用，应使用 v-bind 指令： </p>
+
+	<div id="app-3">
+		<div v-bind:id="dynamicId">
+			<button v-bind:disabled="someDynamicCondition">Button</button>
+		</div>
+	</div>
+
+	<p>
+	在浏览器中，按 F12，在控制台输入：
+	<br/>
+	app3.someDynamicCondition = true;
+	<br/>
+	观察页面的按钮，是否 disabled 发生变化。
+	</p>
+
+
+
+	<script type="text/javascript">
+
+		var app3 = new Vue({
+			el: '#app-3',
+			data: {
+				dynamicId: "testID",
+				someDynamicCondition : false
+			}
+		})
+	</script>
+
+
+
+
+
+	<hr/>
+	<h3>  v-bind / v-on </h3>
+
+	<div id="app-4">
+		<div>
+			<button v-bind:id="btnID" v-on:click="btnFunc">Test v-on Button</button>
+			<br/>
+			<span>  这个按钮被点击了 {{ btnValue }} 次 </span>
+		</div>
+	</div>
+	<p> 点击按钮测试. </p>
+
+	<script type="text/javascript">
+
+		var app4 = new Vue({
+			el: '#app-4',
+			data: {
+				btnValue : 0,
+				btnID: "btnTest"
+			},
+			methods: {
+				btnFunc : function (message) {
+					this.btnValue ++;
+				}
+			}
+		})
+	</script>
+
+
+</body>
+</html>

@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>  vue.js  绑定 Style  </title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<script type="text/javascript" src="js/vue.js"></script>
+</head>
+
+
+<body>
+
+	<h1> 绑定 Style </h1>
+
+
+	<hr/>
+	<h3> 绑定单个属性  </h3>
+
+
+	<div id="app1">
+		<p v-bind:style="{ color: activeColor, fontSize: fontSize + 'px' }">
+			测试文本区域.
+		</p>
+		<p>
+			对照区域.
+		</p>
+	</div>
+
+	<p>
+	在浏览器中，按 F12，在控制台输入：
+	<br/>
+	app1.activeColor = "black";
+	<br/>
+	app1.fontSize = 24;
+	<br/>
+	观察页面的数据， 是否发生变化。
+	</p>
+
+
+	<script type="text/javascript">
+		var app1 = new Vue({
+			el: '#app1',
+			data: {
+				activeColor: "red",
+				fontSize: 12
+			}
+		})
+	</script>
+
+
+
+
+
+
+	<hr/>
+	<h3> 绑定一个对象  </h3>
+
+
+	<div id="app2">
+		<p v-bind:style="styleObject">
+			测试文本区域.
+		</p>
+		<p>
+			对照区域.
+		</p>
+	</div>
+
+	<p>
+	在浏览器中，按 F12，在控制台输入：
+	<br/>
+	app2.styleObject.color = "black";
+	<br/>
+	app2.styleObject.fontSize = "24px";
+	<br/>
+	观察页面的数据， 是否发生变化。
+	</p>
+
+
+	<script type="text/javascript">
+		var app2 = new Vue({
+			el: '#app2',
+			data: {
+				styleObject: {
+					color: 'red',
+					fontSize: '13px'
+				}
+			}
+		})
+	</script>
+
+
+
+
+
+	<hr/>
+	<h3> 绑定一个数组  </h3>
+
+
+	<div id="app3">
+		<p v-bind:style="[colorStyle, fontSizeStyle]">
+			测试文本区域.
+		</p>
+		<p>
+			对照区域.
+		</p>
+	</div>
+
+
+	<p>
+	在浏览器中，按 F12，在控制台输入：
+	<br/>
+	app3.colorStyle = "color: 'green'";
+	<br/>
+	app3.fontSizeStyle = "";
+	<br/>
+	观察页面的数据， 是否发生变化。  (这里好像有点问题)
+	</p>
+
+
+
+	<script type="text/javascript">
+		var app3 = new Vue({
+			el: '#app3',
+			data: {
+				colorStyle: "color:'red'",
+				fontSizeStyle: "fontSize:'13px'"
+			}
+		})
+	</script>
+
+
+
+
+</body>
+</html>

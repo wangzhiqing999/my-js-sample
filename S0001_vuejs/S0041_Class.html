@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>  vue.js   绑定 Class    </title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<script type="text/javascript" src="js/vue.js"></script>
+
+
+
+<style type="text/css">
+p.static {
+	font-style:italic;
+}
+
+p.active {
+	font-size:24px;
+}
+
+p.text-danger {
+	color:red;
+}
+</style>
+
+</head>
+
+
+<body>
+
+	<h1>  绑定 Class   </h1>
+
+
+	<hr/>
+	<h3> 绑定单个属性  </h3>
+
+
+	<div id="app1">
+		<p class="static" v-bind:class="{ active: isActive, 'text-danger': hasError }">
+			测试文本区域.
+		</p>
+		<p>
+			对照区域.
+		</p>
+	</div>
+
+	<p>
+	在浏览器中，按 F12，在控制台输入：
+	<br/>
+	app1.isActive = false;   /    app1.isActive = true;
+	<br/>
+	app1.hasError = true;    /    app1.hasError = false;
+	<br/>
+	观察页面的数据， 是否发生变化。
+	</p>
+
+
+	<script type="text/javascript">
+		var app1 = new Vue({
+			el: '#app1',
+			data: {
+				isActive: true,
+				hasError: false
+			}
+		})
+	</script>
+
+
+
+
+
+
+	<hr/>
+	<h3> 绑定一个对象  </h3>
+
+
+	<div id="app2">
+		<p class="static" v-bind:class="classObject">
+			测试文本区域.
+		</p>
+		<p>
+			对照区域.
+		</p>
+	</div>
+
+	<p>
+	在浏览器中，按 F12，在控制台输入：
+	<br/>
+	app2.classObject.active = false;
+	<br/>
+	观察页面的数据， 是否发生变化。
+	</p>
+
+
+	<script type="text/javascript">
+		var app2 = new Vue({
+			el: '#app2',
+			data: {
+				classObject: {
+					active: true,
+					'text-danger': false
+				}
+			}
+		})
+	</script>
+
+
+
+
+	<hr/>
+	<h3> 绑定一个计算属性  </h3>
+
+
+
+	<div id="app3">
+		<p class="static" v-bind:class="classObject">
+			测试文本区域.
+		</p>
+		<p>
+			对照区域.
+		</p>
+	</div>
+
+
+	<p>
+	在浏览器中，按 F12，在控制台输入：
+	<br/>
+	app3.isActive = false;
+	<br/>
+	app3.error = "Test Error!";
+	<br/>
+	观察页面的数据， 是否发生变化。
+	</p>
+
+	<script type="text/javascript">
+		var app3 = new Vue({
+			el: '#app3',
+			data: {
+				isActive: true,
+				error: null
+			},
+			computed: {
+				classObject: function () {
+					return {
+						active: this.isActive && !this.error,
+						'text-danger': this.error != null
+					}
+				}
+			}
+		})
+	</script>
+
+	
+	
+	
+	<hr/>
+	<h3> 绑定一个数组  </h3>
+
+
+	<div id="app4">
+		<p class="static" v-bind:class="[activeClass, errorClass]">
+			测试文本区域.
+		</p>
+		<p>
+			对照区域.
+		</p>
+	</div>
+
+	
+	<p>
+	在浏览器中，按 F12，在控制台输入：
+	<br/>
+	app4.activeClass = "";
+	<br/>
+	app4.errorClass = "";
+	<br/>
+	观察页面的数据， 是否发生变化。
+	</p>
+
+	<script type="text/javascript">
+		var app4 = new Vue({
+			el: '#app4',
+			data: {
+				activeClass: "active",
+				errorClass: "text-danger"
+			}
+		})
+	</script>
+	
+	
+	
+
+</body>
+</html>

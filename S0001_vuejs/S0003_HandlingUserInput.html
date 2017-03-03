@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>  vue.js  处理用户输入  </title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<script type="text/javascript" src="js/vue.js"></script>
+
+
+
+
+</head>
+
+
+<body>
+
+	<h1> 处理用户输入 </h1>
+
+
+	<hr/>
+	<h3> v-on </h3>
+
+
+	<div id="app-5">
+		<p>{{ message }}</p>
+
+		<p> 点击按钮， 观察上面的文字变化. </p>
+		<button v-on:click="reverseMessage">Reverse Message</button>
+	</div>
+
+
+	<script type="text/javascript">
+		var app5 = new Vue({
+			el: '#app-5',
+			data: {
+				message: 'Hello Vue.js!'
+			},
+			methods: {
+				reverseMessage: function () {
+					this.message = this.message.split('').reverse().join('')
+				}
+			}
+		});
+	</script>
+
+
+
+
+
+
+	<hr/>
+	<h3> v-model </h3>
+
+
+	<div id="app-6">
+		<p>{{ message }}</p>
+
+		<p> 修改输入框的文本信息， 观察上面的文字变化. </p>
+
+		<input v-model="message">
+	</div>
+
+
+	<script type="text/javascript">
+		var app6 = new Vue({
+			el: '#app-6',
+			data: {
+				message: 'Hello Vue!'
+			}
+		});
+	</script>
+
+
+
+
+</body>
+</html>

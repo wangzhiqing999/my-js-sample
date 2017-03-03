@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>  vue.js  If-Else  </title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<script type="text/javascript" src="js/vue.js"></script>
+</head>
+
+
+<body>
+
+	<h1> If-Else  </h1>
+
+
+	<hr/>
+	<h3> v-if  / v-else </h3>
+
+
+	<!-- v-else 元素必须紧跟在 v-if 元素或者 v-else-if的后面——否则它不能被识别。  -->
+	<div id="app1">
+		<h1 v-if="ok">Yes</h1>
+		<h1 v-else>No</h1>
+	</div>
+
+	<p>
+	在浏览器中，按 F12，在控制台输入：
+	<br/>
+	app1.ok = false;
+	<br/>
+	app1.ok = true;
+	<br/>
+	观察页面的数据， 是否发生变化。
+	</p>
+
+
+	<script type="text/javascript">
+		var app1 = new Vue({
+			el: '#app1',
+			data: {
+				ok: true
+			}
+		})
+	</script>
+
+
+
+
+
+
+	<hr/>
+	<h3> v-if  /  v-else-if  / v-else  </h3>
+
+
+	<div id="app2">
+		<div v-if="type === 'A'">
+			A
+		</div>
+		<div v-else-if="type === 'B'">
+			B
+		</div>
+		<div v-else-if="type === 'C'">
+			C
+		</div>
+		<div v-else>
+			Not A/B/C
+		</div>
+	</div>
+
+	<p>
+	在浏览器中，按 F12，在控制台输入：
+	<br/>
+	app2.type = "A";
+	<br/>
+	app2.type = "B";
+	<br/>
+	app2.type = "C";
+	<br/>
+	app2.type = "D";
+	<br/>
+	观察页面的数据， 是否发生变化。
+	</p>
+
+
+	<script type="text/javascript">
+		var app2 = new Vue({
+			el: '#app2',
+			data: {
+				type : "A"
+			}
+		})
+	</script>
+
+
+</body>
+</html>

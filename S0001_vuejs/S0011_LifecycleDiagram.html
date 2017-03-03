@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>  vue.js  生命周期  </title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<script type="text/javascript" src="js/vue.js"></script>
+
+
+
+
+</head>
+
+
+<body>
+
+	<h1> 生命周期 </h1>
+
+	<hr/>
+	<h3> v-for, v-bind, Vue.component </h3>
+
+
+
+	<div id="app-7">
+		<ol>
+			<todo-item v-for="item in groceryList" v-bind:todo="item"></todo-item>
+		</ol>
+	</div>
+
+
+
+	<p>
+	生命周期，注意观察控制台的输出信息。
+	</p>
+
+
+	<p>
+	在浏览器中，按 F12，在控制台输入：
+	<br/>
+	app7.groceryList.push({ text: 'New item' });
+	<br/>
+	app7.groceryList.push({ text: 'New item 2' });
+	<br/>
+	观察页面的数据， 是否发生变化，以及控制台的输出信息。
+	</p>
+
+
+
+	<script type="text/javascript">
+
+		// 定义一个名称为 todo-item 的组件.
+		Vue.component('todo-item', {
+			// props 可以是数组或对象，用于接收来自父组件的数据.
+			props: ['todo'],
+			// 模板的内容.
+			template: '<li>{{ todo.text }}</li>'
+		});
+
+
+		var app7 = new Vue({
+			el: '#app-7',
+			data: {
+				groceryList: [
+					{ text: 'Vegetables' },
+					{ text: 'Cheese' },
+					{ text: 'Whatever else humans are supposed to eat' }
+				]
+			},
+
+			beforeCreate :  function () {
+				// 在实例初始化之后，数据观测(data observer) 和 event/watcher 事件配置之前被调用。
+				console.log('beforeCreate !');
+			},
+
+			created :  function () {
+				// 实例已经创建完成之后被调用。
+				// 在这一步，实例已完成以下的配置：数据观测(data observer)，属性和方法的运算， watch/event 事件回调。然而，挂载阶段还没开始，$el 属性目前不可见。
+				console.log('created !');
+			},
+
+			beforeMount :  function () {
+				// 在挂载开始之前被调用：相关的 render 函数首次被调用。
+				console.log('beforeMount !');
+			},
+
+			mounted :  function () {
+				// el 被新创建的 vm.$el 替换，并挂载到实例上去之后调用该钩子。如果 root 实例挂载了一个文档内元素，当 mounted 被调用时 vm.$el 也在文档内。
+				// 该钩子在服务器端渲染期间不被调用。
+				console.log('mounted !');
+			},
+
+			beforeUpdate :  function () {
+				// 数据更新时调用，发生在虚拟 DOM 重新渲染和打补丁之前。
+				// 你可以在这个钩子中进一步地更改状态，这不会触发附加的重渲染过程。
+				// 该钩子在服务器端渲染期间不被调用。
+				console.log('beforeUpdate !');
+			},
+
+			updated :  function () {
+				// 由于数据更改导致的虚拟 DOM 重新渲染和打补丁，在这之后会调用该钩子。
+				// 当这个钩子被调用时，组件 DOM 已经更新，所以你现在可以执行依赖于 DOM 的操作。然而在大多数情况下，你应该避免在此期间更改状态，因为这可能会导致更新无限循环。
+				// 该钩子在服务器端渲染期间不被调用。
+				console.log('updated !');
+			},
+
+			activated :  function () {
+				// keep-alive 组件激活时调用。
+				// 该钩子在服务器端渲染期间不被调用。
+				console.log('activated !');
+			},
+
+			deactivated :  function () {
+				// keep-alive 组件停用时调用。
+				// 该钩子在服务器端渲染期间不被调用。
+				console.log('deactivated !');
+			},
+
+			beforeDestroy :  function () {
+				// 实例销毁之前调用。在这一步，实例仍然完全可用。
+				// 该钩子在服务器端渲染期间不被调用。
+				console.log('beforeDestroy !');
+			},
+
+			deactivated :  function () {
+				// Vue 实例销毁后调用。调用后，Vue 实例指示的所有东西都会解绑定，所有的事件监听器会被移除，所有的子实例也会被销毁。
+				// 该钩子在服务器端渲染期间不被调用。
+				console.log('deactivated !');
+			}
+		})
+	</script>
+
+
+
+
+
+
+
+
+</body>
+</html>

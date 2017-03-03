@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>  vue.js  条件与循环  </title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<script type="text/javascript" src="js/vue.js"></script>
+
+
+
+
+</head>
+
+
+<body>
+
+	<h1> 条件与循环 </h1>
+
+
+	<hr/>
+	<h3> v-if </h3>
+
+
+	<div id="app-3">
+	  <p v-if="seen">Now you see me</p>
+	</div>
+
+
+	<p>
+	在浏览器中，按 F12，在控制台输入：
+	<br/>
+	app3.seen = false;
+	<br/>
+	以及
+	<br/>
+	app3.seen = true;
+	<br/>
+	观察页面的数据， 是否发生变化。
+	</p>
+
+
+	<script type="text/javascript">
+		var app3 = new Vue({
+			el: '#app-3',
+			data: {
+				seen: true
+			}
+		})
+	</script>
+
+
+
+
+
+
+	<hr/>
+	<h3> v-for </h3>
+
+
+	<div id="app-4">
+		<ol>
+			<li v-for="todo in todos">
+				{{ todo.text }}
+			</li>
+		</ol>
+	</div>
+
+	<p>
+	在浏览器中，按 F12，在控制台输入：
+	<br/>
+	app4.todos.push({ text: 'New item' });
+	<br/>
+	app4.todos.push({ text: 'New item 2' });
+	<br/>
+	观察页面的数据， 是否发生变化。
+	</p>
+
+
+	<script type="text/javascript">
+		var app4 = new Vue({
+			el: '#app-4',
+			data: {
+				todos: [
+					{ text: 'Learn JavaScript' },
+					{ text: 'Learn Vue' },
+					{ text: 'Build something awesome' }
+				]
+			}
+		})
+	</script>
+
+
+
+
+</body>
+</html>

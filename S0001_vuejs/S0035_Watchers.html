@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>  vue.js  Watcher  </title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<script type="text/javascript" src="js/vue.js"></script>
+
+
+
+
+</head>
+
+
+<body>
+
+	<h1> Watcher </h1>
+
+
+	<hr/>
+	<h3> Watcher .</h3>
+
+
+	<div id="watch-example">
+		<p>
+			Ask a yes/no question:
+			<input v-model="question">
+		</p>
+		<p>{{ answer }}</p>
+	</div>
+
+
+
+
+	<script type="text/javascript">
+	
+		var watchExampleVM = new Vue({
+			
+			el: '#watch-example',
+			
+			data: {
+				question: '',
+				answer: 'I cannot give you an answer until you ask a question!'
+			},
+			watch: {
+				// whenever question changes, this function will run
+				question: function (newQuestion) {
+					this.answer = 'Waiting for you to stop typing...'
+					this.watchFunc()
+				}
+			},
+			
+			methods: {
+				watchFunc: function (newQuestion) {
+					console.log('watchFunc Exec......');
+				}
+			}
+		});
+	</script>
+
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>  vue.js  For	</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<script type="text/javascript" src="js/vue.js"></script>
+</head>
+
+
+<body>
+
+	<h1> For  </h1>
+
+
+	<hr/>
+	<h3> v-for </h3>
+
+
+	<ul id="app1">
+		<li v-for="item in items">
+			{{ item.message }}
+		</li>
+	</ul>
+
+	<p>
+	在浏览器中，按 F12，在控制台输入：
+	<br/>
+	app1.items.push({ message: 'New item' });
+	<br/>
+	app1.items.push({ message: 'New item 2' });
+	<br/>
+	观察页面的数据， 是否发生变化。
+	</p>
+
+
+	<script type="text/javascript">
+		var app1 = new Vue({
+			el: '#app1',
+			data: {
+				items: [
+					{message: 'Foo' },
+					{message: 'Bar' }
+				]
+			}
+		})
+	</script>
+
+
+
+
+
+
+	<hr/>
+	<h3> v-for 索引  </h3>
+
+
+	<ul id="app2">
+		<li v-for="(item, index) in items">
+			{{ parentMessage }} - {{ index }} - {{ item.message }}
+		</li>
+	</ul>
+
+	<p>
+	在浏览器中，按 F12，在控制台输入：
+	<br/>
+	app2.items.push({ message: 'New item' });
+	<br/>
+	app2.items.push({ message: 'New item 2' });
+	<br/>
+	观察页面的数据， 是否发生变化。
+	</p>
+
+
+	<script type="text/javascript">
+		var app2 = new Vue({
+			el: '#app2',
+			data: {
+				parentMessage: 'Parent',
+				items: [
+					{ message: 'Foo' },
+					{ message: 'Bar' }
+				]
+			}
+		})
+	</script>
+
+
+
+
+
+
+	<hr/>
+	<h3> v-for 对象  </h3>
+
+
+	<div id="app3">
+		<ul>
+			<li v-for="value in object">
+				{{ value }}
+			</li>
+		</ul>
+
+
+		<ul>
+			<li v-for="(value, key) in object">
+				{{ key }} : {{ value }}
+			</li>
+		</ul>
+
+
+		<ul>
+			<li v-for="(value, key, index)  in object">
+				{{ index }}. {{ key }} : {{ value }}
+			</li>
+		</ul>
+
+	</div>
+
+	<p>
+	在浏览器中，按 F12，在控制台输入：
+	<br/>
+	app3.object.FirstName = "Test";
+	<br/>
+	app3.object.LastName = "Demo";
+	<br/>
+	app3.object.Age = 35;
+	<br/>
+	观察页面的数据， 是否发生变化。
+	</p>
+
+
+	<script type="text/javascript">
+		var app3 = new Vue({
+			el: '#app3',
+			data: {
+				object: {
+					FirstName: 'John',
+					LastName: 'Doe',
+					Age: 30
+				}
+			}
+		})
+	</script>
+
+
+
+
+
+	<hr/>
+	<h3> v-for 整数  </h3>
+
+
+	<div id="app4">
+		<span  v-for="n in IntValue">
+			{{ n }}
+		</span >
+	</div>
+
+	<p>
+	在浏览器中，按 F12，在控制台输入：
+	<br/>
+	app4.IntValue = 15;
+	<br/>
+	观察页面的数据， 是否发生变化。
+	</p>
+
+	<script type="text/javascript">
+		var app4 = new Vue({
+			el: '#app4',
+			data: {
+				IntValue: 5
+			}
+		})
+	</script>
+
+</body>
+</html>

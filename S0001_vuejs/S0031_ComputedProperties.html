@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>  vue.js  计算属性  </title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<script type="text/javascript" src="js/vue.js"></script>
+
+
+
+
+</head>
+
+
+<body>
+
+	<h1> 计算属性 </h1>
+
+
+	<hr/>
+	<h3> 基础例子 .</h3>
+
+
+	<div id="example">
+		<p>原始的字符串: "{{ message }}"</p>
+		<p>反转后的字符串: "{{ reversedMessage }}"</p>
+	</div>
+
+
+
+
+
+	<script type="text/javascript">
+		var vm = new Vue({
+			el: '#example',
+			data: {
+				message: 'Hello'
+			},
+			computed: {
+				// 计算属性.
+				reversedMessage: function () {
+					// `this` points to the vm instance
+					return this.message.split('').reverse().join('')
+				}
+			}
+		})
+	</script>
+
+
+
+
+	<hr/>
+	<h3> 计算属性 与 方法.</h3>
+
+
+	<div id="example2">
+		<p>原始的字符串: "{{ message }}"</p>
+
+		<p>反转后的字符串 （计算属性）: "{{ reversedMessage }}"</p>
+		<p>反转后的字符串 （方法）: "{{ getReversedMessage() }}"</p>
+	</div>
+
+
+	<p>
+	在浏览器中，按 F12，在控制台输入：
+	<br/>
+	vm2.message = "12345";
+	<br/>
+	vm2.message = "Hello";
+	<br/>
+	观察页面的数据， 是否发生变化。
+	以及控制台的日志信息。
+	</p>
+
+
+	<script type="text/javascript">
+		var vm2 = new Vue({
+			el: '#example2',
+			data: {
+				message: 'Hello'
+			},
+			computed: {
+				// 计算属性.
+				reversedMessage: function () {
+					console.log('computed :  reversedMessage!');
+					return this.message.split('').reverse().join('')
+				}
+			},
+			methods: {
+				getReversedMessage: function () {
+					console.log('methods :  getReversedMessage!');
+					return this.message.split('').reverse().join('')
+				}
+			}
+		})
+	</script>
+
+
+
+
+</body>
+</html>
