@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>  vue.js  事件处理	</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<script type="text/javascript" src="js/vue.js"></script>
+</head>
+
+
+<body>
+
+	<h1> Event  </h1>
+
+
+	<hr/>
+	<h3> v-on </h3>
+
+
+	<div id="app1">
+		<button v-on:click="addCount"> 增加 1 </button>
+		<p>这个按钮被点击了  {{ counter }}  次。</p>
+	</div>
+
+	<script type="text/javascript">
+		var app1 = new Vue({
+			el: '#app1',
+
+			// 数据.
+			data: {
+				counter: 0
+			},
+
+			// 方法.
+			methods: {
+				addCount: function (event) {
+					this.counter ++;
+
+					console.log("this.counter = ", this.counter);
+					console.log("event.target.tagName = ", event.target.tagName);
+				}
+			}
+		});
+	</script>
+
+
+
+
+
+
+	<hr/>
+	<h3> v-on :  参数 </h3>
+
+	<div id="app2">
+		<button v-on:click="say('hi', $event)">Say hi</button>
+		<button v-on:click="say('what', $event)">Say what</button>
+	</div>
+
+	<script type="text/javascript">
+		var app2 = new Vue({
+			el: '#app2',
+
+			// 方法.
+			methods: {
+				say: function (message, event) {
+					alert(message);
+
+					console.log("event.target.tagName = ", event.target.tagName);
+				}
+			}
+		});
+	</script>
+
+
+
+
+	<hr/>
+	<h3> v-on :  按键 </h3>
+
+	<div id="app3">
+		<input
+			v-model="newText"
+			v-on:keyup.enter="pressEnter"
+			v-on:keyup.tab="pressTab"
+			v-on:keyup.delete="pressDel"
+			v-on:keyup.esc="pressEsc"
+			v-on:keyup.up="pressUp"
+			v-on:keyup.down="pressDown"
+			v-on:keyup.left="pressLeft"
+			v-on:keyup.right="pressRight"
+			v-on:keyup.ctrl="pressCtrl"
+			v-on:keyup.alt="pressAlt"
+			placeholder="测试：回车；Tab；Del；Esc；Space；上；下；左；右" />
+	</div>
+
+	<script type="text/javascript">
+		var app3 = new Vue({
+			el: '#app3',
+
+			// 数据部分.
+			data: {
+				// 新增的数据.
+				newText: ''
+			},
+
+			// 方法.
+			methods: {
+				pressEnter: function (event) {
+					console.log("按下了回车键，当前文本信息 = ", this.newText);
+					console.log("event.target.tagName = ", event.target.tagName);
+				},
+				pressTab: function (event) {
+					console.log("按下了Tab键，当前文本信息 = ", this.newText);
+					console.log("event.target.tagName = ", event.target.tagName);
+				},
+				pressDel: function (event) {
+					console.log("按下了 删除/退格 键，当前文本信息 = ", this.newText);
+					console.log("event.target.tagName = ", event.target.tagName);
+				},
+				pressEsc: function (event) {
+					console.log("按下了 Esc 键，当前文本信息 = ", this.newText);
+					console.log("event.target.tagName = ", event.target.tagName);
+				},
+				pressUp: function (event) {
+					console.log("按下了 上 键，当前文本信息 = ", this.newText);
+					console.log("event.target.tagName = ", event.target.tagName);
+				},
+				pressDown: function (event) {
+					console.log("按下了 下 键，当前文本信息 = ", this.newText);
+					console.log("event.target.tagName = ", event.target.tagName);
+				},
+				pressLeft: function (event) {
+					console.log("按下了 左 键，当前文本信息 = ", this.newText);
+					console.log("event.target.tagName = ", event.target.tagName);
+				},
+				pressRight: function (event) {
+					console.log("按下了 右 键，当前文本信息 = ", this.newText);
+					console.log("event.target.tagName = ", event.target.tagName);
+				},
+				pressCtrl: function (event) {
+					console.log("按下了 Ctrl 键，当前文本信息 = ", this.newText);
+					console.log("event.target.tagName = ", event.target.tagName);
+				},
+				pressAlt: function (event) {
+					console.log("按下了 Alt 键，当前文本信息 = ", this.newText);
+					console.log("event.target.tagName = ", event.target.tagName);
+				}
+			}
+		});
+	</script>
+
+
+
+</body>
+</html>

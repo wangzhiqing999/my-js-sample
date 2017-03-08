@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>  vue.js  动态组件  </title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<script type="text/javascript" src="js/vue.js"></script>
+
+
+
+
+</head>
+
+
+<body>
+
+	<h1> 动态组件 </h1>
+
+	<hr/>
+	<h3> 动态组件 </h3>
+
+
+
+	<div id="app1">
+
+		<h5> 下面是动态组件 1 的区域. </h5>
+		<component v-bind:is="currentView1">
+		</component>
+
+		
+		<br/>
+		<h5> 下面是动态组件 2 的区域. (使用了 keep-alive ) </h5>
+		
+		<keep-alive>
+			<component v-bind:is="currentView2">
+			</component>
+		</keep-alive>
+
+		<br/>
+
+
+		<button v-on:click="switch1and3"> 动态组件 1 的切换 </button>
+		<button v-on:click="switch2and3"> 动态组件 2 的切换 </button>
+
+
+	</div>
+
+
+	<script type="text/javascript">
+
+		// 组件1.
+		var dyComponent1 = {
+			// 内容.
+			template: '<p>动态组件 1 !   E = {{ eVal }} </p>',
+			// data 是一个函数.
+			data: function () {
+				return {
+					eVal: Math.E
+				};
+			}
+		}
+
+		// 组件2.
+		var dyComponent2 = {
+			template: '<p>动态组件 2!   PI = {{ piVal }}  </p>',
+			// 声明 props
+			props: {
+				piVal: {
+					type: Number,
+					default: Math.PI
+				}
+			}
+		}
+
+		// 组件3.
+		var dyComponent3 = {
+			template: '<p>动态组件 3!  随机值 = {{ randomVal }}  </p>',
+			// data 是一个函数.
+			data: function () {
+				return {
+					randomVal: Math.random()
+				};
+			}
+		}
+
+
+
+		// 创建根实例
+		new Vue({
+			el: '#app1',
+
+			// 数据.
+			data: {
+				currentView1: dyComponent1,
+				currentView2: dyComponent2
+			},
+
+			// 方法.
+			methods: {
+				switch1and3 : function (event) {
+					// console.log('switch1and3 start.');
+					if(this.currentView1 == dyComponent1) {
+						this.currentView1 = dyComponent3;
+					} else {
+						this.currentView1 = dyComponent1;
+					}
+					// console.log('switch1and3 finish.');
+				},
+				switch2and3 : function (event) {
+					// console.log('switch2and3 start.');
+					if(this.currentView2 == dyComponent2) {
+						this.currentView2 = dyComponent3;
+					} else {
+						this.currentView2 = dyComponent2;
+					}
+					// console.log('switch2and3 finish.');
+				}
+			}
+		});
+	</script>
+
+
+
+
+
+
+
+</body>
+</html>

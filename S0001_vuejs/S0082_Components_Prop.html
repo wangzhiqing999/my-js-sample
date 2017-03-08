@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>  vue.js  组件 Prop  </title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<script type="text/javascript" src="js/vue.js"></script>
+
+
+
+
+</head>
+
+
+<body>
+
+	<h1> 组件 Prop </h1>
+
+	<hr/>
+	<h3> 使用 Prop 传递数据 </h3>
+
+
+
+	<div id="app1">
+		<my-component1></my-component1>
+
+
+		<br/>
+		<h5> 直接使用子组件 </h5>
+
+		<div>
+			<my-child1 v-bind:my-message="appMyMessage"></my-child1>
+		</div>
+	</div>
+
+
+	<script type="text/javascript">
+		// 注册 子组件.
+		Vue.component('my-child1', {
+			// 声明 props
+			props: ['myMessage'],
+			template: '<span> ***** {{ myMessage }}  ***** </span>'
+		});
+
+		// 注册 父组件.
+		Vue.component('my-component1', {
+			template: '<div>  <p>测试的父组件</p>  <my-child1 myMessage="测试的子组件!"></my-child1>   </div>'
+		});
+
+		// 创建根实例
+		new Vue({
+			el: '#app1',
+
+			data: {
+				appMyMessage: "直接来自网页的数据"
+			}
+		});
+	</script>
+
+
+
+	<br/>
+	<br/>
+	<br/>
+
+
+	<hr/>
+	<h3> 动态 Prop 传递数据 </h3>
+
+	<div id="app2">
+		<my-component2></my-component2>
+
+
+		<br/>
+		<h5> 直接使用子组件 </h5>
+
+		<div>
+			<input v-model="appParentMsg"/>
+			<br/>
+			<my-child1 v-bind:my-message="appParentMsg"></my-child1>
+		</div>
+
+
+	</div>
+
+	<script type="text/javascript">
+
+		// 注册 父组件.  （这里使用了 my-child1 子组件 ）
+		Vue.component('my-component2', {
+			template: '<div>  <p>测试的父组件</p>   <input v-model="parentMsg"/>  <br/>  <my-child1 v-bind:my-message="parentMsg"></my-child1>   </div>',
+
+			data: function () {
+				return {
+					parentMsg: "来自父组件的数据"
+				};
+			}
+		});
+
+		// 创建根实例
+		new Vue({
+			el: '#app2',
+
+			data: {
+				appParentMsg: "直接来自网页的数据"
+			}
+		});
+	</script>
+
+
+
+
+
+
+	<hr/>
+	<h3> Prop 验证 </h3>
+
+	<div id="app3">
+		<my-component3></my-component3>
+		<br/>
+		<my-component3-plus></my-component3-plus>
+		<br/>
+	</div>
+
+
+
+
+	<script type="text/javascript">
+		// 注册 子组件.
+		Vue.component('my-child3', {
+			// 声明 props
+			 props: {
+				// 基础类型检测 （`null` 意思是任何类型都可以）
+				propA: Number,
+
+				// 多种类型
+				propB: [String, Number],
+
+				// 必传且是字符串
+				propC: {
+				  type: String,
+				  required: true
+				},
+
+				// 数字，有默认值
+				propD: {
+				  type: Number,
+				  default: 100
+				},
+
+				// 数组／对象的默认值应当由一个工厂函数返回
+				propE: {
+				  type: Object,
+				  default: function () {
+					return { code: '0', message: 'success!' }
+				  }
+				},
+
+				// 自定义验证函数
+				propF: {
+				  validator: function (value) {
+					return value > 10
+				  }
+				},
+
+				propG: {
+				  default: function () {
+					return [1,3,5,7,9];
+				  }
+				}
+			},
+
+			template: '<ul>\
+				<li> propA :  {{ propA }}  </li> \
+				<li> propB :  {{ propB }}  </li> \
+				<li> propC :  {{ propC }}  </li> \
+				<li> propD (数字，有默认值) :  {{ propD }}  </li> \
+				<li> propE (对象，有默认值) :  {{ propE.code }} : {{ propE.message }}  </li> \
+				<li> propF :  {{ propF }}  </li> \
+				<li> propG :  {{ propG }}  </li> \
+				<li v-for="item in propG"> propG Value:  {{ item }}  </li>\
+				</ul>'
+		});
+
+		// 注册 父组件.
+		Vue.component('my-component3', {
+			template: '<div>\
+				<p>测试的父组件</p>\
+				<my-child3  \
+				v-bind:propA="A" \
+				v-bind:propB="B" \
+				v-bind:propC="C" \
+				v-bind:propD="D" \
+				v-bind:propE="E" \
+				v-bind:propF="F" \
+				v-bind:propG="G" ></my-child3>\
+				</div>',
+
+			data: function () {
+				return {
+					A: 12345,
+					B: "来自父组件的数据B",
+					C: "来自父组件的数据C",
+
+					D: 0,   // 可以填写， 不填写则使用默认值, 同时控制台提示警告.
+					E: { code: '-9001', message: 'Network access error!!!'  },		// 可以填写， 不填写则使用默认值, 同时控制台提示警告.
+
+					// F: 5  // 用 5 的活， 控制台会有警告提示信息. 因为不满足 验证函数.
+					F: 500,
+
+					G: [2,4,6,8,10]
+				};
+			}
+		});
+
+
+
+		// 注册 父组件. （这里没有设置   子组件的部分有默认值的属性）
+		Vue.component('my-component3-plus', {
+			template: '<div>\
+				<p>测试的父组件 plus</p>\
+				<my-child3  \
+				v-bind:propA="A" \
+				v-bind:propB="B" \
+				v-bind:propC="C" \
+				v-bind:propF="F" ></my-child3>\
+				</div>',
+
+			data: function () {
+				return {
+					A: 12345,
+					B: "来自父组件的数据B",
+					C: "来自父组件的数据C",
+					F: 500
+				};
+			}
+		});
+
+
+		// 创建根实例
+		new Vue({
+			el: '#app3'
+		});
+
+
+	</script>
+
+
+
+	<div id="app4">
+		<p> 直接使用子组件 </p>
+		<my-child3
+			:prop-a="appA"
+			:prop-b="appB"
+			:prop-c="appC"
+			v-bind:prop-d="appD"
+			v-bind:prop-e="appE"
+			v-bind:prop-f="appF"
+			v-bind:prop-g="appG">
+		</my-child3>
+	</div>
+
+
+
+	<script type="text/javascript">
+
+		// 创建根实例
+		new Vue({
+			el: '#app4',
+
+			data: {
+				appA: 10000,
+				appB: "来自页面的数据B",
+				appC: "来自页面的数据C",
+				appD: 10000,   // 可以填写， 不填写则使用默认值, 同时控制台提示警告.
+				appE: { code: '-9002', message: 'server access error!!!'  },		// 可以填写， 不填写则使用默认值, 同时控制台提示警告.
+				appF: 10000,
+				appG: [12,14,16,18,20]
+			}
+		});
+
+	</script>
+
+</body>
+</html>

@@ -173,5 +173,81 @@
 		})
 	</script>
 
+
+
+
+
+	<hr/>
+	<h3> 组件 与 v-for   </h3>
+
+	<div id="todo-list-example">
+		<input
+			v-model="newTodoText"
+			v-on:keyup.enter="addNewTodo"
+			placeholder="Add a todo，按回车添加。" />
+		<ul>
+			<li
+				is="todo-item"
+				v-for="(todo, index) in todos"
+				v-bind:title="todo"
+				v-on:remove="todos.splice(index, 1)">
+			</li>
+		</ul>
+	</div>
+
+	<script type="text/javascript">
+
+		// 这里定义一个组件. 名称为  todo-item
+		Vue.component('todo-item', {
+			// 模板的内容.
+			template: '\
+				<li>\
+				  {{ title }}\
+				  <button v-on:click="$emit(\'remove\')">X</button>\
+				</li>\
+				',
+			// props 可以是数组或对象，用于接收来自父组件的数据.
+			props: ['title']
+		});
+
+
+		new Vue({
+			// 目标为网页中, id 为 todo-list-example 的元素.
+			el: '#todo-list-example',
+
+			// 数据部分.
+			data: {
+				// 新增的数据.
+				newTodoText: '',
+
+				// 列表数据.
+				todos: [
+					'Do the dishes',
+					'Take out the trash',
+					'Mow the lawn'
+					]
+			},
+
+			// 方法部分.
+			methods: {
+				// 添加数据到列表.
+				addNewTodo: function () {
+					if(this.newTodoText === "") {
+						// 新增数据为空白时，不处理.
+						return;
+					}
+					// 将新增的数据，加入数组.
+					this.todos.push(this.newTodoText);
+					// 将新增的数据设置为空白.
+					this.newTodoText = '';
+				}
+			}
+		});
+
+	</script>
+
+
+
+
 </body>
 </html>

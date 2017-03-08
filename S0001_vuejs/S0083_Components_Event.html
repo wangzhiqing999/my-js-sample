@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>  vue.js  组件 事件  </title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<script type="text/javascript" src="js/vue.js"></script>
+
+
+
+
+</head>
+
+
+<body>
+
+	<h1> 组件 事件 </h1>
+
+	<hr/>
+	<h3> 使用 $on(eventName) 监听事件 / 使用 $emit(eventName) 触发事件 </h3>
+
+
+
+	<div id="app1">
+		<button-counter v-on:increment="incrementTotal"></button-counter>
+		<span> + </span>
+		<button-counter v-on:increment="incrementTotal"></button-counter>
+		<span> = </span>
+		<span>{{ total }}</span>
+	</div>
+
+
+	<script type="text/javascript">
+
+		// 注册 组件.
+		Vue.component('button-counter', {
+			// 内容.
+			// 这里使用  v-on:click， 监听点击事件.
+			template: '<button v-on:click="increment">{{ counter }}</button>',
+			// 数据.
+			data: function () {
+				return {
+					counter: 0
+				}
+			},
+			// 方法.
+			methods: {
+				increment: function () {
+					console.log('### increment start!  this.counter = ', this.counter);
+
+					this.counter += 1;
+
+					// 重要！！！
+					// 这里使用 $emit(eventName) 触发事件
+					this.$emit('increment');
+
+					console.log('### increment finish!  this.counter = ', this.counter);
+				}
+			},
+		});
+
+		// 创建根实例
+		new Vue({
+			el: '#app1',
+			// 数据.
+			data: {
+				total: 0
+			},
+			// 方法.
+			methods: {
+				incrementTotal: function () {
+					console.log('incrementTotal start!  this.total = ', this.total);
+
+					this.total += 1;
+
+					console.log('incrementTotal finish!  this.total = ', this.total);
+				}
+			}
+		});
+	</script>
+
+
+
+
+
+	<hr/>
+	<h3> 使用 v-on:click.native 绑定原生事件 </h3>
+
+	<div id="app2">
+		<button-counter v-on:click.native="incrementTotal"></button-counter>
+		<span> + </span>
+		<button-counter v-on:click.native="incrementTotal"></button-counter>
+		<span> = </span>
+		<span>{{ total }}</span>
+	</div>
+
+
+	<script type="text/javascript">
+
+		// 创建根实例
+		new Vue({
+			el: '#app2',
+			// 数据.
+			data: {
+				total: 0
+			},
+			// 方法.
+			methods: {
+				incrementTotal: function () {
+					console.log('incrementTotal start!  this.total = ', this.total);
+
+					this.total += 1;
+
+					console.log('incrementTotal finish!  this.total = ', this.total);
+				}
+			}
+		});
+	</script>
+
+
+
+
+</body>
+</html>

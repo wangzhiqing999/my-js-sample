@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>  vue.js  可复用组件  </title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<script type="text/javascript" src="js/vue.js"></script>
+
+
+
+
+</head>
+
+
+<body>
+
+	<h1> 可复用组件 </h1>
+
+
+
+	<hr/>
+	<h3> props, events 和 slots </h3>
+
+	<span> 关键点 </span>
+	<ul>
+		<li> Props 允许外部环境传递数据给组件 </li>
+		<li> Events 允许组件触发外部环境的副作用 </li>
+		<li> Slots 允许外部环境将额外的内容组合在组件中。 </li>
+	</ul>
+
+
+
+	<div id="app1">
+
+		<!-- 设置组件的 Props， 以及组件的 Events  -->
+		<my-component1
+			v-bind:title="myTitle"
+			v-bind:city-list="myCityList"
+			v-on:new-city="myNewCity"
+			v-on:remove-city="myRemoveCity" >
+
+			<span> Slots 测试 1234567. <span>
+
+		</my-component1>
+
+	</div>
+
+
+	<script type="text/javascript">
+
+
+		// 注册全局组件.
+		Vue.component('my-component1', {
+
+			// 内容.
+			template: '<div> \
+					<h4> {{ title }} </h4>\
+					<input v-model="inputCity" v-on:keyup.enter="newCity" placeholder="输入一个城市名" />\
+					<button v-on:click="newCity"> 增加 </button>\
+					<ul>\
+						<li v-for="item in localCityList">\
+							{{ item }}\
+							<button v-on:click="removeCity(item, $event)">x</button>\
+						</li>\
+					</ul>\
+					<slot>\
+						城市，让生活更美好！\
+					</slot>\
+				</div>',
+
+			// 数据.
+			// data 是一个函数.
+			data: function () {
+				return {
+					// 输入的城市数据.
+					inputCity: "",
+
+					// 局部城市列表.
+					localCityList: this.cityList
+				};
+			},
+
+			// Props 允许外部环境传递数据给组件.
+			props: {
+				title: {
+				  type: String,
+				  default: "标题"
+				},
+				cityList: {
+					default: function () {
+						return ["北京", "上海", "广州"];
+					}
+				}
+			},
+
+			// 方法.
+			methods: {
+				// 新增城市.
+				newCity: function (event) {
+
+					if(this.inputCity === "") {
+						// 新增数据为空白时，不处理.
+						return;
+					}
+
+					console.log('### newCity start.');
+
+					// 将新增的数据，加入数组.
+					this.localCityList.push(this.inputCity);
+					// 将新增的数据设置为空白.
+					this.inputCity = '';
+
+					// 使用 $emit 触发事件
+					this.$emit('new-city');
+
+					console.log('### newCity finish.');
+				},
+				// 移除城市.
+				removeCity: function (city, event) {
+					console.log('### removeCity start. city = ', city);
+
+					// 删除数据,
+					for(var i = 0; i < this.localCityList.length; i ++) {
+						if(this.localCityList[i] === city) {
+							this.localCityList.splice(i,1);
+						}
+					}
+
+					// 使用 $emit 触发事件
+					this.$emit('remove-city', city, event);
+
+					console.log('### removeCity finish. city = ', city);
+				}
+			}
+		});
+
+
+
+		// 创建根实例
+		new Vue({
+			el: '#app1',
+
+			// 数据.
+			data: {
+				myTitle: "测试城市",
+				myCityList: ["北京", "上海", "广州", "深圳"]
+			},
+
+			// 方法.
+			methods: {
+				myNewCity : function (event) {
+					console.log('myNewCity start.');
+
+					console.log('myNewCity finish.');
+				},
+				myRemoveCity : function (city, event) {
+					console.log('myRemoveCity start.. city = ', city);
+
+					console.log('myRemoveCity finish.. city = ', city);
+				}
+			}
+		});
+	</script>
+
+
+
+
+
+
+
+</body>
+</html>

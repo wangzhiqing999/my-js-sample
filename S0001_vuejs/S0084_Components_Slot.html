@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>  vue.js  组件 Slot  </title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<script type="text/javascript" src="js/vue.js"></script>
+
+
+
+
+</head>
+
+
+<body>
+
+	<h1> 组件 Slot </h1>
+
+	<hr/>
+	<h3> 单个 Slot </h3>
+
+
+
+	<div id="app1">
+		<h1>我是父组件的标题</h1>
+
+		<!-- 测试没有内容的情况. -->
+		<my-component1>
+		</my-component1>
+
+		<br/>
+
+		<!-- 测试有内容的情况. -->
+		<my-component1>
+			<p>这是一些初始内容</p>
+			<p>这是更多的初始内容</p>
+		</my-component1>
+	</div>
+
+
+	<script type="text/javascript">
+
+		// 注册 组件.
+		Vue.component('my-component1', {
+			// 内容.
+			template: '<div>\
+					<h2>我是子组件的标题</h2>\
+					<slot>\
+						只有在没有要分发的内容时才会显示。\
+					</slot>\
+					</div>'
+		});
+
+		// 创建根实例
+		new Vue({
+			el: '#app1'
+		});
+	</script>
+
+
+
+
+
+
+
+
+	<hr/>
+	<h3> 具名 Slot </h3>
+
+	<div id="app2">
+
+		<my-component2>
+			<h1 slot="header">这里可能是一个页面标题</h1>
+
+			<p>主要内容的一个段落。</p>
+			<p>另一个主要段落。</p>
+
+			<p slot="footer">这里有一些联系信息</p>
+		</my-component2>
+
+	</div>
+
+
+
+	<script type="text/javascript">
+
+		// 注册 组件.
+		Vue.component('my-component2', {
+			// 内容.
+			template: '<div class="container">\
+						<header>\
+							<slot name="header"></slot>\
+						</header>\
+						<main>\
+							<slot></slot>\
+						</main>\
+						<footer>\
+							<slot name="footer"></slot>\
+						</footer>\
+					</div>'
+		});
+
+		// 创建根实例
+		new Vue({
+			el: '#app2'
+		});
+	</script>
+
+
+
+</body>
+</html>

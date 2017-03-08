@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>  vue.js  组件  </title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<script type="text/javascript" src="js/vue.js"></script>
+
+
+
+
+</head>
+
+
+<body>
+
+	<h1> 组件 </h1>
+
+	<hr/>
+	<h3> 全局注册 </h3>
+
+
+
+	<div id="app1">
+		<my-component1></my-component1>
+	</div>
+
+	<script type="text/javascript">
+
+		// 注册一个名称为 my-component1 的全局组件.
+		Vue.component('my-component1', {
+			template: '<div> 自定义的全局测试组件! </div>'
+		});
+
+		// 创建根实例
+		new Vue({
+			el: '#app1'
+		});
+	</script>
+
+
+
+	<hr/>
+	<h3> 局部注册 </h3>
+
+	<div id="app2">
+		<my-component2></my-component2>
+	</div>
+
+	<script type="text/javascript">
+		// 定义一个对象.
+		var Child = {
+			template: '<div> 自定义的局部注册! </div>'
+		};
+		// 创建根实例
+		new Vue({
+			el: '#app2',
+
+			components: {
+				// <my-component2> 将只在父模板可用
+				'my-component2': Child
+			}
+		});
+	</script>
+
+
+
+
+
+	<hr/>
+	<h3> data  </h3>
+
+	<p> data 必须是函数。 </p>
+
+	<div id="app3">
+		<my-component3></my-component3>
+	</div>
+
+	<script type="text/javascript">
+
+		// 注册组件.
+		Vue.component('my-component3', {
+
+			// 内容.
+			template: '<button v-on:click="counter += 1">{{ counter }}</button>',
+
+			// data 是一个函数.
+			data: function () {
+				return {
+					counter: 0
+				};
+			}
+		});
+
+		// 创建 Vue 实例.
+		new Vue({
+			el: '#app3'
+		});
+	</script>
+
+
+</body>
+</html>

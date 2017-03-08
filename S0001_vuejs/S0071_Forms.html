@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>  vue.js  表单控件	</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<script type="text/javascript" src="js/vue.js"></script>
+</head>
+
+
+<body>
+
+	<h1> 表单控件  </h1>
+
+	<p>
+	参考： http://cn.vuejs.org/v2/guide/forms.html
+	</p>
+
+
+	<hr/>
+	<h3> v-model 文本 </h3>
+
+
+	<div id="app1">
+		<input v-model="message" placeholder="edit me">
+		<p>Message is: {{ message }}</p>
+	</div>
+
+	<script type="text/javascript">
+		var app1 = new Vue({
+			el: '#app1',
+
+			// 数据.
+			data: {
+				message: ""
+			}
+		});
+	</script>
+
+
+
+
+
+	<hr/>
+	<h3> v-model 多行文本 </h3>
+
+
+	<div id="app2">
+
+		<span>Multiline message is:</span>
+		<p style="white-space: pre">{{ message }}</p>
+		<br>
+		<textarea v-model="message" placeholder="add multiple lines"></textarea>
+
+	</div>
+
+
+	<script type="text/javascript">
+		var app2 = new Vue({
+			el: '#app2',
+
+			// 数据.
+			data: {
+				message: ""
+			}
+		});
+	</script>
+
+
+
+
+
+	<hr/>
+	<h3> v-model 复选框 </h3>
+
+	<div id="app3">
+		<input type="checkbox" id="checkbox" v-model="checked">
+		<label for="checkbox">{{ checked }}</label>
+		<br/>
+
+		<input type="checkbox" id="checkbox2" v-model="checked2" v-bind:true-value="checked2TrueValue" v-bind:false-value="checked2FalseValue" >
+		<label for="checked2">{{ checked2 }}</label>
+		<br/>
+
+		<input type="checkbox" id="jack" value="Jack" v-model="checkedNames">
+		<label for="jack">Jack</label>
+
+		<input type="checkbox" id="john" value="John" v-model="checkedNames">
+		<label for="john">John</label>
+
+		<input type="checkbox" id="mike" value="Mike" v-model="checkedNames">
+		<label for="mike">Mike</label>
+
+		<br/>
+		<span>Checked names: {{ checkedNames }}</span>
+
+	</div>
+
+	<script type="text/javascript">
+		var app3 = new Vue({
+			el: '#app3',
+
+			// 数据.
+			data: {
+				// 单个选择项目.
+				checked: false,
+
+
+				// 用于绑定的Value.
+				checked2: "OFF",
+				checked2TrueValue : "ON",
+				checked2FalseValue : "OFF",
+
+
+				// 多个选择项目.
+				checkedNames: []
+			}
+		});
+	</script>
+
+
+
+
+
+	<hr/>
+	<h3> v-model 单选框 </h3>
+
+	<div id="app4">
+
+		<input type="radio" id="one" value="One" v-model="picked">
+		<label for="one">One</label>
+		<br/>
+		<input type="radio" id="two" value="Two" v-model="picked">
+		<label for="two">Two</label>
+		<br/>
+		<span>Picked: {{ picked }}</span>
+
+	</div>
+
+	<script type="text/javascript">
+		var app4 = new Vue({
+			el: '#app4',
+
+			// 数据.
+			data: {
+				// 单选.
+				picked: ""
+			}
+		});
+	</script>
+
+
+
+
+	<hr/>
+	<h3> v-model 单选列表 </h3>
+
+	<div id="app5">
+		<select v-model="selected" >
+			<option v-for="option in options" v-bind:value="option.value">
+				{{ option.text }}
+			</option>
+		</select>
+		<span>Selected: {{ selected }}</span>
+	</div>
+
+	<script type="text/javascript">
+		var app5 = new Vue({
+			el: '#app5',
+
+			// 数据.
+			data: {
+				// 单选.
+				selected : "A",
+
+				// 列表.
+				options: [
+					{ text: 'One', value: 'A' },
+					{ text: 'Two', value: 'B' },
+					{ text: 'Three', value: 'C' }
+				]
+			}
+		});
+	</script>
+
+
+
+
+	<hr/>
+	<h3> v-model 多选列表 </h3>
+
+	<div id="app6">
+		<select v-model="selected" multiple="multiple">
+			<option v-for="option in options" v-bind:value="option.value">
+				{{ option.text }}
+			</option>
+		</select>
+		<span>Selected: {{ selected }}</span>
+	</div>
+
+	<script type="text/javascript">
+		var app6 = new Vue({
+			el: '#app6',
+
+			// 数据.
+			data: {
+				// 单选.
+				selected : [],
+
+				// 列表.
+				options: [
+					{ text: 'One', value: 'A' },
+					{ text: 'Two', value: 'B' },
+					{ text: 'Three', value: 'C' }
+				]
+			}
+		});
+	</script>
+
+
+
+
+
+
+
+	<hr/>
+	<h3> v-model lazy  </h3>
+
+	<div id="app11">
+		<p> lazy ，在 change 事件中同步 </p>
+		<input v-model.lazy="message" placeholder="edit me">
+		<p>Message is: {{ message }}</p>
+	</div>
+
+	<script type="text/javascript">
+		var app11 = new Vue({
+			el: '#app11',
+
+			// 数据.
+			data: {
+				message: ""
+			}
+		});
+	</script>
+
+
+	<hr/>
+	<h3> v-model number  </h3>
+
+	<div id="app12">
+		<p> number ，自动将用户的输入值转为 Number 类型 </p>
+		<input v-model.number="message" placeholder="edit me" type="number">
+		<p>Message is: {{ message }}</p>
+	</div>
+
+	<script type="text/javascript">
+		var app12 = new Vue({
+			el: '#app12',
+
+			// 数据.
+			data: {
+				message: 0
+			}
+		});
+	</script>
+
+
+
+
+	<hr/>
+	<h3> v-model trim   </h3>
+
+	<div id="app13">
+		<p> trim，自动过滤用户输入的首尾空格 </p>
+		<input v-model.trim="message" placeholder="edit me">
+		<p>Message is: {{ message }}</p>
+	</div>
+
+	<script type="text/javascript">
+		var app13 = new Vue({
+			el: '#app13',
+
+			// 数据.
+			data: {
+				message: ""
+			}
+		});
+	</script>
+
+
+
+
+
+</body>
+</html>

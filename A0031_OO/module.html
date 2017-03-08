@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>面向对象 - Module模式 </title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+
+<body>
+	<p>
+	F12 看控制台的输出！
+	</p>
+
+	<p>
+
+
+
+	</p>
+
+
+	<script type="text/javascript">
+
+
+		var counter = (function () {
+
+			// 私有的成员.
+			var i = 0;
+			var test = 0;
+
+
+			// 暴露公开的成员.
+			return {
+
+				// 测试方法.
+				getTest : function () {
+					// 这里访问 私有的成员的时候， 不要写  this.
+					return this.test;
+				},
+
+				// 取值
+				get: function () {
+					return i;
+				},
+
+				// 设置.
+				set: function (val) {
+					i = val;
+				},
+
+				// 业务处理.
+				increment: function () {
+					i++;
+				}
+
+			};
+		} ());
+
+
+
+
+		console.log("counter.getTest() = ",  counter.getTest());
+
+		console.log("counter.get() = ",  counter.get());
+
+		counter.set(1024);
+		console.log("After Set 1024, counter.get() = ",  counter.get());
+
+		counter.increment();
+		console.log("After increment, counter.get() = ",  counter.get());
+
+		counter.increment();
+		console.log("After increment, counter.get() = ",  counter.get());
+
+		//  undefined:  因为i不是返回对象的属性
+		console.log("counter.i = ",  counter.i);
+
+	</script>
+
+
+
+
+</body>
+</html>
