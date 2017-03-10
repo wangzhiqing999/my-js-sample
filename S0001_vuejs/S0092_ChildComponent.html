@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>  vue.js  子组件  </title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<script type="text/javascript" src="js/vue.js"></script>
+
+
+
+
+</head>
+
+
+<body>
+
+	<h1> 子组件 </h1>
+
+
+
+	<hr/>
+	<h3> 使用 ref 为子组件指定一个索引 ID  </h3>
+
+
+
+	<div id="app1">
+
+		<h4> 组件的数据. </h4>
+
+		<!-- 设置组件的 Props， 以及组件的 Events  -->
+		<!--
+			需要注意： 组件中定义的 Props， 名称为 cityList，  v-bind 的时候， 名称为 city-list。
+
+
+			这里引用 my-component1， 使用了两次。
+			通过 ref， 分别命名为 cboFrom 与 cboTo
+		-->
+		<my-component1
+			ref="cboFrom"
+			v-on:city-change="myCityChange"
+			v-bind:title="myFromTitle"
+			v-bind:city-list="myCityList" >
+		</my-component1>
+
+
+		<my-component1
+			ref="cboTo"
+			v-on:city-change="myCityChange"
+			v-bind:title="myToTitle"
+			v-bind:city-list="myCityList" >
+		</my-component1>
+
+		<br/>
+		<h4> 根实例的数据. </h4>
+
+		{{ resultMessage }}
+
+	</div>
+
+
+	<script type="text/javascript">
+
+
+		// 注册全局组件.
+		Vue.component('my-component1', {
+
+			// 内容.
+			template: '<div> \
+					<h4> {{ title }} </h4>\
+					<select v-model="inputCity" v-on:change="cityChange" >\
+						<option v-for="option in localCityList" v-bind:value="option">\
+							{{ option }}\
+						</option>\
+					</select>\
+					<span>Selected: {{ inputCity }}</span>\
+				</div>',
+
+			// 数据.
+			// data 是一个函数.
+			data: function () {
+				return {
+					// 输入的城市数据.
+					inputCity: "",
+
+					// 局部城市列表.
+					localCityList: this.cityList
+				};
+			},
+
+			// Props 允许外部环境传递数据给组件.
+			props: {
+				title: {
+				  type: String,
+				  default: "标题"
+				},
+				cityList: {
+					default: function () {
+						return ["北京", "上海", "广州"];
+					}
+				}
+			},
+
+			// 方法.
+			methods: {
+				cityChange : function (event) {
+					console.log('### cityChange start.');
+
+					// 使用 $emit 触发事件
+					this.$emit('city-change', this.inputCity, event);
+
+					console.log('### cityChange start.');
+				}
+			}
+		});
+
+
+
+		// 创建根实例
+		var app1 = new Vue({
+			el: '#app1',
+
+			// 数据.
+			data: {
+				myFromTitle: "起点城市",
+				myToTitle: "终点城市",
+				myCityList: ["北京", "上海", "广州", "深圳"],
+				resultMessage: ""
+			},
+
+			// 方法.
+			methods: {
+				myCityChange : function (event) {
+					console.log('cityChange start.');
+
+
+					// ### 这里通过  $refs.cboFrom 与 $refs.cboTo， 来获取 子组件的引用.
+					var childFrom = this.$refs.cboFrom;
+					var childTo = this.$refs.cboTo;
+
+					// console.log('childFrom.inputCity  =', childFrom.inputCity );
+					// console.log('childTo.inputCity  =', childTo.inputCity );
+
+					this.resultMessage = 'From ' + childFrom.inputCity + " To " + childTo.inputCity;
+
+					console.log('cityChange finish.');
+				}
+			}
+
+		});
+	</script>
+
+
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>  vue.js  异步组件  </title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<script type="text/javascript" src="js/vue.js"></script>
+
+
+
+
+</head>
+
+
+<body>
+
+	<h1> 异步组件 </h1>
+
+
+
+	<hr/>
+	<h3> setTimeout  </h3>
+
+
+
+	<div id="app1">
+
+		<my-component1>
+		</my-component1>
+
+	</div>
+
+
+	<script type="text/javascript">
+
+
+		// 注册全局组件.
+		Vue.component('my-component1', function (resolve, reject) {
+
+			// 一定时候后才显示出来.
+			setTimeout(function () {
+				// Pass the component definition to the resolve callback
+				resolve({
+				  template: '<div>I am async!</div>'
+				})
+			}, 3000)
+
+		});
+
+
+
+		// 创建根实例
+		var app1 = new Vue({
+			el: '#app1'
+		});
+	</script>
+
+
+
+
+
+
+
+</body>
+</html>

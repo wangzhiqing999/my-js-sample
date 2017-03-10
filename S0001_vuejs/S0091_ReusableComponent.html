@@ -31,7 +31,12 @@
 
 	<div id="app1">
 
+		<h4> 组件的数据. </h4>
+
 		<!-- 设置组件的 Props， 以及组件的 Events  -->
+		<!--
+			需要注意： 组件中定义的 Props， 名称为 cityList，  v-bind 的时候， 名称为 city-list。
+		-->
 		<my-component1
 			v-bind:title="myTitle"
 			v-bind:city-list="myCityList"
@@ -42,6 +47,15 @@
 
 		</my-component1>
 
+
+		<br/>
+		<h4> 根实例的数据. </h4>
+
+		<dl>
+			<li v-for="item in myCityList">
+				{{ item }}
+			</li>
+		</dl>
 	</div>
 
 
@@ -105,12 +119,14 @@
 					console.log('### newCity start.');
 
 					// 将新增的数据，加入数组.
-					this.localCityList.push(this.inputCity);
-					// 将新增的数据设置为空白.
-					this.inputCity = '';
+					// 为了避免子组件，修改父节点的数据， 因此，这里不删除数据，仅仅是向外触发事件.
+					// this.localCityList.push(this.inputCity);
 
 					// 使用 $emit 触发事件
-					this.$emit('new-city');
+					this.$emit('new-city', this.inputCity, event);
+
+					// 将新增的数据设置为空白.
+					this.inputCity = '';
 
 					console.log('### newCity finish.');
 				},
@@ -119,11 +135,12 @@
 					console.log('### removeCity start. city = ', city);
 
 					// 删除数据,
-					for(var i = 0; i < this.localCityList.length; i ++) {
-						if(this.localCityList[i] === city) {
-							this.localCityList.splice(i,1);
-						}
-					}
+					// 为了避免子组件，修改父节点的数据， 因此，这里不删除数据，仅仅是向外触发事件.
+					// for(var i = 0; i < this.localCityList.length; i ++) {
+					//	if(this.localCityList[i] === city) {
+					//		this.localCityList.splice(i,1);
+					//	}
+					// }
 
 					// 使用 $emit 触发事件
 					this.$emit('remove-city', city, event);
@@ -147,13 +164,22 @@
 
 			// 方法.
 			methods: {
-				myNewCity : function (event) {
-					console.log('myNewCity start.');
+				myNewCity : function (city, event) {
+					console.log('myNewCity start. city = ', city);
 
-					console.log('myNewCity finish.');
+					this.myCityList.push(city);
+
+					console.log('myNewCity finish. city = ', city);
 				},
 				myRemoveCity : function (city, event) {
-					console.log('myRemoveCity start.. city = ', city);
+					console.log('myRemoveCity start. city = ', city);
+
+					// 删除数据,
+					for(var i = 0; i < this.myCityList.length; i ++) {
+						if(this.myCityList[i] === city) {
+							this.myCityList.splice(i,1);
+						}
+					}
 
 					console.log('myRemoveCity finish.. city = ', city);
 				}
