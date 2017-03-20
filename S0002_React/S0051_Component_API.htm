@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>组件 API</title>
+
+	<!--
+    <script src="https://unpkg.com/react@latest/dist/react.js"></script>
+    <script src="https://unpkg.com/react-dom@latest/dist/react-dom.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+	-->
+
+    <script src="js/react.js"></script>
+    <script src="js/react-dom.js"></script>
+    <script src="js/babel.min.js"></script>
+
+	<!-- 上面代码一共用了三个库： react.js 、react-dom.js 和 Browser.js ，它们必须首先加载。
+		其中，
+		react.js 是 React 的核心库，
+		react-dom.js 是提供与 DOM 相关的功能，
+		Browser.js 的作用是将 JSX 语法转为 JavaScript 语法，这一步很消耗时间，实际上线的时候，应该将它放到服务器完成。
+	-->
+  </head>
+
+
+  <body>
+
+	<ul>
+		<li>设置状态：setState				</li>
+		<li>替换状态：replaceState         </li>
+		<li>设置属性：setProps             </li>
+		<li>替换属性：replaceProps         </li>
+		<li>强制更新：forceUpdate          </li>
+		<li>获取DOM节点：findDOMNode       </li>
+		<li>判断组件挂载状态：isMounted    </li>
+	</ul>
+
+
+
+	<h3>设置状态：setState</h3>
+	<p>
+	setState(object nextState[, function callback])
+	</p>
+    <div id="root"></div>
+
+	<script type="text/babel">
+		var Counter = React.createClass({
+			// 状态的初始值.
+			getInitialState: function () {
+				return { clickCount: 0 };
+			},
+
+			handleClick: function () {
+				// 这里设置状态 setState
+				this.setState(function(state) {
+					return {clickCount: state.clickCount + 1};
+				});
+			},
+			render: function () {
+				return (<h2 onClick={this.handleClick}>点我！点击次数为: {this.state.clickCount}</h2>);
+			}
+		});
+
+		ReactDOM.render(
+			<Counter />,
+			document.getElementById('root')
+		);
+    </script>
+
+
+
+  </body>
+</html>

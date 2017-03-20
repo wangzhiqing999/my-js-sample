@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>状态</title>
+
+	<!--
+    <script src="https://unpkg.com/react@latest/dist/react.js"></script>
+    <script src="https://unpkg.com/react-dom@latest/dist/react-dom.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+	-->
+
+    <script src="js/react.js"></script>
+    <script src="js/react-dom.js"></script>
+    <script src="js/babel.min.js"></script>
+
+	<!-- 上面代码一共用了三个库： react.js 、react-dom.js 和 Browser.js ，它们必须首先加载。
+		其中，
+		react.js 是 React 的核心库，
+		react-dom.js 是提供与 DOM 相关的功能，
+		Browser.js 的作用是将 JSX 语法转为 JavaScript 语法，这一步很消耗时间，实际上线的时候，应该将它放到服务器完成。
+	-->
+  </head>
+
+
+  <body>
+
+
+    <div id="root"></div>
+
+	<script type="text/babel">
+	
+		// MyCheckBoxButton 组件.
+		var MyCheckBoxButton = React.createClass({
+			
+			// 初期状态.
+			getInitialState: function() {
+				return {isChecked: false};
+			},
+			
+			// 点击事件.
+			handleClick: function(event) {
+				this.setState({isChecked: !this.state.isChecked});
+			},
+			
+			// 输出.
+			render: function() {
+				// 注意，下面这行， 使用了 this.state。 state 和 props 主要的区别在于 props 是不可变的，而 state 可以根据与用户交互来改变。
+				var text = this.state.isChecked ? 'ON' : 'OFF';
+				return (
+					<p onClick={this.handleClick}>
+						Power <b>{text}</b>
+					</p>
+				);
+			}
+		});
+
+		
+		ReactDOM.render(
+			<MyCheckBoxButton />,
+			document.getElementById('root')
+		);
+    </script>
+
+
+
+
+
+  </body>
+</html>

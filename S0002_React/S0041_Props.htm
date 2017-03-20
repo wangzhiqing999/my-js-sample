@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Props</title>
+
+	<!--
+    <script src="https://unpkg.com/react@latest/dist/react.js"></script>
+    <script src="https://unpkg.com/react-dom@latest/dist/react-dom.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+	-->
+
+    <script src="js/react.js"></script>
+    <script src="js/react-dom.js"></script>
+    <script src="js/babel.min.js"></script>
+
+	<!-- 上面代码一共用了三个库： react.js 、react-dom.js 和 Browser.js ，它们必须首先加载。
+		其中，
+		react.js 是 React 的核心库，
+		react-dom.js 是提供与 DOM 相关的功能，
+		Browser.js 的作用是将 JSX 语法转为 JavaScript 语法，这一步很消耗时间，实际上线的时候，应该将它放到服务器完成。
+	-->
+  </head>
+
+
+  <body>
+
+
+    <div id="root"></div>
+
+	<div id="root2"></div>
+
+
+
+	<script type="text/babel">
+		// 这里使用 React.createClass 方法用于生成一个组件类 HelloMessage
+		// 包含了 内容 与 参数.
+		// 注意，组件类的第一个字母必须大写，否则会报错，比如HelloMessage不能写成helloMessage。另外，组件类只能包含一个顶层标签，否则也会报错。
+		var HelloMessage = React.createClass({
+
+			// 可以通过 getDefaultProps() 方法为 props 设置默认值
+			getDefaultProps: function() {
+				return {
+					name: '张三（默认值）'
+				};
+			},
+
+
+			// 所有组件类都必须有自己的 render 方法，用于输出组件。
+			render: function() {
+				// 注意，下面这行， 使用了 this.props。 state 和 props 主要的区别在于 props 是不可变的，而 state 可以根据与用户交互来改变。
+				return <h1>你好！ {this.props.name}。</h1>;
+			}
+		});
+
+
+		// 这里使用组件.
+		// 定义了 组件的名称，与组件参数的数值.
+		// 需要注意，组件参数，class 属性需要写成 className ，for 属性需要写成 htmlFor ，这是因为 class 和 for 是 JavaScript 的保留字。
+		ReactDOM.render(
+			<HelloMessage/>,
+			document.getElementById('root')
+		);
+
+
+		ReactDOM.render(
+			<HelloMessage name="李四" />,
+			document.getElementById('root2')
+		);
+    </script>
+
+
+
+
+
+  </body>
+</html>

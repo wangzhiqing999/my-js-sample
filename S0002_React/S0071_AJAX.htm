@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title> React AJAX </title>
+
+	<!--
+    <script src="https://unpkg.com/react@latest/dist/react.js"></script>
+    <script src="https://unpkg.com/react-dom@latest/dist/react-dom.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+	-->
+
+    <script src="js/react.js"></script>
+    <script src="js/react-dom.js"></script>
+    <script src="js/babel.min.js"></script>
+
+	<!-- 上面代码一共用了三个库： react.js 、react-dom.js 和 Browser.js ，它们必须首先加载。
+		其中，
+		react.js 是 React 的核心库，
+		react-dom.js 是提供与 DOM 相关的功能，
+		Browser.js 的作用是将 JSX 语法转为 JavaScript 语法，这一步很消耗时间，实际上线的时候，应该将它放到服务器完成。
+	-->
+
+
+	<script src="js/jquery-1.10.2.min.js"></script>
+	<!-- 这里引用 jQuery 完成 Ajax 请求。-->
+
+  </head>
+
+
+
+  <body>
+
+	<p>
+		组件的数据来源，通常是通过 Ajax 请求从服务器获取，可以使用 componentDidMount 方法设置 Ajax 请求，等到请求成功，再用 this.setState 方法重新渲染 UI
+	</p>
+
+    <div id="root"></div>
+
+	<script type="text/babel">
+
+		var UserGist = React.createClass({
+
+			// 初始状态.
+			getInitialState: function() {
+				return {
+					// 加载中的标记.
+					loading: true,
+					// AJAX 请求获取的数据.
+					username: '',
+					lastGistUrl: ''
+				};
+			},
+
+			// componentDidMount : 在第一次渲染后调用，只在客户端。
+			componentDidMount: function() {
+				// $.get 是 jQuery 的 AJAX 请求方法.
+				this.serverRequest = $.get(this.props.source, function (result) {
+					// 获取 AJAX 请求结果的第一个对象.
+					var lastGist = result[0];
+					// 设置组件的属性.
+					this.setState({
+						username: lastGist.owner.login,
+						lastGistUrl: lastGist.html_url,
+						loading: false
+					});
+				}.bind(this));
+			},
+
+			// componentWillUnmount : 在组件从 DOM 中移除的时候立刻被调用。
+			componentWillUnmount: function() {
+				this.serverRequest.abort();
+			},
+
+			render: function() {
+				if (this.state.loading) {
+					// AJAX数据加载中.
+					return <span>Data Loading...</span>;
+				} else {
+					// AJAX数据加载完毕。
+					return (
+						<div>
+							{this.state.username} 用户最新的 Gist 共享地址：
+							<a href={this.state.lastGistUrl}>{this.state.lastGistUrl}</a>
+						</div>
+					);
+				}
+			}
+		});
+
+		// 最终展示.
+		ReactDOM.render(
+			<UserGist source="https://api.github.com/users/octocat/gists" />,
+			document.getElementById('root')
+		);
+
+    </script>
+
+
+
+  </body>
+</html>

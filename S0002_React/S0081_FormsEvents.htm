@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title> React 表单与事件 </title>
+
+	<!--
+    <script src="https://unpkg.com/react@latest/dist/react.js"></script>
+    <script src="https://unpkg.com/react-dom@latest/dist/react-dom.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+	-->
+
+    <script src="js/react.js"></script>
+    <script src="js/react-dom.js"></script>
+    <script src="js/babel.min.js"></script>
+
+	<!-- 上面代码一共用了三个库： react.js 、react-dom.js 和 Browser.js ，它们必须首先加载。
+		其中，
+		react.js 是 React 的核心库，
+		react-dom.js 是提供与 DOM 相关的功能，
+		Browser.js 的作用是将 JSX 语法转为 JavaScript 语法，这一步很消耗时间，实际上线的时候，应该将它放到服务器完成。
+	-->
+
+  </head>
+
+
+
+  <body>
+
+
+
+    <div id="root"></div>
+
+	<script type="text/babel">
+
+		var BasicText = React.createClass({
+			// 状态初始值.
+			getInitialState: function() {
+				return {value: '1初始值！'};
+			},
+
+			handleChange: function(event) {
+				// 修改状态值.
+				this.setState({value: event.target.value});
+			},
+
+			render: function() {
+				// 获取初始值.
+				var value = this.state.value;
+
+				// 展示的页面内容.
+				return <div>
+					{/* input  设置数值， 并定义 onChange 事件. */}
+					<input type="text" value={value} onChange={this.handleChange} />
+					<h4>{value}</h4>
+				</div>;
+			}
+		});
+
+		// 最终展示.
+		ReactDOM.render(
+			<BasicText />,
+			document.getElementById('root')
+		);
+
+    </script>
+
+
+
+
+	<hr/>
+
+
+    <div id="root2"></div>
+
+	<script type="text/babel">
+
+		var Content2 = React.createClass({
+			render: function() {
+				return  <div>
+				{/* input  设置属性， 全部由父组件传递. */}
+				<input type="text" value={this.props.myDataProp} onChange={this.props.updateStateProp} />
+				<h4>{this.props.myDataProp}</h4>
+				</div>;
+			}
+		});
+
+		var BasicText2 = React.createClass({
+			// 状态初始值.
+			getInitialState: function() {
+				return {value: '2初始值！'};
+			},
+			handleChange: function(event) {
+				// 修改状态值.
+				this.setState({value: event.target.value});
+			},
+			render: function() {
+				var value = this.state.value;
+				return <div>
+					{/* 调用子组件， 并将本组件的 状态，作为参数， 传递给子组件.  */}
+					<Content2 myDataProp = {value} updateStateProp = {this.handleChange}></Content2>
+				</div>;
+			}
+		});
+
+		// 最终展示.
+		ReactDOM.render(
+			<BasicText2 />,
+			document.getElementById('root2')
+		);
+
+    </script>
+
+
+
+	<hr/>
+
+
+
+
+    <div id="root3"></div>
+
+	<script type="text/babel">
+		var HelloMessage3 = React.createClass({
+			getInitialState: function() {
+				return {value: '3初始值！'};
+			},
+			handleChange: function(event) {
+				this.setState({value: '3生效值'})
+			},
+			render: function() {
+				var value = this.state.value;
+			return <div>
+					<button onClick={this.handleChange}>点我</button>
+					<h4>{value}</h4>
+			   </div>;
+			}
+		});
+		ReactDOM.render(
+			<HelloMessage3 />,
+			document.getElementById('root3')
+		);
+	</script>
+
+
+
+
+	<hr/>
+
+    <div id="root4"></div>
+
+	<script type="text/babel">
+
+		// 按钮组件.
+		var Content4 = React.createClass({
+			render: function() {
+				return  <div>
+						<button onClick = {this.props.updateStateProp}>点我</button>
+						<h4>{this.props.myDataProp}</h4>
+					</div>
+			}
+		});
+
+
+		var HelloMessage4 = React.createClass({
+			getInitialState: function() {
+				return {value: '4初始值！'};
+			},
+			handleChange: function(event) {
+				this.setState({value: '4生效值'})
+			},
+			render: function() {
+				var value = this.state.value;
+				return <div>
+							<Content4 myDataProp = {value} updateStateProp = {this.handleChange}></Content4>
+						</div>;
+			}
+		});
+
+		ReactDOM.render(
+			<HelloMessage4 />,
+			document.getElementById('root4')
+		);
+	</script>
+
+  </body>
+</html>
