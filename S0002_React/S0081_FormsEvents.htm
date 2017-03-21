@@ -14,13 +14,6 @@
     <script src="js/react-dom.js"></script>
     <script src="js/babel.min.js"></script>
 
-	<!-- 上面代码一共用了三个库： react.js 、react-dom.js 和 Browser.js ，它们必须首先加载。
-		其中，
-		react.js 是 React 的核心库，
-		react-dom.js 是提供与 DOM 相关的功能，
-		Browser.js 的作用是将 JSX 语法转为 JavaScript 语法，这一步很消耗时间，实际上线的时候，应该将它放到服务器完成。
-	-->
-
   </head>
 
 
@@ -41,6 +34,7 @@
 
 			handleChange: function(event) {
 				// 修改状态值.
+				console.log("event.target.value = ", event.target.value);
 				this.setState({value: event.target.value});
 			},
 
@@ -92,6 +86,7 @@
 			},
 			handleChange: function(event) {
 				// 修改状态值.
+				console.log("event.target.value = ", event.target.value);
 				this.setState({value: event.target.value});
 			},
 			render: function() {
@@ -182,6 +177,131 @@
 			document.getElementById('root4')
 		);
 	</script>
+
+
+
+
+
+
+	<hr/>
+	<div id="root5"></div>
+
+	<script type="text/babel">
+
+		var BasicInputTest = React.createClass({
+			// 状态初始值.
+			getInitialState: function() {
+				return {
+					textValue: 'Text初始值！',
+					textareaValue: 'TextArea初始值！',
+					checkboxValue: false,
+					radioValue: 'A',
+					selectValue: 'A'
+				};
+			},
+
+			handleTextChange: function(event) {
+				// 修改 Text 状态值.
+				console.log("# handleTextChange # event.target.value = ", event.target.value);
+				this.setState({textValue: event.target.value});
+			},
+			handleTextAreaChange: function(event) {
+				// 修改 TextArea 状态值.
+				console.log("# handleTextAreaChange # event.target.value = ", event.target.value);
+				this.setState({textareaValue: event.target.value});
+			},
+			handleCheckBoxChange: function(event) {
+				// 修改 Checkbox 状态值.
+				console.log("# handleCheckBoxChange # event.target.checked  = ", event.target.checked );
+				this.setState({checkboxValue: event.target.checked });
+			},
+			handleRadioChange: function(event) {
+				// 修改 Radio 状态值.
+				console.log("# handleRadioChange # event.target.value = ", event.target.value);
+				this.setState({radioValue: event.target.value});
+			},
+			handleSelectOptionChange: function(event) {
+				// 修改 Radio 状态值.
+				console.log("# handleSelectOptionChange # event.target.value = ", event.target.value);
+				this.setState({selectValue: event.target.value});
+			},
+
+
+
+			render: function() {
+				// 获取初始值.
+				var textValue = this.state.textValue;
+				var textareaValue = this.state.textareaValue;
+				var checkboxValue = this.state.checkboxValue;
+				var radioValue = this.state.radioValue;
+				var selectValue = this.state.selectValue;
+
+				// 展示的页面内容.
+				return <table>
+					<tbody>
+						<tr>
+							<td> Text 测试: </td>
+							<td> <input type="text" value={textValue} onChange={this.handleTextChange} /> </td>
+							<td> {textValue}  </td>
+						</tr>
+						<tr>
+							<td> TextArea 测试: </td>
+							<td>
+								{/*
+								注意：
+									这里与 HTML 上的处理有差异.
+									HTML 是  <textarea> 文本内容. </textarea>
+									React 则是 <textarea value={内容} />
+								*/}
+								<textarea value={textareaValue} onChange={this.handleTextAreaChange} />
+							</td>
+							<td> {textareaValue}  </td>
+						</tr>
+						<tr>
+							<td> CheckBox 测试: </td>
+							<td> <input type="checkbox" checked={checkboxValue} onChange={this.handleCheckBoxChange}  /> Power </td>
+							<td> {checkboxValue ? 'ON' : 'OFF'} </td>
+						</tr>
+						<tr>
+							<td> Radio 测试: </td>
+							<td>
+								<input type="radio" name="testABC" checked={radioValue == 'A'} value="A" onChange={this.handleRadioChange}  /> A
+								<input type="radio" name="testABC" checked={radioValue == 'B'} value="B" onChange={this.handleRadioChange}  /> B
+								<input type="radio" name="testABC" checked={radioValue == 'C'} value="C" onChange={this.handleRadioChange}  /> C
+							</td>
+							<td> {radioValue} </td>
+						</tr>
+						<tr>
+							<td> Select 测试: </td>
+							<td>
+								{/*
+								注意：
+									这里与 HTML 上的处理有差异.
+									HTML 选中是在 option 上面设置 selected .
+									React 则是简单在 select 上，设置 value.
+								*/}
+								<select name="testSelect" onChange={this.handleSelectOptionChange} value={selectValue}>
+									<option value="A">A</option>
+									<option value="B">B</option>
+									<option value="C">C</option>
+									<option value="D">D</option>
+								</select>
+							</td>
+							<td> {this.state.selectValue} </td>
+						</tr>
+					</tbody>
+				</table>;
+			}
+		});
+
+		// 最终展示.
+		ReactDOM.render(
+			<BasicInputTest />,
+			document.getElementById('root5')
+		);
+
+    </script>
+
 
   </body>
 </html>

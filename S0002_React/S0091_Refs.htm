@@ -2,7 +2,7 @@
 <html>
   <head>
     <meta charset="UTF-8" />
-    <title>状态</title>
+    <title>Hello World</title>
 
 	<!--
     <script src="https://unpkg.com/react@latest/dist/react.js"></script>
@@ -22,38 +22,41 @@
 
     <div id="root"></div>
 
+
+
+
 	<script type="text/babel">
-	
-		// MyCheckBoxButton 组件.
-		var MyCheckBoxButton = React.createClass({
-			
-			// 初期状态.
-			getInitialState: function() {
-				return {isChecked: false};
+
+
+		var MyComponent = React.createClass({
+
+			handleClick: function() {
+
+				// 通过 this.refs 获取支撑实例.
+				var inputItem = this.refs.myInput;
+
+				// 使用原生的 DOM API .
+				inputItem.value = "测试！";
+				inputItem.focus();
 			},
-			
-			// 点击事件.
-			handleClick: function(event) {
-				this.setState({isChecked: !this.state.isChecked});
-			},
-			
-			// 输出.
+
 			render: function() {
-				// 注意，下面这行， 使用了 this.state。 state 和 props 主要的区别在于 props 是不可变的，而 state 可以根据与用户交互来改变。
-				var text = this.state.isChecked ? 'ON' : 'OFF';
+				//  当组件插入到 DOM 后，ref 属性添加一个组件的引用于到 this.refs
 				return (
-					<p onClick={this.handleClick}>
-						Power <b>{text}</b>
-					</p>
+					<div>
+						<input type="text" ref="myInput" />
+						<input type="button" value="测试输入框赋值并获取焦点" onClick={this.handleClick} />
+					</div>
 				);
 			}
 		});
 
-		
 		ReactDOM.render(
-			<MyCheckBoxButton />,
+			<MyComponent />,
 			document.getElementById('root')
 		);
+
+
     </script>
 
 

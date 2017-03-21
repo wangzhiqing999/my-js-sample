@@ -14,12 +14,6 @@
     <script src="js/react-dom.js"></script>
     <script src="js/babel.min.js"></script>
 
-	<!-- 上面代码一共用了三个库： react.js 、react-dom.js 和 babel.min.js ，它们必须首先加载。
-		其中，
-		react.js 是 React 的核心库，
-		react-dom.js 是提供与 DOM 相关的功能，
-		Babel是一个广泛使用的转码器，可以将ES6代码转为ES5代码，从而在现有环境执行。
-	-->
   </head>
 
 
@@ -43,15 +37,22 @@
 
 	<div id="test"></div>
     <script type="text/babel">
-      ReactDOM.render(
-		<div>
-			<h1>JSX</h1>
-			<p> React 使用 JSX 来替代常规的 JavaScript。 </p>
-			<p> 需要注意： 因为 React 独有的 JSX 语法，跟 JavaScript 不兼容。凡是使用 JSX 的地方，都要加上 type="text/babel" </p>
-		</div>
-		,
-        document.getElementById('test')
-      );
+
+		// 这里使用 ES6 的语法.
+		class HelloMessage extends React.Component {
+		  render() {
+			return <div>
+				<h1>JSX</h1>
+				<p> React 使用 JSX 来替代常规的 JavaScript。 </p>
+				<p> 需要注意： 因为 React 独有的 JSX 语法，跟 JavaScript 不兼容。凡是使用 JSX 的地方，都要加上 type="text/babel" </p>
+			</div>;
+		  }
+		}
+
+		ReactDOM.render(
+			<HelloMessage/>,
+			document.getElementById('test')
+		);
     </script>
 
 

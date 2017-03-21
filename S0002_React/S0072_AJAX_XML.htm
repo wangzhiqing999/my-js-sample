@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title> React AJAX </title>
+
+	<!--
+    <script src="https://unpkg.com/react@latest/dist/react.js"></script>
+    <script src="https://unpkg.com/react-dom@latest/dist/react-dom.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+	-->
+
+    <script src="js/react.js"></script>
+    <script src="js/react-dom.js"></script>
+    <script src="js/babel.min.js"></script>
+
+	
+	<style>
+table.mytable {
+	width: 80%;
+	border: 2px solid #444;  
+	border-spacing: 0;    
+}
+
+table.mytable tr {border-bottom: 1px solid #444}
+
+table.mytable td,th{
+	border-right: 1px solid #444;
+	border-bottom: 1px solid #444;
+	padding: 5px;
+}
+
+table.mytable tr td:last-child{ border-right: 0 }
+table.mytable tr:last-child td{ border-bottom: 0 }
+	</style>
+	
+	
+  </head>
+
+
+
+  <body>
+
+	<p>
+		组件的数据来源，通常是通过 Ajax 请求从服务器获取，可以使用 componentDidMount 方法设置 Ajax 请求，等到请求成功，再用 this.setState 方法重新渲染 UI
+	</p>
+
+    <div id="root"></div>
+
+	<script type="text/babel">
+	
+		// 财经日历数据.
+		function FinanceCalendaData(financeDateTime, countryName, content, weightiness, previous, predict, currentValue) {
+			// 时间.
+			this.financeDateTime = financeDateTime;
+			// 国家.
+			this.countryName = countryName;
+			// 内容.
+			this.content = content;
+			// 重要度.
+			this.weightiness = weightiness;			
+			// 前值.
+			this.previous = previous;
+			// 预测值.
+			this.predict = predict;
+			// 当前值.
+			this.currentValue = currentValue;
+		}
+
+		
+		// 财经日历组件.
+		var FinanceCalenda = React.createClass({
+			// 初始状态.
+			getInitialState: function() {
+				return {
+					// 加载中的标记.
+					loading: true,
+					// 财经日历数据列表.
+					financeCalendaData : new Array()
+				};
+			},
+			
+			// AJAX 加载完毕后的处理.
+			ajaxFinish: function(xml) {
+				// 取得 XML.
+				var xmlDoc = xml.responseXML;
+				// 获取节点.
+				var x = xmlDoc.getElementsByTagName("FinanceData");
+				
+				// 结果数据.
+				var resultData = new Array();
+				
+				for(var i = 0, len = x.length; i < len; i ++) {
+				
+					// 时间.
+					var m_financeDateTime = x[i].getElementsByTagName("FinanceDateTime")[0].childNodes[0].nodeValue;
+					// 国家.
+					var m_countryName = x[i].getElementsByTagName("CountryName")[0].childNodes[0].nodeValue;
+					// 内容.
+					var m_content = x[i].getElementsByTagName("Content")[0].childNodes[0].nodeValue;
+					// 重要度.
+					var m_weightiness = x[i].getElementsByTagName("Weightiness")[0].childNodes[0].nodeValue;			
+					// 前值.
+					var m_previous = "";
+					// 预测值.
+					var m_predict = "";
+					// 当前值.
+					var m_currentValue = "";
+					
+					if(x[i].getElementsByTagName("Previous")[0] != null && x[i].getElementsByTagName("Previous")[0].childNodes[0] != null) {
+						m_previous = x[i].getElementsByTagName("Previous")[0].childNodes[0].nodeValue;
+					}
+					if(x[i].getElementsByTagName("Predict")[0] != null && x[i].getElementsByTagName("Predict")[0].childNodes[0] != null) {
+						m_predict = x[i].getElementsByTagName("Predict")[0].childNodes[0].nodeValue;
+					}
+					if(x[i].getElementsByTagName("CurrentValue")[0] != null && x[i].getElementsByTagName("CurrentValue")[0].childNodes[0] != null) {
+						m_currentValue = x[i].getElementsByTagName("CurrentValue")[0].childNodes[0].nodeValue;
+					}
+
+					// 创建结果对象.
+					var oneFinanceCalendaData = new FinanceCalendaData(
+						m_financeDateTime,
+						m_countryName,
+						m_content,
+						m_weightiness,
+						m_previous,
+						m_predict,
+						m_currentValue
+					);
+					// 数据加入数组.
+					resultData.push(oneFinanceCalendaData);
+				}
+				
+				// 设置组件的属性.
+				this.setState({
+					financeCalendaData: resultData,
+					loading: false
+				});
+			},
+
+			// componentDidMount : 在第一次渲染后调用，只在客户端。
+			componentDidMount: function() {
+				var rootItem = this;
+				var xhttp = new XMLHttpRequest();
+				xhttp.onreadystatechange = function() {
+					if (this.readyState == 4 && this.status == 200) {
+						rootItem.ajaxFinish(this);
+					}
+				};
+				xhttp.open("GET", this.props.source , true);
+				xhttp.send();
+			},
+
+			// componentWillUnmount : 在组件从 DOM 中移除的时候立刻被调用。
+			componentWillUnmount: function() {
+			},
+
+			render: function() {
+				if (this.state.loading) {
+					// AJAX数据加载中.
+					return <span>Data Loading...</span>;
+				} else {
+					// AJAX数据加载完毕。
+					return (
+						<div>
+							<h3> 财经日历 </h3>
+							{/*  这里如果在 table 中，使用  border="1" 将会报错. */}
+							<table  className="mytable"  >
+								<tbody>
+								<tr>
+									<th>时间</th>
+									<th>国家</th>
+									<th>内容</th>
+									<th>重要度</th>
+									<th>前值</th>
+									<th>预测值</th>
+									<th>当前值</th>
+								</tr>
+								{
+									this.state.financeCalendaData.map(function (financeCalenda) {
+										return <tr>
+											<td>{financeCalenda.financeDateTime}</td>
+											<td>{financeCalenda.countryName}</td>
+											<td>{financeCalenda.content}</td>
+											<td>{financeCalenda.weightiness}</td>
+											<td>{financeCalenda.previous}</td>
+											<td>{financeCalenda.predict}</td>
+											<td>{financeCalenda.currentValue}</td>
+										</tr>
+									})
+								}
+								</tbody>
+							</table>
+						</div>
+					);
+				}
+			}
+		});
+
+
+		// 最终展示.
+		ReactDOM.render(
+			<FinanceCalenda source="20170320.xml" />,
+			document.getElementById('root')
+		);
+
+    </script>
+
+
+
+  </body>
+</html>
