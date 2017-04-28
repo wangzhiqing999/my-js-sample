@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Basic Observable </title>
+    <script src="js/knockout-3.4.2.debug.js"></script>
+
+
+  </head>
+
+
+  <body>
+
+
+	<div>
+		<p>
+			<label>firstName</label> <span data-bind="text: firstName"></span>
+			<br/>
+			<label>lastName</label> <span data-bind="text: lastName"></span>
+			<br/>
+			<label>fullName</label> <span data-bind="text: fullName"></span>
+		</p>
+
+		<hr/>
+		<p>
+			测试：修改下面的输入框数据，输入焦点离开时，观察上面的信息， 是否发生变化.
+		</p>
+
+
+		<input type="text" data-bind="value: firstName"/>
+		<input type="text" data-bind="value: lastName"/>
+
+	</div>
+
+
+
+
+
+
+	<script type="text/javascript">
+
+		function AppViewModel () {
+			// 这里是默认的属性.
+			this.firstName = ko.observable("Fox"),
+			this.lastName = ko.observable("Wang"),
+
+			// 这里是计算的属性.
+			this.fullName = ko.computed(function() {
+				return this.firstName() + " " + this.lastName();
+			}, this);
+		};
+
+		var viewModel = AppViewModel();
+
+		ko.applyBindings(viewModel);
+
+	</script>
+
+  </body>
+</html>

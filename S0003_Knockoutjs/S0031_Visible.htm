@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title> visible </title>
+    <script src="js/knockout-3.4.2.debug.js"></script>
+
+
+  </head>
+
+
+  <body>
+
+
+	<div>
+		<div data-bind="visible: shouldShowMessage">
+			You will see this message only when "shouldShowMessage" holds a true value.
+		</div>
+
+
+		<hr/>
+
+		<label>shouldShowMessage</label>
+		<input type="checkbox" data-bind="checked: shouldShowMessage"/>
+
+	</div>
+
+	<p>
+	关键点， 使用  data-bind = visible: ......
+	</p>
+
+
+
+
+	<script type="text/javascript">
+
+		var viewModel = {
+			shouldShowMessage: ko.observable(true) // Message initially visible
+		};
+
+		ko.applyBindings(viewModel);
+
+	</script>
+
+  </body>
+</html>

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title> foreach </title>
+    <script src="js/knockout-3.4.2.debug.js"></script>
+
+  </head>
+
+
+  <body>
+
+
+	<ul data-bind="foreach: { data: categories, as: 'category' }">
+		<li>
+			<ul data-bind="foreach: { data: items, as: 'item' }">
+				<li>
+					<span data-bind="text: category.name"></span>:
+					<span data-bind="text: item"></span>
+				</li>
+			</ul>
+		</li>
+	</ul>
+
+
+
+
+	<ul>
+		<li class="header">Header item 默认元素 ... </li>
+
+		<!-- ko foreach: categories -->
+			<li> Item <span data-bind="text: $data.name"></span> </li>
+		<!-- /ko -->
+	</ul>
+
+
+	<p>
+	关键点， 使用  data-bind = foreach: ......
+	<br/>
+	在 foreach 中， 使用  as 来为当前循环组的项目， 起个别名.
+	这样一来，当遇到嵌套的循环的时候， 能够区分 外层循环 与 内层循环
+	<br/>
+	如果遇到无法在顶级元素上加  data-bind = foreach 的时候， 例如 ul 下面， 有个 默认的 li.
+	这种情况下， 使用  注释 ko foreach 来处理.
+	<br/>
+
+
+	</p>
+
+
+
+	<script type="text/javascript">
+
+		var viewModel = {
+			categories: ko.observableArray([
+				{ name: 'Fruit', items: [ 'Apple', 'Orange', 'Banana' ] },
+				{ name: 'Vegetables', items: [ 'Celery', 'Corn', 'Spinach' ] }
+			])
+		};
+		ko.applyBindings(viewModel);
+
+
+	</script>
+
+  </body>
+</html>

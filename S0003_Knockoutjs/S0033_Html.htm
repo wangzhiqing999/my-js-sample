@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title> html </title>
+    <script src="js/knockout-3.4.2.debug.js"></script>
+
+
+  </head>
+
+
+  <body>
+
+
+	<div data-bind="html: details"></div>
+
+
+	<p>
+	关键点， 使用  data-bind = html: ......
+	</p>
+
+
+
+	<script type="text/javascript">
+
+		var viewModel = {
+			details: ko.observable() // Initially blank
+		};
+		ko.applyBindings(viewModel);
+
+
+		viewModel.details("<em>Hello, world!</em>");
+
+
+		// 更新 Model 数据.
+		function updateModelData() {
+			console.log("updateModelData Start.");
+			// 修改数据.
+			var newText = viewModel.details() + "<br/> ^_^ ";
+			viewModel.details(newText);
+		}
+
+		// 尝试周期修改 Model 的数据， 观察画面数据是否会变更.
+		setInterval("updateModelData()",3000);
+
+	</script>
+
+  </body>
+</html>

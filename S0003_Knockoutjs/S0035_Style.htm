@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title> style </title>
+    <script src="js/knockout-3.4.2.debug.js"></script>
+
+  </head>
+
+
+  <body>
+
+
+	<div data-bind="style: { color: currentValue() < 0 ? 'red' : 'blue' }">
+	   Profit Information
+	   <span data-bind="text: currentValue"></span>
+	</div>
+
+
+
+	<p>
+	关键点， 使用  data-bind = style: ......
+	</p>
+
+
+
+	<script type="text/javascript">
+
+		var viewModel = {
+			currentValue: ko.observable(100)
+		};
+
+		ko.applyBindings(viewModel);
+
+    	// 更新 Model 数据.
+		function updateModelData() {
+			console.log("updateModelData Start.");
+			// 修改数据.
+			var currentValue = viewModel.currentValue();
+
+			if(currentValue > 0) {
+				currentValue -= 30;
+			} else {
+				currentValue += 25;
+			}
+
+			viewModel.currentValue(currentValue);
+		}
+
+		// 尝试周期修改 Model 的数据， 观察画面数据是否会变更.
+		setInterval("updateModelData()",1000);
+
+	</script>
+
+  </body>
+</html>

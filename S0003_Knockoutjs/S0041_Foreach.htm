@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title> foreach </title>
+    <script src="js/knockout-3.4.2.debug.js"></script>
+
+  </head>
+
+
+  <body>
+
+
+	<table>
+		<thead>
+			<tr><th>First name</th><th>Last name</th></tr>
+		</thead>
+		<tbody data-bind="foreach: people">
+			<tr>
+				<td data-bind="text: firstName"></td>
+				<td data-bind="text: lastName"></td>
+			</tr>
+		</tbody>
+	</table>
+
+
+
+
+	<p>
+	关键点， 使用  data-bind = foreach: ......
+	</p>
+
+
+
+	<script type="text/javascript">
+
+		var viewModel = {
+			people: [
+				{ firstName: 'Bert', lastName: 'Bertington' },
+				{ firstName: 'Charles', lastName: 'Charlesforth' },
+				{ firstName: 'Denise', lastName: 'Dentiste' }
+			]
+		};
+
+		ko.applyBindings(viewModel);
+
+	</script>
+
+  </body>
+</html>

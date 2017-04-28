@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title> text </title>
+    <script src="js/knockout-3.4.2.debug.js"></script>
+
+
+  </head>
+
+
+  <body>
+
+
+	<div>
+		Today's message is: <span data-bind="text: myMessage"></span>
+	</div>
+
+
+	<p>
+	关键点， 使用  data-bind = text: ......
+	注意：如果 text 内容中， 包含 html 标记， 那么， 需要使用 <a href="S0033_Html.htm"> Html </a> 的方式.
+	</p>
+
+
+
+	<script type="text/javascript">
+
+		var viewModel = {
+			myMessage: ko.observable() // Initially blank
+		};
+		ko.applyBindings(viewModel);
+
+
+		viewModel.myMessage("Hello, world!"); // Text appears
+
+
+		// 更新 Model 数据.
+		function updateModelData() {
+			console.log("updateModelData Start.");
+			// 修改数据.
+			var newText = viewModel.myMessage() + " ^_^ ";
+			viewModel.myMessage(newText);
+		}
+
+		// 尝试周期修改 Model 的数据， 观察画面数据是否会变更.
+		setInterval("updateModelData()",3000);
+
+	</script>
+
+  </body>
+</html>

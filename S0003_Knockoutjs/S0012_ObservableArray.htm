@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title> Observable Array </title>
+    <script src="js/knockout-3.4.2.debug.js"></script>
+  </head>
+
+
+  <body>
+
+
+	<div>
+
+		<form data-bind="submit: addItem">
+			New item:
+			<input data-bind='value: itemToAdd, valueUpdate: "afterkeydown"' />
+			<button type="submit" data-bind="enable: itemToAdd().length > 0">Add</button>
+
+			<p>Your items:</p>
+			<select multiple="multiple" width="50" data-bind="options: items"> </select>
+		</form>
+
+	</div>
+
+
+
+
+
+
+	<script type="text/javascript">
+
+
+		var SimpleListModel = function(items) {
+
+			// 项目数据列表.
+			this.items = ko.observableArray(items);
+
+			// 单个项目. 用于存储待新增的数据.
+			this.itemToAdd = ko.observable("");
+
+			// 新增项目的方法.
+			this.addItem = function() {
+				if (this.itemToAdd() != "") {
+					this.items.push(this.itemToAdd()); // Adds the item. Writing to the "items" observableArray causes any associated UI to update.
+					this.itemToAdd(""); // Clears the text box, because it's bound to the "itemToAdd" observable
+				}
+			}.bind(this);  // Ensure that "this" is always this view model
+		};
+
+
+
+		ko.applyBindings(new SimpleListModel(["北京", "上海", "广州"]));
+
+
+	</script>
+
+  </body>
+</html>

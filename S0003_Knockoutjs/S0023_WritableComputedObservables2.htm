@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Basic Observable </title>
+    <script src="js/knockout-3.4.2.debug.js"></script>
+
+
+  </head>
+
+
+  <body>
+
+
+
+	<div class="heading">
+		<input type="checkbox" data-bind="checked: selectedAllProduce" title="Select all/none"/> Produce
+	</div>
+	<div data-bind="foreach: produce">
+		<label>
+			<input type="checkbox" data-bind="checkedValue: $data, checked: $parent.selectedProduce"/>
+			<span data-bind="text: $data"></span>
+		</label>
+	</div>
+
+	<script type="text/javascript">
+
+		function MyViewModel() {
+
+			// 产品列表.
+			this.produce = [ 'Apple', 'Banana', 'Celery', 'Corn', 'Orange', 'Spinach' ];
+			// 已选择的产品列表.
+			this.selectedProduce = ko.observableArray([ 'Corn', 'Orange' ]);
+
+			// 计算属性: 【全选】
+			this.selectedAllProduce = ko.pureComputed({
+				// 读取的方法.
+				read: function () {
+					// Comparing length is quick and is accurate if only items from the
+					// main array are added to the selected array.
+					return this.selectedProduce().length === this.produce.length;
+				},
+				// 写入的方法.
+				write: function (value) {
+					this.selectedProduce(value ? this.produce.slice(0) : []);
+				},
+				owner: this
+			});
+		}
+		ko.applyBindings(new MyViewModel());
+	</script>
+
+
+
+  </body>
+</html>

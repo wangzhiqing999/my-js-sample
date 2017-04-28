@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title> if </title>
+    <script src="js/knockout-3.4.2.debug.js"></script>
+
+  </head>
+
+
+  <body>
+
+	<h3> 简单使用 </h3>
+
+	<label><input type="checkbox" data-bind="checked: displayMessage" /> Display message</label>
+
+	<div data-bind="if: displayMessage">Here is a message. Astonishing.</div>
+
+	<div data-bind="visible: displayMessage">
+		You will see this message only when "displayMessage" holds a true value.
+	</div>
+
+
+
+	<h3> 避免 null 或 undefined  的情况下使用 </h3>
+	<ul data-bind="foreach: planets">
+		<li>
+			Planet: <b data-bind="text: name"> </b>
+			<div data-bind="if: capital">
+				Capital: <b data-bind="text: capital.cityName"> </b>
+			</div>
+		</li>
+	</ul>
+
+
+
+	<p>
+	关键点， 使用  data-bind = if: ......
+	<br/>
+	简单的使用，与 data-bind = visible  效果基本一致.
+	<br/>
+
+	实际情况下，在 对象为空时，不处理，  对象非空时， 显示 对象下的属性。
+	<br/>
+
+
+	</p>
+
+
+
+	<script type="text/javascript">
+
+		var viewModel = {
+			displayMessage: ko.observable(true),
+
+			planets: [
+				{ name: 'Mercury', capital: null },
+				{ name: 'Earth', capital: { cityName: 'Barnsley' } }
+			]
+
+		};
+
+		ko.applyBindings(viewModel);
+
+	</script>
+
+  </body>
+</html>

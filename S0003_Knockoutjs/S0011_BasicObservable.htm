@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Basic Observable </title>
+    <script src="js/knockout-3.4.2.debug.js"></script>
+
+
+  </head>
+
+
+  <body>
+
+
+	<div>
+		<p>
+			<label>用户名</label> <span data-bind="text: userName"></span>
+			<br/>
+			<label>密码</label> <span data-bind="text: userPassword"></span>
+		</p>
+
+		<hr/>
+		<p>
+			测试：修改下面的输入框数据，输入焦点离开时，观察上面的信息， 是否发生变化.
+		</p>
+
+
+		<input type="text" data-bind="value: userName"/>
+		<input type="password" data-bind="value: userPassword"/>
+
+	</div>
+
+
+
+
+
+
+	<script type="text/javascript">
+
+		var viewModel = {
+			userName: ko.observable(""),        	// Initially blank
+			userPassword: ko.observable("123456") 	// Prepopulate
+		};
+
+		ko.applyBindings(viewModel);
+
+	</script>
+
+  </body>
+</html>

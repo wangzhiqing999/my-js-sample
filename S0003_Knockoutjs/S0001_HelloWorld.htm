@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Hello World</title>
+    <script src="js/knockout-3.4.2.debug.js"></script>
+
+
+  </head>
+
+
+  <body>
+
+	<span data-bind="text:helloWorld"></span>  
+
+	
+	<script type="text/javascript">
+	
+		// 定义 Model.
+		var AppViewModel = {
+			helloWorld: 'Hello World !!  ~~~ 1234567890 ~~~~~'
+		};
+		
+		// 绑定.
+		ko.applyBindings(AppViewModel);
+		
+		// 注意：
+		// 这个只是 Hello World.
+		// 实际开发，属性要使用 ko.observable("Hello World !!  ~~~ 1234567890 ~~~~~") 的方式来处理。
+	</script>
+	
+  </body>
+</html>
