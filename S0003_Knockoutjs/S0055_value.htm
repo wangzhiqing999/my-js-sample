@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title> value </title>
+    <script src="js/knockout-3.4.2.debug.js"></script>
+
+  </head>
+
+
+  <body>
+
+	<h3> 简单使用  </h3>
+
+	<p>用户名: <input data-bind="value: userName" /></p>
+	<p>密码: <input type="password" data-bind="value: userPassword" /></p>
+
+
+
+
+	<p>
+	关键点， 使用  data-bind = value ......
+
+	</p>
+
+
+
+	<script type="text/javascript">
+
+		function AppViewModel()  {
+			var self = this;
+
+			self.userName = ko.observable("Test");
+			self.userPassword = ko.observable("123456");
+
+
+		};
+
+		ko.applyBindings(new AppViewModel());
+
+	</script>
+
+  </body>
+</html>

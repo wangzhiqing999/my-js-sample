@@ -16,9 +16,9 @@
 	<ul data-bind="foreach: people">
 		<li>
 			Name at position <span data-bind="text: $index"> </span>:
-			
+
 			<span data-bind="text: name"> </span>  .vs.   <span data-bind="text: $data.name""> </span>
-			
+
 			<a href="#" data-bind="click: $parent.removePerson">Remove</a>
 		</li>
 	</ul>
@@ -57,6 +57,7 @@
 
 			// 删除的方法.
 			self.removePerson = function() {
+				console.log("removePerson start.", this);
 				self.people.remove(this);
 			}
 		}

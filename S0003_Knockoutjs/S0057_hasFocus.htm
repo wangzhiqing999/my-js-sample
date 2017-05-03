@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title> hasFocus </title>
+    <script src="js/knockout-3.4.2.debug.js"></script>
+
+  </head>
+
+
+  <body>
+
+	<h3> 单纯使用 hasFocus  </h3>
+
+	<div>
+		<input data-bind="hasFocus: isSelected" />
+		<button data-bind="click: setIsSelected">Focus programmatically</button>
+		<span data-bind="visible: isSelected">The textbox has focus</span>
+	</div>
+
+
+	<h3> 配合 visible 使用 hasFocus  </h3>
+
+	<div>
+		<p>
+		Name:
+		<b data-bind="visible: !editing(), text: name, click: edit">&nbsp;</b>
+		<input data-bind="visible: editing, value: name, hasFocus: editing" />
+		</p>
+		<p><em> 点击名称进行编辑，光标离开完成修改.</em></p>
+	</div>
+
+
+
+
+
+<hr/>
+
+	<div>
+
+	ViewModel:
+	<pre data-bind="text: ko.toJSON($root, null, 2)"></pre>
+
+	</div>
+
+
+
+
+	<p>
+	关键点， 使用  data-bind = hasFocus ......
+
+	<br/>
+
+
+
+	</p>
+
+
+
+	<script type="text/javascript">
+
+		function AppViewModel()  {
+			var self = this;
+
+			self.isSelected = ko.observable(false);
+			self.setIsSelected = function() { this.isSelected(true) }
+
+
+
+			// Data
+			this.name = ko.observable("测试");
+			this.editing = ko.observable(false);
+
+			// Behaviors
+			this.edit = function() { this.editing(true) }
+
+		};
+
+		ko.applyBindings(new AppViewModel());
+
+	</script>
+
+  </body>
+</html>

@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title> options </title>
+    <script src="js/knockout-3.4.2.debug.js"></script>
+
+  </head>
+
+
+  <body>
+
+	<h3> 单选列表  </h3>
+
+	<p>
+		目的地:
+		<select data-bind="options: availableCountries,  value: selectedCountry"></select>
+	</p>
+
+
+
+	<h3> 多选列表  </h3>
+
+	<p>
+		想去的目的地:
+		<select data-bind="options: availableCountries,  selectedOptions: multiSelectedCountry" size="5" multiple="true"></select>
+		<!-- 注意： 多选的时候，存储选择的数据， 不要使用 value ， 而是要使用 selectedOptions -->
+	</p>
+
+
+
+	<h3> 数据源绑定js对象.  </h3>
+
+	<p>
+		Your country:
+		<select data-bind="options: plusAvailableCountries,
+						   optionsText: 'countryName',
+						   value: plusSelectedCountry,
+						   optionsCaption: 'Choose...'"></select>
+	</p>
+
+	<div data-bind="visible: plusSelectedCountry"> <!-- Appears when you select something -->
+		You have chosen a country with population
+		<span data-bind="text: plusSelectedCountry() ? plusSelectedCountry().countryPopulation : 'unknown'"></span>.
+	</div>
+
+
+
+
+	<h3> optionsAfterRender 回调事件 </h3>
+	<p>
+		测试 optionsAfterRender 事件.
+		<select data-bind="
+			options: myItems,
+			optionsText: 'name',
+			optionsValue: 'id',
+			value: selectedItem,
+			optionsAfterRender: setOptionDisable">
+		</select>
+	</p>
+
+
+
+<hr/>
+
+	<div>
+
+	ViewModel:
+	<pre data-bind="text: ko.toJSON($root, null, 2)"></pre>
+
+	</div>
+
+
+	<p>
+	关键点， 使用  data-bind = options ......
+
+	<br/>
+	单选的情况下，获取数据，使用 value；
+	多选的情况下，获取数据，使用 selectedOptions。
+
+	</p>
+
+
+
+
+
+
+	<script type="text/javascript">
+
+
+		// Constructor for an object with two properties
+		var Country = function(name, population) {
+			this.countryName = name;
+			this.countryPopulation = population;
+		};
+
+
+		function AppViewModel()  {
+			var self = this;
+
+
+			self.availableCountries = ko.observableArray(['France', 'Germany', 'Spain']);
+
+			// 单选的内容.
+			self.selectedCountry = ko.observable();
+			// 多选的内容
+			self.multiSelectedCountry = ko.observable();
+
+
+
+			// 选择列表是对象.
+			self.plusAvailableCountries = ko.observableArray([
+				new Country("UK", 65000000),
+				new Country("USA", 320000000),
+				new Country("Sweden", 29000000)
+			]);
+			// 当前选择的对象.
+			self.plusSelectedCountry = ko.observable();
+
+
+
+			self.myItems = [
+				{ name: 'Item 1', id: 1, disable: ko.observable(false)},
+				{ name: 'Item 2', id: 2, disable: ko.observable(false)},
+				{ name: 'Item 3', id: 3, disable: ko.observable(true)},
+				{ name: 'Item 4', id: 4, disable: ko.observable(false)}
+			];
+			// 测试回调事件.
+			self.setOptionDisable = function(option, item) {
+				console.log("### setOptionDisable Start.", option, item);
+				ko.applyBindingsToNode(option, {disable: item.disable}, item);
+			};
+			// 当前选择的对象.
+			self.selectedItem = ko.observable();
+
+		};
+
+		ko.applyBindings(new AppViewModel());
+
+	</script>
+
+  </body>
+</html>

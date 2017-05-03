@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title> checked </title>
+    <script src="js/knockout-3.4.2.debug.js"></script>
+
+  </head>
+
+
+  <body>
+
+	<h3> 单个 checked  </h3>
+
+	<div>
+		<p>Send me spam: <input type="checkbox" data-bind="checked: wantsSpam" /></p>
+	</div>
+
+
+	<h3> 多个 checked  </h3>
+
+	<p>Send me spam: <input type="checkbox" data-bind="checked: wantsSpam" /></p>
+	<div data-bind="visible: wantsSpam">
+		Preferred flavors of spam:
+		<div><input type="checkbox" value="cherry" data-bind="checked: spamFlavors" /> Cherry</div>
+		<div><input type="checkbox" value="almond" data-bind="checked: spamFlavors" /> Almond</div>
+		<div><input type="checkbox" value="msg" data-bind="checked: spamFlavors" /> Monosodium Glutamate</div>
+	</div>
+
+
+
+
+	<h3> radio  </h3>
+
+	<p>Send me spam: <input type="checkbox" data-bind="checked: wantsSpam" /></p>
+	<div data-bind="visible: wantsSpam">
+		Preferred flavor of spam:
+		<div><input type="radio" name="flavorGroup" value="cherry" data-bind="checked: spamFlavor" /> Cherry</div>
+		<div><input type="radio" name="flavorGroup" value="almond" data-bind="checked: spamFlavor" /> Almond</div>
+		<div><input type="radio" name="flavorGroup" value="msg" data-bind="checked: spamFlavor" /> Monosodium Glutamate</div>
+	</div>
+
+
+
+
+<hr/>
+
+	<div>
+
+	ViewModel:
+	<pre data-bind="text: ko.toJSON($root, null, 2)"></pre>
+
+	</div>
+
+
+	<p>
+	关键点， 使用  data-bind = checked ......
+
+	<br/>
+
+	单个 checkbox， 使用一个 bool 类型。
+	多个 checkbox，使用一个数组。
+	radio， 使用单个字符串。
+
+	</p>
+
+
+
+
+
+
+	<script type="text/javascript">
+
+		function AppViewModel()  {
+			var self = this;
+
+			// 单个 checkbox， 使用一个 bool 类型.
+			self.wantsSpam = ko.observable(true);
+
+			// 多个 checkbox，使用一个数组.
+			self.spamFlavors = ko.observableArray(["cherry","almond"]) ;
+
+			// radio， 使用单个字符串.
+			self.spamFlavor = ko.observable("almond") ;
+		};
+
+		ko.applyBindings(new AppViewModel());
+
+	</script>
+
+  </body>
+</html>

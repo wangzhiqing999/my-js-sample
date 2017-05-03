@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title> component </title>
+    <script src="js/knockout-3.4.2.debug.js"></script>
+
+  </head>
+
+
+  <body>
+
+	<h3>  component </h3>
+
+	<h4>First instance, without parameters</h4>
+	<div data-bind='component: "message-editor"'></div>
+
+	<h4>Second instance, passing parameters</h4>
+	<div data-bind='component: {
+		name: "message-editor",
+		params: { initialText: "Hello, world!" }
+	}'></div>
+
+
+
+	<hr/>
+
+	<h3> 使用 data-bind=component 进行处理.  </h3>
+	<div data-bind='component: {
+		name: "special-offer",
+		params: { productName: someProduct.name }
+	}'></div>
+
+
+	<h3> 直接使用 组件名 进行处理.  </h3>
+	<special-offer params='productName: someProduct.name'></special-offer>
+
+
+
+
+	<p>
+
+	关键点，使用 ko.components.register 注册组件.
+
+	</p>
+
+
+
+	<script type="text/javascript">
+
+		// 注册组件.
+		ko.components.register('message-editor', {
+			// 初始化参数.
+			viewModel: function(params) {
+				this.text = ko.observable(params && params.initialText || '');
+			},
+			// 组件的模板.
+			template: 'Message: <input data-bind="value: text" /> '
+					+ '(length: <span data-bind="text: text().length"></span>)'
+		});
+
+
+
+		// 注册组件.
+		ko.components.register('special-offer', {
+			// 组件的模板.
+			template: '<div class="offer-box" data-bind="text: productName"></div>'
+		});
+
+
+
+		function AppViewModel()  {
+			var self = this;
+
+			self.someProduct = {
+				name : "测试产品名称"
+			};
+		};
+
+		ko.applyBindings(new AppViewModel());
+
+	</script>
+
+  </body>
+</html>

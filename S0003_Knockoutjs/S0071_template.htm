@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title> template </title>
+    <script src="js/knockout-3.4.2.debug.js"></script>
+
+  </head>
+
+
+  <body>
+
+	<h3> 简单 template 使用.  </h3>
+
+	<!-- 定义 template -->
+	<script type="text/html" id="person-template">
+		<h3 data-bind="text: name"></h3>
+		<p>Credits: <span data-bind="text: credits"></span></p>
+	</script>
+
+	<!-- 使用 template -->
+	<div data-bind="template: { name: 'person-template', data: buyer }"></div>
+	<div data-bind="template: { name: 'person-template', data: seller }"></div>
+
+
+
+
+	<hr/>
+	<h3>  配合 foreach 使用.  </h3>
+
+	<!-- 使用 template. 用 foreach -->
+	<div data-bind="template: { name: 'person-template', foreach: people }"></div>
+
+
+
+
+	<hr/>
+	<h3>  多个 template 时，使用 as .  </h3>
+
+	<!-- 定义 template.  该 template 中包含子 template. -->
+	<script type="text/html" id="seasonTemplate">
+		<li>
+			<strong data-bind="text: name"></strong>
+			<ul data-bind="template: { name: 'monthTemplate', foreach: months, as: 'month' }"></ul>
+		</li>
+	</script>
+
+	<!-- 定义 template -->
+	<script type="text/html" id="monthTemplate">
+		<li>
+			<span data-bind="text: month"></span>
+			is in
+			<span data-bind="text: season.name"></span>
+		</li>
+	</script>
+
+
+	<!-- 使用 template， 用 foreach, as -->
+	<ul data-bind="template: { name: 'seasonTemplate', foreach: seasons, as: 'season' }"></ul>
+
+
+
+
+	<p>
+	关键点， 使用  data-bind = template , 需要传递的参数， 为 name 与 data
+	</p>
+
+
+
+
+
+
+	<script type="text/javascript">
+
+		function AppViewModel()  {
+			var self = this;
+
+			// 简单 template 使用.
+			self.buyer = { name: 'Franklin', credits: 250 };
+			self.seller = { name: 'Mario', credits: 5800 };
+
+			// 配合 foreach 使用.
+			self.people = [
+				{ name: 'Franklin', credits: 250 },
+				{ name: 'Mario', credits: 5800 }
+			];
+
+			// 多个 template 时，使用 as .
+			self.seasons = ko.observableArray([
+				{ name: 'Spring', months: [ 'March', 'April', 'May' ] },
+				{ name: 'Summer', months: [ 'June', 'July', 'August' ] },
+				{ name: 'Autumn', months: [ 'September', 'October', 'November' ] },
+				{ name: 'Winter', months: [ 'December', 'January', 'February' ] }
+			]);
+
+		};
+
+		ko.applyBindings(new AppViewModel());
+
+	</script>
+
+  </body>
+</html>

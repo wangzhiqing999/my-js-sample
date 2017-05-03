@@ -14,11 +14,21 @@
 
 	<label><input type="checkbox" data-bind="checked: displayMessage" /> Display message</label>
 
-	<div data-bind="if: displayMessage">Here is a message. Astonishing.</div>
+	<div data-bind="if: displayMessage"> 这里是  if: displayMessage</div>
 
 	<div data-bind="visible: displayMessage">
-		You will see this message only when "displayMessage" holds a true value.
+		这里是 visible: displayMessage
 	</div>
+
+
+
+	<div data-bind="ifnot: displayMessage"> 这里是  ifnot: displayMessage</div>
+
+	<div data-bind="if: !displayMessage()"> 这里是  if: !displayMessage() </div>
+
+
+
+
 
 
 

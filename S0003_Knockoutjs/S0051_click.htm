@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title> click </title>
+    <script src="js/knockout-3.4.2.debug.js"></script>
+
+  </head>
+
+
+  <body>
+
+	<h3> 简单使用  </h3>
+	<div>
+		You've clicked <span data-bind="text: numberOfClicks"></span> times
+		<button data-bind="click: incrementClickCounter">Click me</button>
+	</div>
+
+
+
+	<hr/>
+
+	<h3> 与 foreach 配合使用  </h3>
+
+	<form data-bind="submit: addPlace">
+		New place:
+		<input data-bind='value: placeToAdd, valueUpdate: "afterkeydown"' />
+		<button type="submit" data-bind="enable: placeToAdd().length > 0">Add</button>
+	</form>
+
+	<ul data-bind="foreach: places">
+		<li>
+			<span data-bind="text: $data"></span>
+			<button data-bind="click: $parent.removePlace">Remove</button>
+		</li>
+	</ul>
+
+
+
+	<p>
+	关键点， 使用  data-bind = click: ......
+
+
+	</p>
+
+
+
+	<script type="text/javascript">
+
+		function AppViewModel()  {
+			var self = this;
+
+			self.numberOfClicks = ko.observable(0),
+			self.incrementClickCounter = function() {
+				var previousCount = this.numberOfClicks();
+				this.numberOfClicks(previousCount + 1);
+			}
+
+
+
+			// 单个项目. 用于存储待新增的数据.
+			self.placeToAdd = ko.observable("");
+
+			// 初始的项目列表.
+			self.places = ko.observableArray(['London', 'Paris', 'Tokyo']);
+
+			// 新增项目的方法.
+			self.addPlace = function() {
+				if (self.placeToAdd() != "") {
+					self.places.push(self.placeToAdd());
+					self.placeToAdd("");
+				}
+			}.bind(self);
+
+			// 删除项目的方法.
+			self.removePlace = function(place) {
+				self.places.remove(place)
+			}
+
+		};
+
+		ko.applyBindings(new AppViewModel());
+
+	</script>
+
+  </body>
+</html>

@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title> with </title>
+    <script src="js/knockout-3.4.2.debug.js"></script>
+
+  </head>
+
+
+  <body>
+
+	<h3> 简单使用  </h3>
+
+	<h1 data-bind="text: city"> </h1>
+
+	<h3> 使用 with 来处理 </h3>
+	<p data-bind="with: coords">
+		Latitude: <span data-bind="text: latitude"> </span>,
+		Longitude: <span data-bind="text: longitude"> </span>
+	</p>
+
+	<h3> 不使用 with 来处理 </h3>
+	<p>
+		Latitude: <span data-bind="text: coords.latitude"> </span>,
+		Longitude: <span data-bind="text: coords.longitude"> </span>
+	</p>
+
+
+	<hr/>
+
+	<form data-bind="submit: getTweets">
+		Twitter account:
+		<input data-bind="value: twitterName" />
+		<button type="submit">Get tweets</button>
+	</form>
+
+
+	<h3> 使用 with 来处理 </h3>
+	<div data-bind="with: resultData">
+		<h3>Recent tweets fetched at <span data-bind="text: retrievalDate"> </span></h3>
+		<ol data-bind="foreach: topTweets">
+			<li data-bind="text: text"></li>
+		</ol>
+		<button data-bind="click: $parent.clearResults">Clear tweets</button>
+	</div>
+
+	<h3> 使用 if 来处理 </h3>
+	<div data-bind="if: resultData">
+		<h3>Recent tweets fetched at <span data-bind="text: resultData().retrievalDate"> </span></h3>
+		<ol data-bind="foreach: resultData().topTweets">
+			<li data-bind="text: text"></li>
+		</ol>
+		<button data-bind="click: clearResults">Clear tweets</button>
+	</div>
+
+
+
+	<p>
+	关键点， 使用  data-bind = with: ......
+
+	可以让某些父子关系的代码， 简短一些。
+
+	</p>
+
+
+
+	<script type="text/javascript">
+
+		function AppViewModel()  {
+			var self = this;
+
+			self.city = "London";
+			self.coords = {
+				latitude:  51.5001524,
+				longitude: -0.1262362
+			};
+
+
+
+
+
+			self.twitterName = ko.observable('@example');
+			self.resultData = ko.observable(); // No initial value
+
+			self.getTweets = function() {
+				var name = self.twitterName(),
+					simulatedResults = [
+						{ text: name + ' What a nice day.' },
+						{ text: name + ' Building some cool apps.' },
+						{ text: name + ' Just saw a famous celebrity eating lard. Yum.' }
+					];
+
+				self.resultData({ retrievalDate: new Date(), topTweets: simulatedResults });
+			}
+
+			self.clearResults = function() {
+				self.resultData(undefined);
+			}
+
+
+		};
+
+		ko.applyBindings(new AppViewModel());
+
+	</script>
+
+  </body>
+</html>

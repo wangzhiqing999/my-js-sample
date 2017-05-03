@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title> event </title>
+    <script src="js/knockout-3.4.2.debug.js"></script>
+
+  </head>
+
+
+  <body>
+
+	<h3> 简单使用  </h3>
+
+	<div>
+		<div data-bind="event: { mouseover: enableDetails, mouseout: disableDetails }">
+			Mouse over me
+		</div>
+		<div data-bind="visible: detailsEnabled">
+			Details
+		</div>
+	</div>
+
+
+	<hr/>
+
+	<h3>与 foreach 配合使用</h3>
+
+	<ul data-bind="foreach: places">
+		<li data-bind="text: $data, event: { mouseover: $parent.logMouseOver }"> </li>
+	</ul>
+	<p>You seem to be interested in: <span data-bind="text: lastInterest"> </span></p>
+
+
+
+
+	<p>
+	关键点， 使用  data-bind = event: { 事件名} : 具体代码 }......
+
+	</p>
+
+
+
+	<script type="text/javascript">
+
+		function AppViewModel()  {
+			var self = this;
+
+			self.detailsEnabled = ko.observable(false);
+			self.enableDetails = function() {
+				self.detailsEnabled(true);
+			};
+			self.disableDetails = function() {
+				self.detailsEnabled(false);
+			};
+
+
+			self.lastInterest = ko.observable();
+			self.places = ko.observableArray(['London', 'Paris', 'Tokyo']);
+			// The current item will be passed as the first parameter, so we know which place was hovered over
+			self.logMouseOver = function(place) {
+				self.lastInterest(place);
+			}
+		};
+
+		ko.applyBindings(new AppViewModel());
+
+	</script>
+
+  </body>
+</html>

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title> enable / disable </title>
+    <script src="js/knockout-3.4.2.debug.js"></script>
+
+  </head>
+
+
+  <body>
+
+	<h3> 简单使用  </h3>
+
+	<p>
+		<input type='checkbox' data-bind="checked: hasCellphone" />
+		我有一个移动电话
+	</p>
+
+	<p>
+		你的移动电话号码:
+		<input type='text' data-bind="value: cellphoneNumber, enable: hasCellphone" />
+	</p>
+
+	<p>
+		你的证件号码:
+		<input type='text' data-bind="value: idNumber, disable: hasCellphone" />
+	</p>
+
+
+
+	<p>
+	关键点， 使用  data-bind = enable / disable ......
+
+	</p>
+
+
+
+	<script type="text/javascript">
+
+		function AppViewModel()  {
+			var self = this;
+
+			self.hasCellphone = ko.observable(false);
+			self.cellphoneNumber = "";
+			self.idNumber = ""
+
+		};
+
+		ko.applyBindings(new AppViewModel());
+
+	</script>
+
+  </body>
+</html>
