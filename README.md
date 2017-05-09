@@ -31,6 +31,12 @@
 
 
 
+### E0001_ES6_HelloWorld
+es6 的 hello world 的例子。  包含 es6 转 es5 的处理方法。
+
+
+
+
 ### N0001_gulp_helloworld
 gulp hello world 的例子。 单纯的测试安装与最简单的运行。
 
