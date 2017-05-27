@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>  日历 - 额外显示 CheckBox  </title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+	<link rel="stylesheet" href="myCalendar.css">
+
+	<script src="../common/jquery-1.10.2.js" type="text/javascript"></script>
+	<script type="text/javascript" src="myCalendar.js"></script>
+
+
+
+
+<script type="text/javascript">
+	$(document).ready(function () {
+
+		// 额外增加的控件.
+		myCalendar.withExpInfo = "<input type='checkbox' class='myCheckBox'>";
+
+		// 额外增加的事件.
+		myCalendar.withExpEventFunc = function(){
+			$(".myCalendar li.Title").on("change", "input.myCheckBox", function () {
+				// 取得父节点.
+				var parentItem = $(this).parent();
+				// 取得星期.
+				var weekIndex = parentItem.attr("data-week");
+				// 批处理标志.
+				var batchFlag = $(this).prop("checked");
+
+				// 遍历处理.
+				$(".myCalendar li.myCalendarData input.myCheckBox").each(function(){
+					var parentDataItem = $(this).parent();
+					if(parentDataItem.attr("data-week")  == weekIndex && parentDataItem.hasClass("OtherMonthData") == false) {
+						$(this).prop("checked", batchFlag);
+					}
+				});
+			});
+		};
+
+		// 初始化日期数据.
+		myCalendar.initMonthView($("#ca"));
+
+
+
+
+		// 工作日.
+		$("#chkAllWorkday").change(function () {
+			// 批处理标志.
+			var batchFlag = $(this).prop("checked");
+
+			// 遍历处理.
+			$(".myCalendar li.Workday input.myCheckBox").each(function(){
+				$(this).prop("checked", batchFlag);
+			});
+		});
+
+
+
+		// 节假日.
+		$("#chkAllHoliday").change(function () {
+			// 批处理标志.
+			var batchFlag = $(this).prop("checked");
+
+			// 遍历处理.
+			$(".myCalendar li.Holiday input.myCheckBox").each(function(){
+				$(this).prop("checked", batchFlag);
+			});
+		});
+
+
+
+		$("#btnGetResult").click(function () {
+			var resultArray = new Array();
+			$(".myCalendar li.myCalendarData input.myCheckBox").each(function(){
+				if($(this).prop("checked") == true) {
+					var parentDataItem = $(this).parent();
+					if(parentDataItem.hasClass("OtherMonthData") == false) {
+						resultArray.push(parentDataItem.attr("data-date"));
+					}
+				}
+			});
+			$("#selectResult").html(resultArray.join());
+		});
+
+	});
+
+
+</script>
+
+
+<body>
+
+<h2> 额外显示 CheckBox </h2>
+
+
+<div>
+	<p>
+		<input type='checkbox' id='chkAllWorkday'>工作日
+		&nbsp;&nbsp;&nbsp;
+		<input type='checkbox' id='chkAllHoliday'>节假日
+	</p>
+
+	<p>
+		<button type='button' id="btnGetResult">获取选择的数据</button>
+		<span id="selectResult">-</span>
+	</p>
+</div>
+
+
+<div id="ca">
+
+</div>
+
+
+
+
+
+</body>
+</html>

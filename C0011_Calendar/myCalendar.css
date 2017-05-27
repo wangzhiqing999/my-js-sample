@@ -1,0 +1,59 @@
+.myCalendarTitle {
+	width: 684px;
+}
+.myCalendarTitle li {
+	width: 228px;
+	float: left;
+	list-style: none;
+}
+.myCalendarPrevButton {
+	float: left;
+}
+.myCalendarNextButton {
+	float: right;
+}
+.myCalendarYearMonth {
+	text-align: center;
+}
+
+.myCalendar {
+	width: 750px;
+}
+.myCalendar li {
+	float: left;
+	list-style: none;
+	padding: 10px 20px 10px 20px;
+	margin : 1px 1px 1px 1px;
+	border-style: double;
+	border-color: black;
+	width: 50px;
+	text-align: center;
+}
+.myCalendar li.Title {
+	font-weight:bold;
+}
+
+/* 其他月的数据. */
+.myCalendar li.OtherMonthData
+{
+	color: #C0C0C0;
+}
+
+/* 假日. */
+.myCalendar li.Holiday
+{
+	color: #FF3300;
+}
+
+/* 工作日. */
+.myCalendar li.Workday
+{
+	color:Black;
+}
+
+/* 今日. */
+.myCalendar li.Today
+{
+	font-weight:bold;
+	font-style:italic;
+}
