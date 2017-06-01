@@ -32,7 +32,7 @@
 
 
 ### C0011_Calendar
-基本的日历处理的例子.
+基本的日历处理的例子. (包含学习使用 Jasmine 做单元测试的代码 )
 
 
 
@@ -60,3 +60,7 @@ React 学习的例子。 基本是复制粘贴下来，测试练习的。
 
 ### S0003_Knockoutjs
 Knockoutjs 学习的例子。 内容直接来自 http://knockoutjs.com/documentation/introduction.html
+
+
+### S0100_Mocha
+Mocha 学习的例子。

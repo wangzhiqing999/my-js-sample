@@ -52,10 +52,12 @@ var myCalendar = {
 	// 取得 周的最后一天.
 	getWeekLastDay : function(pDate, pLastDayIndex) {
 		var vTmpLastDate = pDate;
+		var vResult = new Date(vTmpLastDate.getFullYear(), vTmpLastDate.getMonth(), vTmpLastDate.getDate() + 6);
 		while (vTmpLastDate.getDay() != pLastDayIndex) {
+			vResult = vTmpLastDate;
 			vTmpLastDate = new Date(vTmpLastDate.getFullYear(), vTmpLastDate.getMonth(), vTmpLastDate.getDate() + 1);
 		}
-		return vTmpLastDate;
+		return vResult;
 	},
 
 	// 取得 月的第一天.
@@ -90,11 +92,29 @@ var myCalendar = {
 
 	// 取得前一月.
 	getPrevMonth : function (pDate) {
-		return new Date(pDate.getFullYear(), pDate.getMonth() - 1, pDate.getDate());
+		var result = new Date(pDate.getFullYear(), pDate.getMonth() - 1, pDate.getDate());
+		// 跨月检查.
+		if(pDate.getDate() != result.getDate()) {
+			// 也就是上一个月的时候， 日期与参数不同了.
+			// 发生这种情况的，一般是  3月5月 这样的 31日， 前一个月没有 31日。 导致结果被跨月了.
+			// 这种情况下。 返回上月的最后一天.
+			result = this.getMonthFirstDay(result);
+			result = this.getPrevDay(result);
+		}
+		return result;
 	},
 	// 取得后一月.
 	getNextMonth : function (pDate) {
-		return new Date(pDate.getFullYear(), pDate.getMonth() + 1, pDate.getDate());
+		var result = new Date(pDate.getFullYear(), pDate.getMonth() + 1, pDate.getDate());
+		// 跨月检查.
+		if(pDate.getDate() != result.getDate()) {
+			// 也就是后一个月的时候， 日期与参数不同了.
+			// 发生这种情况的，一般是  1月3月5月 这样的 31日， 后一个月没有 31日。 导致结果被跨月了.
+			// 这种情况下。 返回次月的最后一天.
+			result = this.getMonthFirstDay(result);
+			result = this.getPrevDay(result);
+		}
+		return result;
 	},
 
 
@@ -128,7 +148,7 @@ var myCalendar = {
 
 
 	// 初始化月份视图.
-	initMonthView(objectItem) {
+	initMonthView : function(objectItem) {
 		var detailData = new Array();
 		detailData.push("<ul class='myCalendarTitle'>");
 		detailData.push("<li><button type='button' class='myCalendarPrevButton' onclick='myCalendar.showPrevMonthData()' > &lt;&lt; </button></li>");
