@@ -40,6 +40,8 @@
 es6 的 hello world 的例子。  包含 es6 转 es5 的处理方法。
 
 
+### E0001_ES6_Stduy
+es6 的学习代码。
 
 
 ### N0001_gulp_helloworld
