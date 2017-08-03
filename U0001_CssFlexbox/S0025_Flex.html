@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>  Css Flexbox flex 属性.  </title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+	<link rel="stylesheet" type="text/css" href="style.css">
+
+</head>
+
+
+<body>
+
+	<h1>  Css Flexbox    flex 属性    </h1>
+
+	<p>
+		flex属性是flex-grow, flex-shrink 和 flex-basis的简写，默认值为0 1 auto。后两个属性可选。
+
+		该属性有两个快捷值：auto (1 1 auto) 和 none (0 0 auto)。
+
+		<br/>
+
+		.item {
+			flex: none | [ <'flex-grow'> <'flex-shrink'>? || <'flex-basis'> ]
+		}
+
+	</p>
+
+
+
+	<hr/>
+	<h3>  flex:auto </h3>
+	<div class="box" >
+		<div class="box-item" style="flex:auto;">0</div>
+		<div class="box-item" style="flex:auto;">1</div>
+		<div class="box-item" style="flex:auto;">2</div>
+	</div>
+
+
+	<hr/>
+	<h3>  flex:none  </h3>
+	<div class="box" >
+		<div class="box-item" style="flex:none;" >0</div>
+		<div class="box-item" style="flex:none;" >1</div>
+		<div class="box-item" style="flex:none;" >2</div>
+	</div>
+
+
+	<hr/>
+	<h3>  flex:auto / none / auto </h3>
+	<div class="box" >
+		<div class="box-item" style="flex:auto;" >0</div>
+		<div class="box-item" style="flex:none;" >1</div>
+		<div class="box-item" style="flex:auto;" >2</div>
+	</div>
+
+
+
+	<hr/>
+	<h3>  flex:none / auto / none </h3>
+	<div class="box" >
+		<div class="box-item" style="flex:none;" >0</div>
+		<div class="box-item" style="flex:auto;" >1</div>
+		<div class="box-item" style="flex:none;" >2</div>
+	</div>
+
+</body>
+</html>

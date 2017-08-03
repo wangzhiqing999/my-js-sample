@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>  Css Flexbox align-items 属性  </title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+	<link rel="stylesheet" type="text/css" href="style.css">
+
+</head>
+
+
+<body>
+
+	<h1>  Css Flexbox   align-items 属性   </h1>
+
+	<p>
+		align-items 属性定义项目在交叉轴上如何对齐。
+
+		<br/>
+
+		.box{
+			align-items: flex-start | flex-end | center | baseline | stretch;
+		}
+
+		<ul>
+			<li> flex-start：交叉轴的起点对齐。 </li>
+			<li> flex-end：交叉轴的终点对齐。 </li>
+			<li> center：交叉轴的中点对齐。 </li>
+			<li> baseline：项目的第一行文字的基线对齐。 </li>
+			<li> stretch：（默认值）：如果项目未设置高度或设为auto，将占满整个容器的高度。</li>
+		</ul>
+	</p>
+
+
+
+	<hr/>
+	<h3>  align-items: flex-start  </h3>
+	<div class="box"  style="align-items: flex-start" >
+		<div class="box-item">1</div>
+		<div class="box-item box-item-plus">
+			2
+			<br/>
+			2.5
+		</div>
+		<div class="box-item">3</div>
+		<div class="box-item box-item-plusplus">
+			4
+		</div>
+		<div class="box-item">5</div>
+	</div>
+
+
+	<hr/>
+	<h3>  align-items: flex-end  </h3>
+	<div class="box"  style="align-items: flex-end" >
+		<div class="box-item">1</div>
+		<div class="box-item box-item-plus">
+			2
+			<br/>
+			2.5
+		</div>
+		<div class="box-item">3</div>
+		<div class="box-item box-item-plusplus">
+			4
+		</div>
+		<div class="box-item">5</div>
+	</div>
+
+
+	<hr/>
+	<h3>  align-items: center  </h3>
+	<div class="box"  style="align-items: center" >
+		<div class="box-item">1</div>
+		<div class="box-item box-item-plus">
+			2
+			<br/>
+			2.5
+		</div>
+		<div class="box-item">3</div>
+		<div class="box-item box-item-plusplus">
+			4
+		</div>
+		<div class="box-item">5</div>
+	</div>
+
+
+	<hr/>
+	<h3>  align-items: baseline  </h3>
+	<div class="box"  style="align-items: baseline" >
+		<div class="box-item">1</div>
+		<div class="box-item box-item-plus">
+			2
+			<br/>
+			2.5
+		</div>
+		<div class="box-item">3</div>
+		<div class="box-item box-item-plusplus">
+			4
+		</div>
+		<div class="box-item">5</div>
+	</div>
+
+
+	<hr/>
+	<h3>  align-items: stretch  </h3>
+	<div class="box"  style="align-items: stretch" >
+		<div class="box-item" style="height:auto;">1</div>
+		<div class="box-item box-item-plus" style="height:auto;">
+			2
+			<br/>
+			2.5
+		</div>
+		<div class="box-item" style="height:auto;">3</div>
+		<div class="box-item box-item-plusplus" style="height:auto;">
+			4
+		</div>
+		<div class="box-item" style="height:auto;">5</div>
+	</div>
+
+
+
+</body>
+</html>

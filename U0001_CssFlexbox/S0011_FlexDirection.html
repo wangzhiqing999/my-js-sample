@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>  Css Flexbox flex-direction属性  </title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+	<link rel="stylesheet" type="text/css" href="style.css">
+
+</head>
+
+
+<body>
+
+	<h1>  Css Flexbox   flex-direction属性   </h1>
+
+	<p>
+		flex-direction属性决定主轴的方向（即项目的排列方向）。
+
+		<br/>
+
+		.box {
+			flex-direction: row | row-reverse | column | column-reverse;
+		}
+
+
+		<ul>
+			<li>
+				row（默认值）：主轴为水平方向，起点在左端。
+			</li>
+			<li>
+				row-reverse：主轴为水平方向，起点在右端。
+			</li>
+			<li>
+				column：主轴为垂直方向，起点在上沿。
+			</li>
+			<li>
+				column-reverse：主轴为垂直方向，起点在下沿。
+			</li>
+		</ul>
+	</p>
+
+
+
+	<hr/>
+	<h3>  flex-direction: row  </h3>
+	<div class="box"  style="flex-direction: row" >
+		<div class="box-item">1</div>
+		<div class="box-item">2</div>
+		<div class="box-item">3</div>
+		<div class="box-item">4</div>
+	</div>
+
+
+
+	<hr/>
+	<h3>  flex-direction: row-reverse  </h3>
+	<div class="box"  style="flex-direction: row-reverse" >
+		<div class="box-item">1</div>
+		<div class="box-item">2</div>
+		<div class="box-item">3</div>
+		<div class="box-item">4</div>
+	</div>
+
+
+
+	<hr/>
+	<h3>  flex-direction: column  </h3>
+	<div class="box"  style="flex-direction: column" >
+		<div class="box-item">1</div>
+		<div class="box-item">2</div>
+		<div class="box-item">3</div>
+		<div class="box-item">4</div>
+	</div>
+
+
+
+	<hr/>
+	<h3>  flex-direction: column-reverse  </h3>
+	<div class="box"  style="flex-direction: column-reverse" >
+		<div class="box-item">1</div>
+		<div class="box-item">2</div>
+		<div class="box-item">3</div>
+		<div class="box-item">4</div>
+	</div>
+
+
+
+</body>
+</html>

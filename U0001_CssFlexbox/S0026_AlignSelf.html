@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>  Css Flexbox align-self 属性.  </title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+	<link rel="stylesheet" type="text/css" href="style.css">
+
+</head>
+
+
+<body>
+
+	<h1>  Css Flexbox    align-self 属性    </h1>
+
+	<p>
+		align-self属性允许单个项目有与其他项目不一样的对齐方式，可覆盖align-items属性。
+		默认值为auto，表示继承父元素的align-items属性，如果没有父元素，则等同于stretch。
+
+		<br/>
+
+		.item {
+			align-self: auto | flex-start | flex-end | center | baseline | stretch;
+		}
+
+	</p>
+
+
+
+	<hr/>
+	<h3>   align-items: flex-start;  /  align-self:flex-end; </h3>
+	<div class="box" style="height:250px; align-items: flex-start;" >
+		<div class="box-item">0</div>
+		<div class="box-item" style="align-self:flex-end;">1</div>
+		<div class="box-item">2</div>
+	</div>
+
+	<hr/>
+	<h3>  align-items: flex-start;  /  align-self:center </h3>
+	<div class="box" style="height:250px; align-items: flex-start;" >
+		<div class="box-item">0</div>
+		<div class="box-item" style="align-self:center;">1</div>
+		<div class="box-item">2</div>
+	</div>
+
+
+	<hr/>
+	<h3> align-items: flex-end; / align-self:flex-start </h3>
+	<div class="box" style="height:250px;  flex-wrap: wrap; align-items: flex-end;" >
+		<div class="box-item">0</div>
+		<div class="box-item" style="align-self:flex-start;">1</div>
+		<div class="box-item">2</div>
+	</div>
+
+
+	<hr/>
+	<h3> align-items: flex-end; / align-self:center </h3>
+	<div class="box" style="height:250px;  flex-wrap: wrap; align-items: flex-end;" >
+		<div class="box-item">0</div>
+		<div class="box-item" style="align-self:center;">1</div>
+		<div class="box-item">2</div>
+	</div>
+
+
+</body>
+</html>
