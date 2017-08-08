@@ -1,0 +1,776 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <title> Collection </title>
+    <script src="js/lodash.js"></script>
+</head>
+
+
+<body>
+
+	<p>
+	F12 看控制台的输出！
+	</p>
+
+
+	<ul>
+
+		<li>
+			_.all(collection, [predicate=_.identity], [thisArg])
+			_.every(collection, [predicate=_.identity], [thisArg])
+			是否所有的数据， 都满足条件.
+		</li>
+
+		<li>
+			_.any(collection, [predicate=_.identity], [thisArg])
+			_.some(collection, [predicate=_.identity], [thisArg])
+			是否存在有一条数据， 能满足条件.
+		</li>
+
+		<li>
+			_.at(collection, [props])
+			获取指定位置的元素.
+		</li>
+
+		<li>
+			_.collect(collection, [iteratee=_.identity], [thisArg])
+			_.map(collection, [iteratee=_.identity], [thisArg])
+			额外数据处理.
+		</li>
+
+		<li>
+			_.contains(collection, target, [fromIndex=0])
+			_.includes(collection, target, [fromIndex=0])
+			包含判断.
+		</li>
+
+
+
+		<li>
+			_.countBy(collection, [iteratee=_.identity], [thisArg])
+			计数.
+		</li>
+
+
+		<li>
+			_.detect(collection, [predicate=_.identity], [thisArg])
+			_.find(collection, [predicate=_.identity], [thisArg])
+			查询. (返回首条满足条件的记录)
+		</li>
+
+		<li>
+			_.each(collection, [iteratee=_.identity], [thisArg])
+			_.forEach(collection, [iteratee=_.identity], [thisArg])
+			遍历处理.
+		</li>
+
+
+		<li>
+			_.eachRight(collection, [iteratee=_.identity], [thisArg])
+			_.forEachRight(collection, [iteratee=_.identity], [thisArg])
+			遍历处理.
+		</li>
+
+
+		<li>
+			_.filter(collection, [predicate=_.identity], [thisArg])
+			_.select(collection, [predicate=_.identity], [thisArg])
+			筛选处理.
+		</li>
+
+		<li>
+			_.findLast(collection, [predicate=_.identity], [thisArg])
+			查询 (从后向前， 返回首条满足条件的记录)
+		</li>
+
+		<li>
+			_.foldl(collection, [iteratee=_.identity], [accumulator], [thisArg])
+			_.reduce(collection, [iteratee=_.identity], [accumulator], [thisArg])
+			_.inject(collection, [iteratee=_.identity], [accumulator], [thisArg])
+			累计处理.
+		</li>
+
+		<li>
+			_.foldr(collection, [iteratee=_.identity], [accumulator], [thisArg])
+			_.reduceRight(collection, [iteratee=_.identity], [accumulator], [thisArg])
+			累计处理. (方向，从右向左.)
+		</li>
+
+
+		<li>
+			_.groupBy(collection, [iteratee=_.identity], [thisArg])
+			分组处理.
+		</li>
+
+
+		<li>
+			_.indexBy(collection, [iteratee=_.identity], [thisArg])
+			排序分组处理.
+		</li>
+
+
+		<li>
+			_.invoke(collection, path, [args])
+			调用处理.
+		</li>
+
+
+
+		<li>
+			_.partition(collection, [predicate=_.identity], [thisArg])
+			分区处理.
+		</li>
+
+
+		<li>
+			_.pluck(collection, path)
+			抽取处理.
+		</li>
+
+		<li>
+			_.reject(collection, [predicate=_.identity], [thisArg])
+			返回不满足条件的数据.
+		</li>
+
+		<li>
+			_.sample(collection, [n])
+			返回样本.(随机获取)
+		</li>
+
+
+		<li>
+			_.size(collection)
+			返回集合的大小.
+		</li>
+
+		<li>
+			_.sortBy(collection, [iteratee=_.identity], [thisArg])
+			排序处理.
+		</li>
+
+		<li>
+			_.sortByOrder(collection, iteratees, [orders])
+			排序处理.
+		</li>
+
+
+		<li>
+			_.where(collection, source)
+			筛选处理.
+		</li>
+
+	</ul>
+
+
+
+<script type="text/javascript">
+
+
+	function testAll() {
+		console.group("_.all / every(collection, [predicate=_.identity], [thisArg])");
+
+		// 参数
+		// 1.collection (Array|Object|string): The collection to iterate over.
+		// 2.[predicate=_.identity] (Function|Object|string): The function invoked per iteration.
+		// 3.[thisArg] (*): The this binding of predicate.
+		// 返回值
+		// (boolean): Returns true if all elements pass the predicate check, else false.
+
+
+		var users = [
+			{ 'user': '张三', 	'active': false },
+			{ 'user': '李四',   'active': false }
+		];
+
+		// 是否所有数据， 都满足 'user' == '张三' && 'active' == false
+		var result1 = _.every(users, { 'user': '张三', 'active': false });
+		console.log("result1 = ", result1);
+
+
+		// 是否所有数据， 都满足  'active' == false
+		var result2 = _.every(users, 'active', false);
+		console.log("result2 = ", result2);
+
+
+		// 是否所有数据， 都满足  'active' == false
+		var result3 = _.all(users, function(u) { return u.active === false; } );
+		console.log("result3 = ", result3);
+
+
+		console.groupEnd();
+	}
+
+
+	function testAny() {
+		console.group("_.any / some(collection, [predicate=_.identity], [thisArg])");
+
+		// 参数
+		// 1.collection (Array|Object|string): The collection to iterate over.
+		// 2.[predicate=_.identity] (Function|Object|string): The function invoked per iteration.
+		// 3.[thisArg] (*): The this binding of predicate.
+		// 返回值
+		// (boolean): Returns true if any element passes the predicate check, else false.
+
+
+		var users = [
+			{ 'user': '张三', 	'active': false },
+			{ 'user': '李四',   'active': false }
+		];
+
+		// 是否存在有数据， 满足 'user' == '张三' && 'active' == false
+		var result1 = _.some(users, { 'user': '张三', 'active': false });
+		console.log("result1 = ", result1);
+
+
+		// 是否存在有数据， 满足  'active' == false
+		var result2 = _.some(users, 'active', false);
+		console.log("result2 = ", result2);
+
+
+		// 是否存在有数据， 满足  'active' == true
+		var result3 = _.any(users, function(u) { return u.active === true; } );
+		console.log("result3 = ", result3);
+
+		console.groupEnd();
+	}
+
+
+	function testAt() {
+		console.group("_.at(collection, [props])");
+
+		var sourceArray = ["零", "壹", "贰", "叁", "肆", "伍", "陆", "柒", "捌", "玖"];
+		var result1 = _.at(sourceArray, [0, 2, 4, 6, 8]);
+		var result2 = _.at(sourceArray, 1, 3, 5, 7, 9);
+
+		console.log("source = ", sourceArray);
+		console.log("at( [0, 2, 4, 6, 8] ) = ", result1);
+		console.log("at( 1, 3, 5, 7, 9 ) = ", result2);
+
+		console.groupEnd();
+	}
+
+
+	function timesThree(n) {
+		return n * 3;
+	}
+
+
+	function testCollect() {
+		console.group("_.collect / map(collection, [iteratee=_.identity], [thisArg])");
+
+		var sourceArray = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+		var result = _.map(sourceArray, timesThree);
+
+		console.log("source = ", sourceArray);
+		console.log("result = ", result);
+
+
+		var users = [
+			{ 'user': '张三', 	'active': false },
+			{ 'user': '李四',   'active': false }
+		];
+		var userNames = _.map(users, "user");
+
+		console.log("source = ", users);
+		console.log("result = ", userNames);
+
+		console.groupEnd();
+	}
+
+
+	function testContains() {
+		console.group("_.contains / includes(collection, target, [fromIndex=0])");
+
+		var sourceArray = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+		var result5 = _.includes(sourceArray, 5);
+		var result10 = _.includes(sourceArray, 10);
+
+		console.log("source = ", sourceArray);
+		console.log("includes(5) result = ", result5);
+		console.log("includes(10) result = ", result10);
+
+		console.groupEnd();
+	}
+
+
+	function testCountBy() {
+		console.group("_.countBy(collection, [iteratee=_.identity], [thisArg])");
+
+		var sourceArray = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+
+		var result = _.countBy(sourceArray, function(n) {
+			return n % 3;
+		});
+
+		console.log("source = ", sourceArray);
+		console.log("countBy(n % 3) result = ", result);
+
+		console.groupEnd();
+	}
+
+
+	function testDetect() {
+		console.group("_.detect / find(collection, [predicate=_.identity], [thisArg])");
+
+		// 返回满足条件的首条记录.
+
+		var sourceArray = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+
+		var result = _.detect(sourceArray, function(n) {
+			return n % 3 === 0;
+		});
+
+		var result1 = _.find(sourceArray, function(n) {
+			return n % 3 === 1;
+		});
+
+
+		console.log("source = ", sourceArray);
+		console.log("detect(n % 3 === 0) result = ", result);
+		console.log("find(n % 3 === 1) result = ", result1);
+
+		console.groupEnd();
+	}
+
+
+	function testEach() {
+		console.group("_.each / forEach(collection, [iteratee=_.identity], [thisArg])");
+
+		// 遍历处理.
+		var sourceArray = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+
+		_.forEach(sourceArray, function(n) {
+			console.log("_.forEach : ", n);
+		});
+
+		console.groupEnd();
+	}
+
+
+	function testEachRight() {
+		console.group("_.eachRight / forEachRight(collection, [iteratee=_.identity], [thisArg])");
+
+		// 遍历处理.
+		var sourceArray = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+
+		_.forEachRight(sourceArray, function(n) {
+			console.log("_.forEachRight : ", n);
+		});
+
+		console.groupEnd();
+	}
+
+
+	function testFilter() {
+		console.group("_.filter / select(collection, [predicate=_.identity], [thisArg])");
+
+		// 筛选满足条件的所有数据.
+
+		var sourceArray = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+
+		var result = _.filter(sourceArray, function(n) {
+			return n % 3 === 0;
+		});
+
+		console.log("source = ", sourceArray);
+		console.log("filter(n % 3 === 0) result = ", result);
+
+		console.groupEnd();
+	}
+
+
+	function testFindLast() {
+		console.group("_.findLast(collection, [predicate=_.identity], [thisArg])");
+
+		// 从后向前， 返回满足条件的首条记录.
+
+		var sourceArray = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+
+		var result = _.findLast(sourceArray, function(n) {
+			return n % 3 === 0;
+		});
+
+		var result1 = _.findLast(sourceArray, function(n) {
+			return n % 3 === 1;
+		});
+
+
+		console.log("source = ", sourceArray);
+		console.log("findLast(n % 3 === 0) result = ", result);
+		console.log("findLast(n % 3 === 1) result = ", result1);
+
+		console.groupEnd();
+	}
+
+
+	function testFoldl() {
+		console.group("_.foldl / reduce / inject (collection, [iteratee=_.identity], [accumulator], [thisArg])");
+
+		var sourceArray = [0, 1, 2, 3, 4, 5];
+
+		var result = _.reduce(sourceArray, function(total, n) {
+			return total + n;
+		});
+
+		console.log("source = ", sourceArray);
+		console.log("reduce(total + n) result = ", result);
+
+		console.groupEnd();
+	}
+
+
+	function testFoldr() {
+		console.group("_.foldr / reduceRight (collection, [iteratee=_.identity], [accumulator], [thisArg])");
+
+		var sourceArray = [[0, 1], [2, 3], [4, 5]];
+
+		var result = _.reduceRight(sourceArray, function(flattened, other) {
+			return flattened.concat(other);
+		}, []);
+
+		console.log("source = ", sourceArray);
+		console.log("reduceRight(concat) result = ", result);
+
+		console.groupEnd();
+	}
+
+
+	function testGroupBy() {
+		console.group("_.groupBy(collection, [iteratee=_.identity], [thisArg])");
+
+		// 分组处理.
+
+		var sourceArray = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+
+		var result = _.groupBy(sourceArray, function(n) {
+			return n % 3;
+		});
+
+		console.log("source = ", sourceArray);
+		console.log("groupBy(n % 3) result = ", result);
+
+		console.groupEnd();
+	}
+
+
+	function testIndexBy() {
+		console.group("_.indexBy(collection, [iteratee=_.identity], [thisArg])");
+
+		// 排序处理.
+		var users = [
+			{ 'user': '张三', 	'age': 25 },
+			{ 'user': '李四',   'age': 28 },
+			{ 'user': '王五',   'age': 26 },
+			{ 'user': '赵六',   'age': 25 }
+		];
+
+		// 按年龄排序
+		var result1 = _.indexBy(users, 'age');
+
+		console.log("source = ", users);
+		console.log("indexBy(age) = ", result1);
+
+		console.groupEnd();
+	}
+
+
+	function testInvoke() {
+		console.group("_.invoke(collection, path, [args])");
+
+		// 调用方法处理.
+
+		var sourceArray = [[1, 0], [2, 3], [5, 4]];
+
+
+		console.log("Before Process.");
+		_.forEach(sourceArray, function(n) {
+			console.log("_.forEach : ", n);
+		});
+
+
+
+		// 依次排序.
+		var result = _.invoke(sourceArray, 'sort');
+
+		// 此操作， 修改了数组中的 数组的排序。
+
+		console.log("After Process.");
+
+		_.forEach(sourceArray, function(n) {
+			console.log("_.forEach : ", n);
+		});
+		_.forEach(result, function(n) {
+			console.log("_.forEach result: ", n);
+		});
+
+		console.groupEnd();
+	}
+
+
+	function testPartition() {
+		console.group("_.partition(collection, [predicate=_.identity], [thisArg])");
+
+		// 分区处理.
+		var sourceArray = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+
+		var result = _.partition(sourceArray, function(n) {
+			return n % 3;
+		});
+
+		// 注意： 这里的分区结果， 好像只有2个， 一个是 能被3整除的， 和 不能被3整除的。
+
+		console.log("source = ", sourceArray);
+		console.log("partition(n % 3) result = ", result);
+
+		console.groupEnd();
+	}
+
+
+
+	function testPluck() {
+		console.group("_.pluck(collection, path)");
+
+		var users = [
+			{ 'user': '张三', 	'age': 25 },
+			{ 'user': '李四',   'age': 28 },
+			{ 'user': '王五',   'age': 26 },
+			{ 'user': '赵六',   'age': 25 }
+		];
+
+
+		var names = _.pluck(users, 'user');
+		var ages = _.pluck(users, 'age');
+
+		console.log("source = ", users);
+		console.log("pluck(user) = ", names);
+		console.log("pluck(age) = ", ages);
+
+		console.groupEnd();
+	}
+
+
+	function testReject() {
+		console.group("_.reject(collection, [predicate=_.identity], [thisArg])");
+
+		var sourceArray = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+
+		// 筛选出， 不能被3整除的。
+		var result = _.reject(sourceArray, function(n) {
+			return n % 3 === 0;
+		});
+
+		console.log("source = ", sourceArray);
+		console.log("reject(n % 3 === 0) result = ", result);
+
+
+		console.groupEnd();
+	}
+
+
+	function testSample() {
+		console.group("_.sample(collection, [n])");
+
+		var sourceArray = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+
+		// 取三次样本，每次取三条.
+		var result1 = _.sample(sourceArray, 3);
+		var result2 = _.sample(sourceArray, 3);
+		var result3 = _.sample(sourceArray, 3);
+
+		// 随机处理的， 结果应该不同.
+		console.log("source = ", sourceArray);
+		console.log("sample(3) result1 = ", result1);
+		console.log("sample(3) result2 = ", result2);
+		console.log("sample(3) result3 = ", result3);
+
+		console.groupEnd();
+	}
+
+
+	function testSize() {
+		console.group("_.size(collection)");
+
+		var sourceArray = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+		var size = _.size(sourceArray);
+
+		console.log("source = ", sourceArray);
+		console.log("size = ", size);
+
+		console.groupEnd();
+	}
+
+
+	function testSortBy() {
+		console.group("_.sortBy(collection, [iteratee=_.identity], [thisArg])");
+
+		var sourceArray = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+		var result = _.sortBy(sourceArray, function(n) {
+			return n % 3;
+		});
+
+		console.log("source = ", sourceArray);
+		console.log("sortBy(n % 3) result = ", result);
+
+
+
+		// 排序处理.
+		var users = [
+			{ 'user': '张三', 	'age': 25 },
+			{ 'user': '李四',   'age': 28 },
+			{ 'user': '王五',   'age': 26 },
+			{ 'user': '赵六',   'age': 25 }
+		];
+
+		// 按年龄排序
+		var result1 = _.sortBy(users, 'age');
+
+		console.log("source = ", users);
+		console.log("sortBy(age) = ", result1);
+
+		console.groupEnd();
+	}
+
+
+	function testSortByOrder() {
+		console.group("_.sortByOrder(collection, iteratees, [orders])");
+
+		// 排序处理.
+		var users = [
+			{ 'user': '张三', 	'age': 25 },
+			{ 'user': '李四',   'age': 28 },
+			{ 'user': '王五',   'age': 26 },
+			{ 'user': '赵六',   'age': 25 }
+		];
+
+
+		// 按 [年龄 逆序 / 姓名 升序] 排序
+		var result1 = _.sortByOrder(users, ['age', 'user'], ['desc', 'asc']);
+
+		console.log("source = ", users);
+		console.log("sortByOrder(age, user) = ", result1);
+
+		console.groupEnd();
+	}
+
+
+
+
+	function testWhere() {
+		console.group("_.where(collection, source)");
+
+		var users = [
+			{ 'user': '张三', 	'age': 25 },
+			{ 'user': '李四',   'age': 28 },
+			{ 'user': '王五',   'age': 26 },
+			{ 'user': '赵六',   'age': 25 }
+		];
+
+		var result1 = _.where(users, {'age' : 25});
+
+		console.log("source = ", users);
+		console.log("where(age = 25) = ", result1);
+
+		console.groupEnd();
+	}
+
+
+
+
+	// _.all(collection, [predicate=_.identity], [thisArg])
+	// _.every(collection, [predicate=_.identity], [thisArg])
+	testAll();
+
+	// _.any(collection, [predicate=_.identity], [thisArg])
+	// _.some(collection, [predicate=_.identity], [thisArg])
+	testAny();
+
+	// _.at(collection, [props])
+	testAt();
+
+	// _.collect(collection, [iteratee=_.identity], [thisArg])
+	// _.map(collection, [iteratee=_.identity], [thisArg])
+	testCollect();
+
+	// _.contains(collection, target, [fromIndex=0])
+	// _.includes(collection, target, [fromIndex=0])
+	testContains()
+
+	// _.countBy(collection, [iteratee=_.identity], [thisArg])
+	testCountBy();
+
+	// _.detect(collection, [predicate=_.identity], [thisArg])
+	// _.find(collection, [predicate=_.identity], [thisArg])
+	testDetect();
+
+	// _.each(collection, [iteratee=_.identity], [thisArg])
+	// _.forEach(collection, [iteratee=_.identity], [thisArg])
+	testEach();
+
+	// _.eachRight(collection, [iteratee=_.identity], [thisArg])
+	// _.forEachRight(collection, [iteratee=_.identity], [thisArg])
+	testEachRight();
+
+	// _.filter(collection, [predicate=_.identity], [thisArg])
+	// _.select(collection, [predicate=_.identity], [thisArg])
+	testFilter();
+
+
+	// _.findLast(collection, [predicate=_.identity], [thisArg])
+	testFindLast();
+
+
+	// _.foldl(collection, [iteratee=_.identity], [accumulator], [thisArg])
+	// _.reduce(collection, [iteratee=_.identity], [accumulator], [thisArg])
+	// _.inject(collection, [iteratee=_.identity], [accumulator], [thisArg])
+	testFoldl();
+
+
+	// _.foldr(collection, [iteratee=_.identity], [accumulator], [thisArg])
+	// _.reduceRight(collection, [iteratee=_.identity], [accumulator], [thisArg])
+	testFoldr();
+
+
+	// _.groupBy(collection, [iteratee=_.identity], [thisArg])
+	testGroupBy();
+
+
+	// _.indexBy(collection, [iteratee=_.identity], [thisArg])
+	testIndexBy();
+
+
+	// _.invoke(collection, path, [args])
+	testInvoke();
+
+
+	// _.partition(collection, [predicate=_.identity], [thisArg])
+	testPartition();
+
+
+	// _.pluck(collection, path)
+	testPluck();
+
+	// _.reject(collection, [predicate=_.identity], [thisArg])
+	testReject();
+
+	// _.sample(collection, [n])
+	testSample();
+
+	// _.size(collection)
+	testSize();
+
+	// _.sortBy(collection, [iteratee=_.identity], [thisArg])
+	testSortBy();
+
+	// _.sortByOrder(collection, iteratees, [orders])
+	testSortByOrder();
+
+	// _.where(collection, source)
+	testWhere();
+
+
+</script>
+
+
+</body>
+</html>

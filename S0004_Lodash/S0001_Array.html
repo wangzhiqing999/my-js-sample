@@ -1,0 +1,1147 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <title> Array </title>
+    <script src="js/lodash.js"></script>
+</head>
+
+
+<body>
+
+	<p>
+	F12 看控制台的输出！
+	</p>
+
+
+	<ul>
+
+		<li>
+			_.chunk(array, [size=1])
+			拆分数组.
+		</li>
+
+		<li>
+			_.compact(array)
+			过滤非假值元素
+		</li>
+
+		<li>
+			_.difference(array, [values])
+			筛选出不包含的元素.
+		</li>
+
+		<li>
+			_.drop(array, [n=1])
+			将数组的前 n 个元素去掉，然后返回剩余的部分。
+		</li>
+		<li>
+			_.dropWhile(array, [predicate=_.identity], [thisArg])
+			从开头查询（左数起）数组， 第一个不满足条件的，开始返回后续。
+		</li>
+
+
+		<li>
+			_.dropRight(array, [n=1])
+			将数组的后 n 个元素去掉，然后返回剩余的部分。
+		</li>
+		<li>
+			_.dropRightWhile(array, [predicate=_.identity], [thisArg])
+			从尾端查询（右数）数组 array ，第一个不满足predicate 条件的元素开始截取数组
+		</li>
+
+
+		<li>
+			_.fill(array, value, [start=0], [end=array.length])
+			使用 value 值来填充（也就是替换） array，从start位置开始, 到end位置结束（但不包含end位置）
+		</li>
+
+		<li>
+			_.findIndex(array, [predicate=_.identity], [thisArg])
+			返回的是符合 predicate条件的第一个元素的索引
+		</li>
+		<li>
+			_.findLastIndex(array, [predicate=_.identity], [thisArg])
+			该方法类似 _.findIndex ，区别是其从右到左遍历数组.
+		</li>
+
+
+		<li>
+			_.first(array)
+			获取数组 array的第一个元素
+		</li>
+		<li>
+			_.last(array)
+			取出数组的最后一个元素 array.
+		</li>
+
+
+		<li>
+			_.flatten(array, [isDeep])
+			将嵌套数组的维数减少.
+		</li>
+
+		<li>
+			_.flattenDeep(array)
+			递归地平坦一个嵌套的数组.相当于_.flatten(array, true)
+		</li>
+
+
+		<li>
+			_.indexOf(array, value, [fromIndex=0])
+			获取value在数组 array所在的索引值
+		</li>
+		<li>
+			_.lastIndexOf(array, value, [fromIndex=array.length-1])
+			该方法类似 _.indexOf ，只不过_.lastIndexOf是从右向左遍历数组array.
+		</li>
+
+
+		<li>
+			_.initial(array)
+			去除数组最后一个元素array.
+		</li>
+
+		<li>
+			_.rest(array)
+			获取数组 array第一个元素除外的所有元素.
+		</li>
+
+		<li>
+			_.intersection([arrays])
+			取出各数组中全等的元素
+		</li>
+
+
+		<li>
+			_.pull(array, [values])
+			移除数组array中所有和 values 相等的元素，使用 SameValueZero 进行全等比较
+		</li>
+
+		<li>
+			_.pullAt(array, [indexes])
+			移除指定索引的数组元素，并返回移除的元素，索引值明确给出或者是索引数组.
+		</li>
+
+		<li>
+			_.remove(array, [predicate=_.identity], [thisArg])
+			移除数组 array 中满足 predicate 条件的所有元素 ，返回的是被移除元素数组.
+		</li>
+
+		<li>
+			_.slice(array, [start=0], [end=array.length])
+			从start位置到 end（但不包含end位置），截取 array数组
+		</li>
+
+
+		<li>
+			_.sortedIndex(array, value, [iteratee=_.identity], [thisArg])
+			计算插入位置.
+		</li>
+		<li>
+			_.sortedLastIndex(array, value, [iteratee=_.identity], [thisArg])
+			计算插入位置. 用法类似于 _.sortedIndex ,不同的是从右至左计算插入的位置
+		</li>
+
+		<li>
+			_.take(array, [n=1])
+			从数组的起始位置开始，取n个元素;n默认是1
+		</li>
+
+		<li>
+			_.takeRight(array, [n=1])
+			从数组右侧开始 取得 n 个元素;n默认为1
+		</li>
+
+		<li>
+			_.takeWhile(array, [predicate=_.identity], [thisArg])
+
+		</li>
+		<li>
+			_.takeRightWhile(array, [predicate=_.identity], [thisArg])
+
+		</li>
+
+
+		<li>
+			_.union([arrays])
+		</li>
+		<li>
+			_.uniq(array, [isSorted], [iteratee], [thisArg])
+		</li>
+
+
+		<li>
+			_.zipWith([arrays], [iteratee], [thisArg])
+		</li>
+		<li>
+			_.unzipWith(array, [iteratee], [thisArg])
+		</li>
+
+
+		<li>
+			_.without(array, [values])
+		</li>
+
+
+		<li>
+			_.xor([arrays])
+		</li>
+
+	</ul>
+
+
+
+<script type="text/javascript">
+
+
+	function testChunk() {
+		console.group("_.chunk(array, [size=1])");
+
+		// _.chunk(array, [size=1]) 将 array 拆分成多个 size 长度的块，把这些块组成一个新数组。
+		// 如果 array 无法被分割成全部等长的块，那么最后剩余的元素将组成一个块。
+		// 参数
+		// 1.array (Array): 需要被处理的数组。
+		// 2.[size=1] (number): 每个块的长度。
+		// 返回值
+		// (Array): 返回一个包含拆分块数组的新数组（相当于一个二维数组）。
+
+		var sourceArray = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K'];
+
+		var result1 = _.chunk(sourceArray, 1);
+		var result2 = _.chunk(sourceArray, 2);
+		var result3 = _.chunk(sourceArray, 3);
+
+		console.log("source = ", sourceArray);
+		console.log("chunk 1 Result = ", result1);
+		console.log("chunk 2 Result = ", result2);
+		console.log("chunk 3 Result = ", result3);
+
+		console.groupEnd();
+	}
+
+
+	function testCompact() {
+		console.group("_.compact(array)");
+		// 创建一个新数组，包含原数组中所有的非假值元素。例如 false、null、 0、""、undefined 和 NaN 都是“假值”。
+		// 参数
+		// 1.array (Array): 数组参数.
+		// 返回值
+		// (Array): 返回过滤假值后的数组.
+
+		var sourceArray = [0, 1, false, 2, '', 3,  null, 4, undefined, 5, NaN, 6];
+
+		var result = _.compact(sourceArray);
+
+		console.log("source = ", sourceArray);
+		console.log("compact Result = ", result);
+
+		console.groupEnd();
+	}
+
+
+	function testDifference() {
+		console.group("_.difference(array, [values])");
+
+		// 创建一个新数组， 过滤掉需要排除的数组数据.
+
+		// 参数
+		// 1.array (Array): 需要过滤的数组
+		// 2.[values] (...Array): 数组需要排除掉的值
+		// 返回值
+		// (Array): 返回过滤后的数组
+
+		var sourceArray = [1,2,3,4,5,6,7,8,9];
+
+		var result1 = _.difference(sourceArray, [1,3,5,7,9]);
+		var result2 = _.difference(sourceArray, [2,4,6,8,10]);
+
+		console.log("source = ", sourceArray);
+		console.log("difference [1,3,5,7,9] Result = ", result1);
+		console.log("difference [2,4,6,8,10] Result = ", result2);
+
+		console.groupEnd();
+	}
+
+
+	function testDrop() {
+		console.group("_.drop(array, [n=1])");
+
+		// 将数组的前 n 个元素去掉，然后返回剩余的部分。
+		// 参数
+		// 1.array (Array): 被操作的数组。
+		// 2.[n=1] (number): 去掉的元素个数。
+		// 返回值
+		// (Array): 返回 array 的剩余部分。
+
+		var sourceArray = [1,2,3,4,5,6,7,8,9];
+
+		var result1 = _.drop(sourceArray);
+		var result2 = _.drop(sourceArray, 2);
+		var result5 = _.drop(sourceArray, 5);
+
+		console.log("source = ", sourceArray);
+		console.log("drop Result = ", result1);
+		console.log("drop 2 Result = ", result2);
+		console.log("drop 5 Result = ", result5);
+
+		console.groupEnd();
+	}
+
+
+	function testDropWhile() {
+		console.group("_.dropWhile(array, [predicate=_.identity], [thisArg])");
+
+		// 从开头查询（左数起）数组 array ，第一个不满足predicate 条件的元素开始截取数组
+
+		// 参数
+		// 1.array (Array): 需要查询的数组
+		// 2.[predicate=_.identity] (Function|Object|string): 数组遍历的条件
+		// 3.[thisArg] (*): 对应 predicate 属性的值.
+		// 返回值
+		// (Array): 返回截取元素后的数组
+
+
+		var sourceArray = [1,2,3,4,5,6,7,8,9];
+
+		// 条件是 小于3.
+		var result3 = _.dropWhile(sourceArray,  function(n) { return n < 3} );
+		// 条件是 小于7.
+		var result7 = _.dropWhile(sourceArray,  function(n) { return n < 7} );
+
+
+		console.log("source = ", sourceArray);
+		console.log("dropWhile (n < 3) Result = ", result3);
+		console.log("dropWhile (n < 7) Result = ", result7);
+
+		console.groupEnd();
+	}
+
+
+	function testDropRight() {
+		console.group("_.dropRight(array, [n=1])");
+
+		// 将数组的后 n 个元素去掉，然后返回剩余的部分。
+		// 参数
+		// 1.array (Array): 需要被处理数组。
+		// 2.[n=1] (number): 去掉的元素个数。
+		// 返回值
+		// (Array): 返回 array 的剩余部分。
+
+		var sourceArray = [1,2,3,4,5,6,7,8,9];
+
+		var result1 = _.dropRight(sourceArray);
+		var result2 = _.dropRight(sourceArray, 2);
+		var result5 = _.dropRight(sourceArray, 5);
+
+		console.log("source = ", sourceArray);
+		console.log("dropRight Result = ", result1);
+		console.log("dropRight 2 Result = ", result2);
+		console.log("dropRight 5 Result = ", result5);
+
+		console.groupEnd();
+	}
+
+
+	function testDropRightWhile() {
+		console.group("_.dropRightWhile(array, [predicate=_.identity], [thisArg])");
+
+		// 从尾端查询（右数）数组 array ，第一个不满足predicate 条件的元素开始截取数组. thisArg为predicate 条件执行上下文对象绑定的参数 .
+
+		// 参数
+		// 1.array (Array): 需要查询的数组
+		// 2.[predicate=_.identity] (Function|Object|string): 数组迭代判断条件
+		// 3.[thisArg] (*): 对应 predicate 属性的值.
+		// 返回值
+		// (Array): 返回截取元素后的数组
+
+
+		var sourceArray = [1,2,3,4,5,6,7,8,9];
+
+		// 条件是 大于3.
+		var result3 = _.dropRightWhile(sourceArray,  function(n) { return n > 3} );
+		// 条件是 大于7.
+		var result7 = _.dropRightWhile(sourceArray,  function(n) { return n > 7} );
+
+		console.log("source = ", sourceArray);
+		console.log("dropRightWhile (n > 3) Result = ", result3);
+		console.log("dropRightWhile (n > 7) Result = ", result7);
+
+		console.groupEnd();
+	}
+
+
+	function testFill() {
+		console.group("_.fill(array, value, [start=0], [end=array.length])");
+
+		// 使用 value 值来填充（也就是替换） array，从start位置开始, 到end位置结束（但不包含end位置）
+		// Note: 这是个改变数组的方法
+		// 参数
+		// 1.array (Array): 需要填充的数组.
+		// 2.value (*): 填充 array 元素的值.
+		// 3.[start=0] (number): 起始位置（包含）
+		// 4.[end=array.length] (number): 结束位置（不含）
+		// 返回值
+		// (Array): 返回 array .
+
+
+		var result1 = [1,1,1,1,1,1,1,1,1];
+		var result2 = [2,2,2,2,2,2,2,2,2];
+		var result3 = [3,3,3,3,3,3,3,3,3];
+
+
+		_.fill(result1, 0);
+		_.fill(result2, 0, 3);
+		_.fill(result3, 0, 3, 5);
+
+		console.log("result1 = ", result1);
+		console.log("result2 = ", result2);
+		console.log("result3 = ", result3);
+
+		console.groupEnd();
+	}
+
+
+	function testFindIndex() {
+		console.group("_.findIndex(array, [predicate=_.identity], [thisArg])");
+
+		// 返回的是符合 predicate条件的第一个元素的索引
+		// 参数
+		// 1.array (Array): 需要搜索的数组
+		// 2.[predicate=_.identity] (Function|Object|string): 数组遍历满足的条件
+		// 3.[thisArg] (*): 对应 predicate 属性的值.
+		// 返回值
+		// (number): 返回符合查询条件的元素的索引值, 未找到则返回 -1.
+
+		var sourceArray = [1,2,3,4,5,6,7,8,9];
+
+		// 条件是 大于3.
+		var result3 = _.findIndex(sourceArray,  function(n) { return n > 3} );
+		// 条件是 大于7.
+		var result7 = _.findIndex(sourceArray,  function(n) { return n > 7} );
+		// 条件是 大于99.
+		var result99 = _.findIndex(sourceArray,  function(n) { return n > 99} );
+
+		console.log("source = ", sourceArray);
+		console.log("findIndex (n > 3) Result = ", result3);
+		console.log("findIndex (n > 7) Result = ", result7);
+		console.log("findIndex (n > 99) Result = ", result99);
+
+		console.groupEnd();
+	}
+
+
+	function testFindLastIndex() {
+		console.group("_.findLastIndex(array, [predicate=_.identity], [thisArg])");
+
+		// 该方法类似 _.findIndex ，区别是其从右到左遍历数组.
+		// 参数
+		// 1.array (Array): 需要查询的数组
+		// 2.[predicate=_.identity] (Function|Object|string): 遍历数组条件
+		// 3.[thisArg] (*): The this binding of predicate.
+		// 返回值
+		// (number): 返回匹配数组元素的索引值, 否则返回 -1.
+
+
+		var sourceArray = [1,2,3,4,5,6,7,8,9];
+
+		// 条件是 小于3.
+		var result3 = _.findLastIndex(sourceArray,  function(n) { return n < 3} );
+		// 条件是 小于7.
+		var result7 = _.findLastIndex(sourceArray,  function(n) { return n < 7} );
+		// 条件是 小于 0.
+		var result0 = _.findLastIndex(sourceArray,  function(n) { return n < 0 } );
+
+		console.log("source = ", sourceArray);
+		console.log("findLastIndex (n < 3) Result = ", result3);
+		console.log("findLastIndex (n < 7) Result = ", result7);
+		console.log("findLastIndex (n < 0) Result = ", result0);
+
+		console.groupEnd();
+	}
+
+
+	function testFirst() {
+		console.group("_.first(array)");
+
+		// 获取数组 array的第一个元素
+		// 参数
+		// 1.array (Array): 需要查询的数组
+		// 返回值
+		// (*): 返回数组的第一个元素
+
+		var sourceArray = [1,2,3,4,5,6,7,8,9];
+
+		var result = _.first(sourceArray);
+
+		console.log("source = ", sourceArray);
+		console.log("first Result = ", result);
+
+		console.groupEnd();
+	}
+
+	function testLast() {
+		console.group("_.last(array)");
+
+		// 取出数组的最后一个元素 array.
+		// 参数
+		// 1.array (Array): 查询的数组
+		// 返回值
+		// (*): 返回 array的最后一个元素.
+
+		var sourceArray = [1,2,3,4,5,6,7,8,9];
+
+		var result = _.last(sourceArray);
+
+		console.log("source = ", sourceArray);
+		console.log("last Result = ", result);
+
+		console.groupEnd();
+	}
+
+
+
+	function testFlatten() {
+		console.group("_.flatten(array, [isDeep])");
+
+		// 将嵌套数组的维数减少.
+
+		// 参数
+		// 1.array (Array): 需要flattened（减少维数）的嵌套数组
+		// 2.[isDeep] (boolean): 是否深递归
+		// 返回值
+		// (Array): 返回处理后的数组
+
+
+		var sourceArray = [1,[2,3,[4,5,6,[7,8,9]]]];
+
+		var result1 = _.flatten(sourceArray);
+		var result2 = _.flatten(sourceArray, true);
+
+
+		console.log("source = ", sourceArray);
+		console.log("flatten Result = ", result1);
+		console.log("flatten(isDeep) Result = ", result2);
+
+		console.groupEnd();
+	}
+
+	function testFlattenDeep() {
+		console.group("_.flattenDeep(array)");
+
+		// 递归地平坦一个嵌套的数组.相当于_.flatten(array, true)
+		// 参数
+		// 1.array (Array): 需要
+		// 返回值
+		// (Array): 返回处理后的数组.
+
+		var sourceArray = [1,[2,3,[4,5,6,[7,8,9]]]];
+
+		var result = _.flattenDeep(sourceArray);
+
+		console.log("source = ", sourceArray);
+		console.log("flattenDeep Result = ", result);
+
+		console.groupEnd();
+	}
+
+
+	function testIndexOf() {
+		console.group("_.indexOf(array, value, [fromIndex=0])");
+
+		// 获取value在数组 array所在的索引值 使用 SameValueZero 来保证比较的质量（第一个全等===的元素）.
+		// 如果 fromIndex 值是负数, 则从array末尾起算. 如果 fromIndex为true时，对已排序的数组array执行二分（二进制）查找
+
+		// 参数
+		// 1.array (Array): 需要查找的数组
+		// 2.value (*): 需要查找的元素
+		// 3.[fromIndex=0] (boolean|number): 查询的位置或者true值时对一个已排序的数组进行二分查找.
+		// 返回值
+		// (number): 返回元素在数组中的索引位置, else -1.
+
+
+		var sourceArray = [1,2,3,4,5,6,7,8,9];
+
+		// 查找3的位置.
+		var result = _.indexOf(sourceArray, 3);
+
+		// 条件是 等于3.
+		var result3 = _.findIndex(sourceArray,  function(n) { return n === 3} );
+
+
+		console.log("source = ", sourceArray);
+		console.log("indexOf (3) Result = ", result);
+		console.log("findIndex (n === 3) Result = ", result3);
+
+		console.groupEnd();
+	}
+
+	function testLastIndexOf() {
+		console.group("_.lastIndexOf(array, value, [fromIndex=array.length-1])");
+
+		// 该方法类似 _.indexOf ，只不过_.lastIndexOf是从右向左遍历数组array.
+		// 参数
+		// 1.array (Array): 查询的数组
+		// 2.value (*):查询的元素.
+		// 3.[fromIndex=array.length-1] (boolean|number): 查询的起始位置或者为 true 时对已排序的数组进行二分查找.
+		// 返回值
+		// (number): 返回第一个匹配值的索引值, 查询不到则返回 -1.
+
+		var sourceArray = [1,2,3,4,5,6,7,8,9];
+
+		// 查找3的位置.
+		var result = _.lastIndexOf(sourceArray, 3);
+
+		// 条件是 等于3.
+		var result3 = _.findLastIndex(sourceArray,  function(n) { return n === 3} );
+
+
+		console.log("source = ", sourceArray);
+		console.log("lastIndexOf (3) Result = ", result);
+		console.log("findLastIndex (n === 3) Result = ", result3);
+
+		console.groupEnd();
+	}
+
+
+
+	function testInitial() {
+		console.group("_.initial(array)");
+
+		// 去除数组最后一个元素array.
+		// 参数
+		// 1.array (Array): 需要查询的数组.
+		// 返回值
+		// (Array): 返回截取的数组array.
+
+		var sourceArray = [1,2,3,4,5,6,7,8,9];
+
+		var result = _.initial(sourceArray);
+
+
+		console.log("source = ", sourceArray);
+		console.log("initial Result = ", result);
+
+		console.groupEnd();
+	}
+
+	function testRest() {
+		console.group("_.rest(array)");
+
+		// 获取数组 array第一个元素除外的所有元素.
+
+		// 参数
+		// 1.array (Array): 需要查询的数组
+		// 返回值
+		// (Array): 返回截取的 array.
+
+		var sourceArray = [1,2,3,4,5,6,7,8,9];
+
+		var result = _.rest(sourceArray);
+
+
+		console.log("source = ", sourceArray);
+		console.log("rest Result = ", result);
+
+		console.groupEnd();
+	}
+
+
+
+
+	function testIntersection() {
+		console.group("_.intersection([arrays])");
+
+		// 取出各数组中全等的元素，使用 SameValueZero方式平等比较
+		// 参数
+		// 1.[arrays] (...Array): 需要检查的数组数组.
+		// 返回值
+		// (Array): 返回共有元素的数组.
+
+		var sourceArray1 = [1,2,3,4,5,6,7,8,9];
+		var sourceArray2 = [1,3,5,7,9];
+		var sourceArray3 = [1,2,3,5,7];
+
+		var result = _.intersection(sourceArray1, sourceArray2, sourceArray3);
+
+		console.log("sourceArray1 = ", sourceArray1);
+		console.log("sourceArray2 = ", sourceArray2);
+		console.log("sourceArray3 = ", sourceArray3);
+
+		console.log("intersection Result = ", result);
+
+		console.groupEnd();
+	}
+
+
+	function testPull() {
+		console.group("_.pull(array, [values])");
+
+		// 移除数组array中所有和 values 相等的元素，使用 SameValueZero 进行全等比较
+		// 参数
+		// 1.array (Array): 修改的数组
+		// 2.[values] (...*): 移除的元素
+		// 返回值
+		// (Array): 返回数组 array.
+
+		var sourceArray = [1,2,3,4,5,6,7,8,9];
+		console.log("source = ", sourceArray);
+
+		var result1 = _.pull(sourceArray, 1,3,5,7,9);
+		console.log("pull (1,3,5,7,9) Result = ", result1);
+
+
+		// 注意： 此方法改变了数组 array（并不是原来的数组了）.
+
+		console.log("source = ", sourceArray);
+		var result2 = _.pull(sourceArray, 2,4,6,8,10);
+		console.log("pull (2,4,6,8,10) Result = ", result2);
+
+		console.groupEnd();
+	}
+
+
+	function testPullAt() {
+		console.group("_.pullAt(array, [indexes])");
+
+		// 移除指定索引的数组元素，并返回移除的元素，索引值明确给出或者是索引数组.
+		// 参数
+		// 1.array (Array): 需要修改的数组
+		// 2.[indexes] (...(number|number[]): 需要移除元素的索引, 数组的索引值或者索引数组.
+		// 返回值
+		// (Array): 返回移除元素后的新数组；
+
+
+		var sourceArray = [1,2,3,4,5,6,7,8,9];
+		console.log("source = ", sourceArray);
+
+		var result1 = _.pullAt(sourceArray, 3);
+		console.log("pullAt (3) Result = ", result1);
+
+		// 注意： 此方法改变了数组 array（并不是原来的数组了）.
+
+		console.log("source = ", sourceArray);
+		var result2 = _.pullAt(sourceArray, 5);
+		console.log("pullAt (3) Result = ", result2);
+
+		console.groupEnd();
+	}
+
+
+	function testRemove() {
+		console.group("_.remove(array, [predicate=_.identity], [thisArg])");
+
+		// 移除数组 array 中满足 predicate 条件的所有元素 ，返回的是被移除元素数组.
+
+		var sourceArray = [1,2,3,4,5,6,7,8,9];
+		console.log("source = ", sourceArray);
+
+
+		var result = _.remove(sourceArray, function(n) {
+			return n % 2 == 0;
+		});
+
+		console.log("remove (n % 2 == 0) Result = ", result);
+
+		//  注意： 此方法改变了数组 array（并不是原来的数组了）.
+
+		console.log("source = ", sourceArray);
+
+		console.groupEnd();
+	}
+
+
+	function testSlice() {
+		console.group("_.slice(array, [start=0], [end=array.length])");
+
+		var sourceArray = [1,2,3,4,5,6,7,8,9];
+
+		var result = _.slice(sourceArray, 3, 5);
+
+		console.log("source = ", sourceArray);
+		console.log("slice (3, 5) Result = ", result);
+
+		console.groupEnd();
+	}
+
+
+
+
+	function testSortedIndex() {
+		console.group("_.sortedIndex(array, value, [iteratee=_.identity], [thisArg])");
+
+		var sourceArray = [1,2,3,4,5,6,7,8,9];
+
+
+		var result3 = _.sortedIndex(sourceArray, 3);
+		var result5 = _.sortedIndex(sourceArray, 5);
+
+		console.log("source = ", sourceArray);
+		console.log("sortedIndex (3) Result = ", result3);
+		console.log("sortedIndex (5) Result = ", result5);
+
+		console.groupEnd();
+	}
+
+	function testSortedLastIndex() {
+		console.group("_.sortedLastIndex(array, value, [iteratee=_.identity], [thisArg])");
+
+		var sourceArray = [1,2,3,4,5,6,7,8,9];
+
+		var result3 = _.sortedLastIndex(sourceArray, 3);
+		var result5 = _.sortedLastIndex(sourceArray, 5);
+
+		console.log("source = ", sourceArray);
+		console.log("sortedLastIndex (3) Result = ", result3);
+		console.log("sortedLastIndex (5) Result = ", result5);
+
+		console.groupEnd();
+	}
+
+	function testTake() {
+		console.group("_.take(array, [n=1])");
+
+
+		// 从数组的起始位置开始，取n个元素;n默认是1
+		// 参数
+		// 1.array (Array): 需要查询的数组
+		// 2.[n=1] (number): 获取的元素个数
+		// 返回值
+		// (Array): 返回取得的数组
+
+
+
+		var sourceArray = [1,2,3,4,5,6,7,8,9];
+
+		var result3 = _.take(sourceArray, 3);
+		var result5 = _.take(sourceArray, 5);
+
+		console.log("source = ", sourceArray);
+		console.log("take (3) Result = ", result3);
+		console.log("take (5) Result = ", result5);
+
+		console.groupEnd();
+	}
+
+
+	function testTakeRight() {
+		console.group("_.takeRight(array, [n=1])");
+
+		// 从数组右侧开始 取得 n 个元素;n默认为1
+		// 参数
+		// 1.array (Array): 需要查询的数组
+		// 2.[n=1] (number): 获取的元素个数
+		// 返回值
+		// (Array): 返回截取的数组 array.
+
+		var sourceArray = [1,2,3,4,5,6,7,8,9];
+
+		var result3 = _.takeRight(sourceArray, 3);
+		var result5 = _.takeRight(sourceArray, 5);
+
+		console.log("source = ", sourceArray);
+		console.log("takeRight (3) Result = ", result3);
+		console.log("takeRight (5) Result = ", result5);
+
+		console.groupEnd();
+	}
+
+
+
+	function testTakeWhile() {
+		console.group("_.takeWhile(array, [predicate=_.identity], [thisArg])");
+
+		var sourceArray = [1,2,3,4,5,6,7,8,9];
+		var result = _.takeWhile(sourceArray, function(n) {
+			return n < 3;
+		});
+
+		console.log("source = ", sourceArray);
+		console.log("takeWhile (n < 3) Result = ", result);
+
+		console.groupEnd();
+	}
+
+	function testTakeRightWhile() {
+		console.group("_.takeRightWhile(array, [predicate=_.identity], [thisArg])");
+
+		var sourceArray = [1,2,3,4,5,6,7,8,9];
+		var result = _.takeRightWhile(sourceArray, function(n) {
+			return n > 5;
+		});
+
+		console.log("source = ", sourceArray);
+		console.log("takeRightWhile (n > 5) Result = ", result);
+
+		console.groupEnd();
+	}
+
+
+
+	function testUnion() {
+		console.group("_.union([arrays])");
+
+		// 生成一个 无重复数据的数组。
+
+		var sourceArray = [1,9,2,8,3,7,4,6,5,5,6,4,7,3,8,2,9,1];
+
+		var result = _.union(sourceArray);
+
+		console.log("source = ", sourceArray);
+		console.log("union Result = ", result);
+
+		console.groupEnd();
+	}
+
+
+	function testUniq() {
+		console.group("_.uniq(array, [isSorted], [iteratee], [thisArg])");
+
+
+		var sourceArray1 = [1,9,2,8,3,7,4,6,5,5,6,4,7,3,8,2,9,1];
+		var result1 = _.uniq(sourceArray1);
+		console.log("source = ", sourceArray1);
+		console.log("uniq Result = ", result1);
+
+
+
+		// 注意： 参数的 isSorted， 指的是 数组已经被排序.
+		var sourceArray2 = [1,1,2,2,3,3,4,5,5,6,7,7,8,9,9,10];
+		var result2 = _.uniq(sourceArray2, true);
+		console.log("source = ", sourceArray2);
+		console.log("uniq (isSorted) Result = ", result2);
+
+
+		console.groupEnd();
+	}
+
+
+	function testZipUnzip() {
+		console.group("_.zip([arrays])  /  _.unzip(array)");
+
+		var sourceArray1 = ["张三", "李四", "王五", "赵六"];
+		var sourceArray2 = ["男","女","男","女"];
+		var sourceArray3 = [25, 26, 27, 28];
+		var sourceArray4 = ["IT", "HR", "IT", "HR"];
+
+		var result = _.zip(sourceArray1, sourceArray2, sourceArray3, sourceArray4);
+
+		console.log("source1 = ", sourceArray1);
+		console.log("source2 = ", sourceArray2);
+		console.log("source3 = ", sourceArray3);
+		console.log("source4 = ", sourceArray4);
+		console.log("zip (source1, source2, source3, source4) Result = ", result);
+
+
+		var unzipResult = _.unzip(result);
+		console.log("unzip Result = ", unzipResult);
+
+		console.groupEnd();
+	}
+
+
+	function testZipWith() {
+		console.group("_.zipWith([arrays], [iteratee], [thisArg])");
+
+		var sourceArray1 = [1, 2, 3, 4];
+		var sourceArray2 = [10, 20, 30, 40];
+		var sourceArray3 = [100, 200, 300, 400];
+		var sourceArray4 = [1000, 2000, 3000, 4000];
+
+		var result = _.zipWith(sourceArray1, sourceArray2, sourceArray3, sourceArray4, _.add);
+
+
+		console.log("source1 = ", sourceArray1);
+		console.log("source2 = ", sourceArray2);
+		console.log("source3 = ", sourceArray3);
+		console.log("source4 = ", sourceArray4);
+		console.log("zipWith (source1, source2, source3, source4, _.add) Result = ", result);
+
+
+		console.groupEnd();
+	}
+
+
+	function testUnzipWith() {
+		console.group("_.unzipWith(array, [iteratee], [thisArg])");
+
+		var sourceArray1 = [1, 2, 3, 4];
+		var sourceArray2 = [10, 20, 30, 40];
+		var sourceArray3 = [100, 200, 300, 400];
+		var sourceArray4 = [1000, 2000, 3000, 4000];
+
+		var result = _.zip(sourceArray1, sourceArray2, sourceArray3, sourceArray4);
+
+
+		var unzipWithResult = _.unzipWith(result, _.add);
+
+
+		console.log("source1 = ", sourceArray1);
+		console.log("source2 = ", sourceArray2);
+		console.log("source3 = ", sourceArray3);
+		console.log("source4 = ", sourceArray4);
+		console.log("zip (source1, source2, source3, source4) Result = ", result);
+		console.log("unzipWith Result = ", unzipWithResult);
+
+		console.groupEnd();
+	}
+
+
+
+	function testWithout() {
+		console.group("_.without(array, [values])");
+
+		// 获取不包含 value  的数组元素.
+		var sourceArray = [1,2,3,4,5,6,7,8,9];
+
+		var result1 = _.without(sourceArray, 1,3,5,7,9);
+		var result2 = _.without(sourceArray, 2,4,6,8,10);
+
+		console.log("source = ", sourceArray);
+
+		console.log("without (1,3,5,7,9) Result = ", result1);
+		console.log("without (2,4,6,8,10) Result = ", result2);
+
+		console.groupEnd();
+	}
+
+	function testXor() {
+		console.group("_.xor([arrays])");
+
+		// 获取各数组中，互不包含的元素.
+		var sourceArray1 = [1,3,5,7,9];
+		var sourceArray2 = [1,2,4,8];
+
+		var result = _.xor(sourceArray1, sourceArray2);
+
+		console.log("source1 = ", sourceArray1);
+		console.log("source2 = ", sourceArray2);
+		console.log("xor (source1, source2) Result = ", result);
+
+		console.groupEnd();
+	}
+
+
+
+	// _.chunk(array, [size=1])
+	testChunk();
+
+	// _.compact(array)
+	testCompact();
+
+	// _.difference(array, [values])
+	testDifference();
+
+
+
+	// _.drop(array, [n=1])
+	testDrop();
+
+	// _.dropWhile(array, [predicate=_.identity], [thisArg])
+	testDropWhile();
+
+
+	// _.dropRight(array, [n=1])
+	testDropRight();
+
+	// _.dropRightWhile(array, [predicate=_.identity], [thisArg])
+	testDropRightWhile();
+
+	// _.fill(array, value, [start=0], [end=array.length])
+	testFill();
+
+	// _.findIndex(array, [predicate=_.identity], [thisArg])
+	testFindIndex();
+
+	// _.findLastIndex(array, [predicate=_.identity], [thisArg])
+	testFindLastIndex();
+
+	// _.first(array)
+	testFirst();
+
+	// _.last(array)
+	testLast();
+
+	// _.flatten(array, [isDeep])
+	testFlatten();
+
+	// _.flattenDeep(array)
+	testFlattenDeep();
+
+	// _.indexOf(array, value, [fromIndex=0])
+	testIndexOf();
+
+	// _.lastIndexOf(array, value, [fromIndex=array.length-1])
+	testLastIndexOf();
+
+	// _.initial(array)
+	testInitial();
+
+	// _.rest(array)
+	testRest();
+
+	// _.intersection([arrays])
+	testIntersection();
+
+	// _.pull(array, [values])
+	testPull();
+
+	// _.pullAt(array, [indexes])
+	testPullAt();
+
+	// _.remove(array, [predicate=_.identity], [thisArg])
+	testRemove();
+
+	// _.slice(array, [start=0], [end=array.length])
+	testSlice();
+
+
+	// _.sortedIndex(array, value, [iteratee=_.identity], [thisArg])
+	testSortedIndex();
+
+	// _.sortedLastIndex(array, value, [iteratee=_.identity], [thisArg])
+	testSortedLastIndex();
+
+	// _.take(array, [n=1])
+	testTake();
+
+	// _.takeRight(array, [n=1])
+	testTakeRight();
+
+
+	// _.takeWhile(array, [predicate=_.identity], [thisArg])
+	testTakeWhile();
+
+	// _.takeRightWhile(array, [predicate=_.identity], [thisArg])
+	testTakeRightWhile();
+
+	// _.union([arrays])
+	testUnion();
+
+	// _.uniq(array, [isSorted], [iteratee], [thisArg])
+	testUniq();
+
+
+	// _.zip([arrays])
+	// _.unzip(array)
+	testZipUnzip();
+
+
+	// _.zipWith([arrays], [iteratee], [thisArg])
+	testZipWith();
+
+	// _.unzipWith(array, [iteratee], [thisArg])
+	testUnzipWith();
+
+
+	// _.without(array, [values])
+	testWithout();
+
+	// _.xor([arrays])
+	testXor();
+
+</script>
+
+
+</body>
+</html>

@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <title> Chain </title>
+    <script src="js/lodash.js"></script>
+</head>
+
+
+<body>
+
+	<p>
+	F12 看控制台的输出！
+	</p>
+
+
+	<ul>
+
+		<li>
+			_(value)
+			构造对象.
+		</li>
+
+		<li>
+			_.chain(value)
+			构造对象.
+		</li>
+
+
+	</ul>
+
+
+
+<script type="text/javascript">
+
+
+	function testInit() {
+		console.group("_(value)");
+		var wrapped = _([1, 2, 3]);
+		console.log("wrapped is " , wrapped);
+		console.groupEnd();
+	}
+
+
+	function testChain() {
+		console.group("_.chain(value)");
+
+		var users = [
+			{ 'user': '张三',	'age': 36 },
+			{ 'user': '李四',	'age': 40 },
+			{ 'user': '王五',	'age': 25 }
+		];
+
+		var youngest = _.chain(users)
+			.sortBy('age')
+			.map(function(chr) {
+				return chr.user + ' is ' + chr.age;
+			})
+			.first()
+			.value();
+
+		console.log("Result = ", youngest);
+
+		console.groupEnd();
+	}
+
+
+
+
+
+	function testTap() {
+		console.group("_.tap(value, interceptor, [thisArg])");
+
+		console.groupEnd();
+	}
+
+
+	function testThru() {
+		console.group("_.thru(value, interceptor, [thisArg])");
+
+		console.groupEnd();
+	}
+
+
+
+
+	// _(value)
+	testInit();
+
+
+	// _.chain(value)
+	testChain();
+
+
+	// _.tap(value, interceptor, [thisArg])
+
+
+	// _.thru(value, interceptor, [thisArg])
+
+</script>
+
+
+</body>
+</html>

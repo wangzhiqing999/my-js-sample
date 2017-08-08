@@ -64,6 +64,10 @@ React 学习的例子。 基本是复制粘贴下来，测试练习的。
 Knockoutjs 学习的例子。 内容直接来自 http://knockoutjs.com/documentation/introduction.html
 
 
+### S0004_Lodash
+lodash 学习的例子。
+
+
 ### S0100_Mocha
 Mocha 学习的例子。
 
