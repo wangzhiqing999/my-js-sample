@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <title> Math </title>
+    <script src="js/lodash.js"></script>
+</head>
+
+
+<body>
+
+	<p>
+	F12 看控制台的输出！
+	</p>
+
+
+	<ul>
+
+		<li>
+			_.add(augend, addend)
+			加
+		</li>
+
+		<li>
+			_.ceil(n, [precision=0])
+			向上取整.
+		</li>
+
+		<li>
+			_.floor(n, [precision=0])
+			向下取整.
+		</li>
+
+		<li>
+			_.max(collection, [iteratee], [thisArg])
+			最大值.
+		</li>
+
+		<li>
+			_.min(collection, [iteratee], [thisArg])
+			最小值.
+		</li>
+
+		<li>
+			_.round(n, [precision=0])
+			四舍五入
+		</li>
+
+		<li>
+			_.sum(collection, [iteratee], [thisArg])
+			合计.
+		</li>
+
+	</ul>
+
+
+
+<script type="text/javascript">
+
+
+	function testAdd() {
+		console.group("_.add(augend, addend)");
+
+		console.log("_.add(100, 100)", _.add(100, 100));
+
+		console.groupEnd();
+	}
+
+	function testCeil() {
+		console.group("_.ceil(n, [precision=0])");
+
+		console.log("_.ceil(123.456)", _.ceil(123.456));
+
+		console.log("_.ceil(123.456, 2)", _.ceil(123.456, 2));
+		console.log("_.ceil(123.456, 1)", _.ceil(123.456, 1));
+		console.log("_.ceil(123.456, -1)", _.ceil(123.456, -1));
+		console.log("_.ceil(123.456, -2)", _.ceil(123.456, -2));
+
+		console.groupEnd();
+	}
+
+	function testFloor() {
+		console.group("_.floor(n, [precision=0])");
+
+		console.log("_.floor(123.456)", _.floor(123.456));
+
+		console.log("_.floor(123.456, 2)", _.floor(123.456, 2));
+		console.log("_.floor(123.456, 1)", _.floor(123.456, 1));
+		console.log("_.floor(123.456, -1)", _.floor(123.456, -1));
+		console.log("_.floor(123.456, -2)", _.floor(123.456, -2));
+
+		console.groupEnd();
+	}
+
+
+
+
+
+	// 测试用户.
+	var testUsers = [
+		{ 'user': '张三', 	'age': 36 },
+		{ 'user': '李四',   'age': 40 },
+		{ 'user': '王五',   'age': 55 },
+		{ 'user': '赵六', 	'age': 36 },
+		{ 'user': '田七',   'age': 55 }
+	];
+
+	function getUserAge(user) {
+		return user.age;
+	}
+
+	function testMax() {
+		console.group("_.max(collection, [iteratee], [thisArg])");
+
+		console.log("_.max([1,3,5,7,9])", _.max([1,3,5,7,9]));
+
+		console.log("users = ", testUsers);
+		console.log("_.max(testUsers, getUserAge)", _.max(testUsers, getUserAge));
+
+		console.groupEnd();
+	}
+
+
+
+	function testMin() {
+		console.group("_.min(collection, [iteratee], [thisArg])");
+
+		console.log("_.min([1,3,5,7,9])", _.min([1,3,5,7,9]));
+
+		console.log("users = ", testUsers);
+		console.log("_.min(testUsers, getUserAge)", _.min(testUsers, getUserAge));
+
+		console.groupEnd();
+	}
+
+
+
+	function testRound() {
+		console.group("_.round(n, [precision=0])");
+
+		console.log("_.round(123.456)", _.round(123.456));
+
+		console.log("_.round(123.456, 2)", _.round(123.456, 2));
+		console.log("_.round(123.456, 1)", _.round(123.456, 1));
+		console.log("_.round(123.456, -1)", _.round(123.456, -1));
+		console.log("_.round(123.456, -2)", _.round(123.456, -2));
+
+		console.groupEnd();
+	}
+
+
+
+	function testSum() {
+		console.group("_.sum(collection, [iteratee], [thisArg])");
+
+
+		console.log("_.sum([1,3,5,7,9])", _.sum([1,3,5,7,9]));
+
+		console.log("users = ", testUsers);
+		console.log("_.sum(testUsers, getUserAge)", _.sum(testUsers, getUserAge));
+
+
+		console.groupEnd();
+	}
+
+
+
+
+	// _.add(augend, addend)
+	testAdd();
+
+	// _.ceil(n, [precision=0])
+	testCeil();
+
+	// _.floor(n, [precision=0])
+	testFloor();
+
+	// _.max(collection, [iteratee], [thisArg])
+	testMax();
+
+	// _.min(collection, [iteratee], [thisArg])
+	testMin();
+
+	// _.round(n, [precision=0])
+	testRound();
+
+	// _.sum(collection, [iteratee], [thisArg])
+	testSum();
+
+</script>
+
+
+</body>
+</html>

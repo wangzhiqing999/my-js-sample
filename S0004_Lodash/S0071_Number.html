@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <title> Number </title>
+    <script src="js/lodash.js"></script>
+</head>
+
+
+<body>
+
+	<p>
+	F12 看控制台的输出！
+	</p>
+
+
+	<ul>
+
+		<li>
+			_.inRange(n, [start=0], end)
+			判断是否在范围内.
+		</li>
+
+		<li>
+			_.random([min=0], [max=1], [floating])
+			随机数
+		</li>
+
+	</ul>
+
+
+
+<script type="text/javascript">
+
+
+	function testInRange() {
+		console.group("_.inRange(n, [start=0], end)");
+
+		console.log("_.inRange(3, 2, 4) = " , _.inRange(3, 2, 4));
+
+		console.log("_.inRange(4, 0, 8) = " , _.inRange(4, 0, 8));
+		console.log("_.inRange(4, 8) = " , _.inRange(4, 8));
+
+
+		console.log("_.inRange(14, 0, 8) = " , _.inRange(14, 0, 8));
+		console.log("_.inRange(14, 8) = " , _.inRange(14, 8));
+
+
+		console.log("_.inRange(8, 0, 8) = " , _.inRange(8, 0, 8));
+		console.log("_.inRange(8, 8) = " , _.inRange(8, 8));
+
+		console.groupEnd();
+	}
+
+
+	function testRandom() {
+		console.group("_.random([min=0], [max=1], [floating])");
+
+		console.log("_.random(0, 5) is " , _.random(0, 5));
+
+		console.log("_.random(5) is " , _.random(5));
+
+		console.log("_.random(5, true) is " , _.random(5, true));
+
+		console.log("_.random(1.5, 5.5) is " , _.random(1.5, 5.5));
+
+		console.groupEnd();
+	}
+
+
+	// _.inRange(n, [start=0], end)
+	testInRange();
+
+	// _.random([min=0], [max=1], [floating])
+	testRandom();
+
+</script>
+
+
+</body>
+</html>

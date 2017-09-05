@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <title> Function </title>
+    <script src="js/lodash.js"></script>
+</head>
+
+
+<body>
+
+	<p>
+	F12 看控制台的输出！
+	</p>
+
+
+	<ul>
+
+		<li>
+			_.ary(func, [n=func.length])
+			创建函数. 忽略附加参数.
+		</li>
+
+		<li>
+			_.bind(func, thisArg, [partials])
+			函数参数绑定.
+		</li>
+
+		<li>
+			_.bindKey(object, key, [partials])
+			函数参数绑定.
+		</li>
+
+		<li>
+			_.curry(func, [arity=func.length])
+
+		</li>
+
+		<li>
+			_.curryRight(func, [arity=func.length])
+		</li>
+
+		<li>
+			_.defer(func, [args])
+			推迟处理
+		</li>
+
+		<li>
+			_.delay(func, wait, [args])
+			延时处理
+		</li>
+
+		<li>
+			_.flow([funcs])
+			连续调用.
+		</li>
+
+		<li>
+			_.flowRight([funcs])
+			连续调用.
+		</li>
+
+		<li>
+			_.memoize(func, [resolver])
+			缓存函数调用结果.
+		</li>
+
+		<li>
+			_.modArgs(func, [transforms])
+			将函数结果，作为参数处理.
+		</li>
+
+		<li>
+			_.negate(predicate)
+			函数的非操作.
+		</li>
+
+		<li>
+			_.once(func)
+			只调用一次.
+		</li>
+
+
+		<li>
+			_.partial(func, [partials])
+			填写函数的部分参数.
+		</li>
+
+		<li>
+			_.partialRight(func, [partials])
+			填写函数的部分参数.
+		</li>
+
+		<li>
+			_.rearg(func, indexes)
+			变更参数顺序.
+		</li>
+
+
+		<li>
+			_.restParam(func, [start=func.length-1])
+			变更参数. (数组 变 普通)
+		</li>
+
+		<li>
+			_.spread(func)
+			变更参数. (普通 变 数组)
+		</li>
+
+		<li>
+			_.throttle(func, [wait=0], [options])
+		</li>
+
+		<li>
+			_.wrap(value, wrapper)
+		</li>
+
+	</ul>
+
+
+
+<script type="text/javascript">
+
+
+	function testAry() {
+		console.group("_.ary(func, [n=func.length])");
+
+		var source = ['1', '3', '5', '7', '9', '0xF'];
+
+		var result = _.map(source, _.ary(parseInt, 1));
+
+		console.log("source = ", source);
+		console.log("result = ", result);
+
+		console.groupEnd();
+	}
+
+
+
+	function testBind() {
+		console.group("_.bind(func, thisArg, [partials])");
+
+		// 测试的函数.
+		var testFunc = function(para1, para2, para3) {
+			// 注意： 这个函数中， 有个  this.
+			return  this.user + ' ' + para1 + ' ' + para2 + ' ' + para3;
+		};
+
+		var object = { 'user': '测试用户' };
+
+		var bound1 = _.bind(testFunc, object, '参数1');
+		var result1 = bound1('参数2', '参数3');
+		console.log("result1 = ", result1);
+
+		var bound2 = _.bind(testFunc, object, _, '参数2');
+		var result2 = bound2('参数1', '参数3');
+		console.log("result2 = ", result2);
+
+		console.groupEnd();
+	}
+
+
+
+	function testBindKey() {
+		console.group(".bindKey(object, key, [partials])");
+
+		var object = {
+			'user': '测试用户',
+			'testFunc': function(para1, para2, para3) {
+				return this.user + ' ' + para1 + ' ' + para2 + ' ' + para3;
+			}
+		};
+
+		console.log("默认的调用方式， 结果 = ", object.testFunc('参数1','参数2','参数3'));
+
+		var bound1 = _.bindKey(object, "testFunc", '参数1');
+		var result1 = bound1('参数2', '参数3');
+		console.log("result1 = ", result1);
+
+		var bound2 = _.bindKey(object, "testFunc", _, '参数2');
+		var result2 = bound2('参数1', '参数3');
+		console.log("result2 = ", result2);
+
+
+		console.groupEnd();
+	}
+
+
+
+
+	// 测试 _.curry / _.curryRight 的函数.
+	var testCurryFunc = function(para1, para2, para3) {
+		return  '# ' + para1 + ' ' + para2 + ' ' + para3;
+	};
+
+
+	function testCurry() {
+		console.group("_.curry(func, [arity=func.length])");
+
+		var curried = _.curry(testCurryFunc);
+
+		console.log("curried(1)(2)(3) = ", curried(1)(2)(3));
+		console.log("curried(1, 2)(3) = ", curried(1, 2)(3));
+		console.log("curried(1, 2, 3) = ", curried(1, 2, 3));
+		console.log("curried(1)(_, 3)(2); = ", curried(1)(_, 3)(2));
+
+		console.groupEnd();
+	}
+
+
+
+	function testCurryRight() {
+		console.group("_.curryRight(func, [arity=func.length])");
+
+		var curried = _.curryRight(testCurryFunc);
+
+		console.log("curried(1)(2)(3) = ", curried(1)(2)(3));
+		console.log("curried(1, 2)(3) = ", curried(1, 2)(3));
+		console.log("curried(1, 2, 3) = ", curried(1, 2, 3));
+		console.log("curried(1)(_, 3)(2); = ", curried(1)(_, 3)(2));
+
+		console.groupEnd();
+	}
+
+
+
+	function testDefer() {
+		console.group("_.defer(func, [args])");
+
+		console.log('处理开始！');
+
+		_.defer(function(text) {
+			console.log(text);
+		}, '### 推迟处理 ###');
+
+		console.log('处理结束！');
+
+		console.groupEnd();
+	}
+
+
+
+	function testDelay() {
+		console.group("_.delay(func, wait, [args])");
+
+		console.log('处理开始！');
+
+		_.delay(function(text) {
+			console.log(text);
+		}, 1000, '### 延迟1秒后处理！###');
+
+		console.log('处理结束！');
+
+		console.groupEnd();
+	}
+
+
+
+
+
+	// 测试 _.flow / _.flowRight 的函数.
+	var testFlowFunc1 = function(para1, para2) {
+		return  '# ' + para1 + ' # ' + para2 + ' #';
+	};
+	var testFlowFunc2 = function(para1) {
+		return  '$ ' + para1 + ' $';
+	};
+	var testFlowFunc3 = function(para1) {
+		return  '@ ' + para1 + ' @';
+	};
+
+
+	function testFlow() {
+		console.group("_.flow([funcs])");
+
+		// 连续调用多个函数，前面函数的返回值，作为后续函数的参数.
+		var flowFunc = _.flow(testFlowFunc1, testFlowFunc2, testFlowFunc3);
+
+		console.log("flowFunc(1, 2) = ", flowFunc(1, 2));
+
+		console.groupEnd();
+	}
+
+
+
+	function testFlowRight() {
+		console.group("_.flowRight([funcs])");
+
+		// 连续调用多个函数，后面函数的返回值，作为前面函数的参数.
+		var flowRightFunc = _.flowRight(testFlowFunc3, testFlowFunc2, testFlowFunc1);
+
+		console.log("flowRightFunc(1, 2) = ", flowRightFunc(1, 2));
+
+		console.groupEnd();
+	}
+
+
+
+	// 用于测试 _.memoize 的函数.
+	var testMemoizeFunc = function(para1) {
+		console.log("### testMemoizeFunc Start...", para1);
+		return  '# ' + para1 + ' #';
+	};
+
+	function testMemoize() {
+		console.group("_.memoize(func, [resolver])");
+
+		var memoizeFunc = _.memoize(testMemoizeFunc);
+
+		console.log("memoizeFunc('ABC') = ", memoizeFunc('ABC'));
+		console.log("memoizeFunc('123') = ", memoizeFunc('123'));
+
+		// 这里，使用了缓存， 没有去调用具体的 testMemoizeFunc 函数.
+		console.log("memoizeFunc('ABC') = ", memoizeFunc('ABC'));
+
+		// 这里， 尝试修改缓存结果.
+		memoizeFunc.cache.set('ABC', 'ABCABCABC');
+		// 再次调用. 还是不会去调用实际函数的， 继续使用缓存结果.
+		console.log("memoizeFunc('ABC') = ", memoizeFunc('ABC'));
+
+		console.groupEnd();
+	}
+
+
+
+	// 用于测试 _.modArgs 的函数.
+	function testModArgsFunc1(para1) {
+		return "业务处理：" + para1;
+	}
+	function testModArgsFunc2(para1) {
+		return "操作日志：" + para1;
+	}
+
+	function testModArgsFunc(para1, para2) {
+		return "# " + para1 + "； " + para2 + " #";
+	}
+
+	function testModArgs() {
+		console.group("_.modArgs(func, [transforms])");
+
+		// 用 调用 testModArgsFunc1 / testModArgsFunc2 函数的结果， 作为调用 testModArgsFunc 的参数.
+		var modArgsFunc = _.modArgs(testModArgsFunc, testModArgsFunc1, testModArgsFunc2);
+
+		console.log("modArgsFunc('结算处理', '张三') = ", modArgsFunc('结算处理', '张三'));
+
+		console.groupEnd();
+	}
+
+
+
+	function testNegate() {
+		console.group("_.negate(predicate)");
+
+		var sourceArray = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+		var filterFunc = function(n) {
+			return n % 2 === 0;
+		}
+
+		console.log("source = ", sourceArray);
+
+
+		var result = _.filter(sourceArray, filterFunc);
+		console.log("filter(filterFunc) result = ", result);
+
+		var result2 = _.filter(sourceArray, _.negate(filterFunc));
+		console.log("filter(_.negate(filterFunc)) result = ", result2);
+
+		console.groupEnd();
+	}
+
+
+
+	// 用于测试 _.once 的函数.
+	function testOnceFunc() {
+		console.log("业务系统初始化作业中......");
+	}
+
+	function testOnce() {
+		console.group("_.once(func)");
+
+		var initialize = _.once(testOnceFunc);
+		initialize();
+		initialize();
+		initialize();
+		initialize();
+		initialize();
+
+		// 上面的函数调用了多次， 但是实际的函数， 应该只调用一次.
+
+		console.groupEnd();
+	}
+
+
+
+	// 用于测试 _.partial / _.partialRight 的函数.
+	function testPartialFunc(para1, para2) {
+		return "# " + para1 + " # " + para2 + " #";
+	}
+
+
+	function testPartial() {
+		console.group("_.partial(func, [partials])");
+
+		var partialFunc1 = _.partial(testPartialFunc, '默认参数1');
+		var partialFunc2 = _.partial(testPartialFunc, _, '默认参数2');
+
+		console.log("partialFunc1('ABC') = ", partialFunc1('ABC'));
+		console.log("partialFunc2('ABC') = ", partialFunc2('ABC'));
+
+		console.groupEnd();
+	}
+
+	function testPartialRight() {
+		console.group("_.partialRight(func, [partials])");
+
+		var partialFunc1 = _.partialRight(testPartialFunc, '默认参数2');
+		var partialFunc2 = _.partialRight(testPartialFunc, '默认参数1', _);
+
+		console.log("partialFunc1('ABC') = ", partialFunc1('ABC'));
+		console.log("partialFunc2('ABC') = ", partialFunc2('ABC'));
+
+		console.groupEnd();
+	}
+
+
+
+	// 测试 _.rearg  的函数.
+	var testReargFunc = function(para1, para2, para3) {
+		return  '# ' + para1 + ' ' + para2 + ' ' + para3;
+	};
+
+	function testRearg() {
+		console.group("_.rearg(func, indexes)");
+
+		var rearged1 = _.rearg(testReargFunc, 0, 1, 2);
+		var rearged2 = _.rearg(testReargFunc, 2, 0, 1);
+
+		console.log("rearged1(1,2,3) = ", rearged1(1,2,3));
+		console.log("rearged2(1,2,3) = ", rearged2(1,2,3));
+
+		console.groupEnd();
+	}
+
+
+
+	// 测试 _.restParam  的函数.
+	function testRestParamFunc(what, names) {
+		return what + ' ' + _.initial(names).join(', ') + (_.size(names) > 1 ? ', & ' : '') + _.last(names);
+	}
+
+	function testRestParam() {
+		console.group("_.restParam(func, [start=func.length-1])");
+
+		console.log("普通调用 = ", testRestParamFunc('初始化', ['主板', 'CPU', '内存', '硬盘']));
+
+		var restParamFunc = _.restParam(testRestParamFunc);
+
+		console.log("_restParam调用 = ",  restParamFunc('初始化', '主板', 'CPU', '内存', '硬盘'));
+
+		console.groupEnd();
+	}
+
+
+
+	// 测试 _.spread  的函数.
+	function testSpreadFunc(para1, para2, para3) {
+		return  '# ' + para1 + ' ' + para2 + ' ' + para3;
+	}
+
+	function testSpread() {
+		console.group("_.spread(func)");
+
+		console.log("普通调用 = ", testSpreadFunc(1,2,3));
+
+		var spreadFunc = _.spread(testSpreadFunc);
+
+		console.log("_spread调用 = ",  spreadFunc([1,2,3]));
+
+		console.groupEnd();
+	}
+
+
+
+
+	function testThrottle() {
+		console.group("_.throttle(func, [wait=0], [options])");
+		console.groupEnd();
+	}
+
+
+
+	// 测试 _.wrap  的函数.
+	// 第一个参数， 是函数.
+	function testWarpFunc(func, text) {
+		return "# " + func(text);
+	}
+
+	function testWrap() {
+		console.group("_.wrap(value, wrapper)");
+
+		// 用指定的函数，  替代掉 testWarpFunc 的第一个参数.
+		var wrapFunc1 = _.wrap(_.camelCase, testWarpFunc);
+		var wrapFunc2 = _.wrap(_.kebabCase, testWarpFunc);
+		var wrapFunc3 = _.wrap(_.snakeCase, testWarpFunc);
+
+
+		console.log("wrapFunc1('System Config Test') = ",  wrapFunc1('System Config Test'));
+		console.log("wrapFunc2('System Config Test') = ",  wrapFunc2('System Config Test'));
+		console.log("wrapFunc3('System Config Test') = ",  wrapFunc3('System Config Test'));
+
+		console.groupEnd();
+	}
+
+
+
+
+	// _.ary(func, [n=func.length])
+	testAry();
+
+	// _.bind(func, thisArg, [partials])
+	testBind();
+
+	// _.bindKey(object, key, [partials])
+	testBindKey();
+
+	// _.curry(func, [arity=func.length])
+	testCurry();
+
+	// _.curryRight(func, [arity=func.length])
+	testCurryRight();
+
+	// _.defer(func, [args])
+	testDefer();
+
+	// _.delay(func, wait, [args])
+	testDelay();
+
+	// _.flow([funcs])
+	testFlow();
+
+	// _.flowRight([funcs])
+	testFlowRight();
+
+	// _.memoize(func, [resolver])
+	testMemoize();
+
+	// _.modArgs(func, [transforms])
+	testModArgs();
+
+	// _.negate(predicate)
+	testNegate();
+
+	// _.once(func)
+	testOnce();
+
+	// _.partial(func, [partials])
+	testPartial();
+
+	// _.partialRight(func, [partials])
+	testPartialRight();
+
+	// _.rearg(func, indexes)
+	testRearg();
+
+	// _.restParam(func, [start=func.length-1])
+	testRestParam();
+
+	// _.spread(func)
+	testSpread();
+
+	// _.throttle(func, [wait=0], [options])
+	// testThrottle();
+
+	// _.wrap(value, wrapper)
+	testWrap();
+
+</script>
+
+
+</body>
+</html>

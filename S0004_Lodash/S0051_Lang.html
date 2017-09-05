@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <title> Lang </title>
+    <script src="js/lodash.js"></script>
+</head>
+
+
+<body>
+
+	<p>
+	F12 看控制台的输出！
+	</p>
+
+
+	<ul>
+
+		<li>
+			_.clone(value, [isDeep], [customizer], [thisArg])
+			克隆
+		</li>
+
+		<li>
+			_.cloneDeep(value, [customizer], [thisArg])
+			深克隆.
+		</li>
+
+		<li>
+			_.gt(value, other)
+			是否大于.
+		</li>
+
+		<li>
+			_.gte(value, other)
+			是否大于等于.
+		</li>
+
+		<li>
+			_.isArguments(value)
+			是否是参数对象.
+		</li>
+
+		<li>
+			_.isArray(value)
+			是否是数组.
+		</li>
+
+		<li>
+			_.isBoolean(value)
+			是否是布尔类型.
+		</li>
+
+		<li>
+			_.isDate(value)
+			是否是日期.
+		</li>
+
+		<li>
+			_.isElement(value)
+			是否是元素.
+		</li>
+
+		<li>
+			_.isEmpty(value)
+			是否为空.
+		</li>
+
+		<li>
+			_.isEqual(value, other, [customizer], [thisArg])
+			是否相等.
+		</li>
+
+		<li>
+			_.isError(value)
+			是否是错误.
+		</li>
+
+		<li>
+			_.isFinite(value)
+			是否是数字.
+		</li>
+
+		<li>
+			_.isFunction(value)
+			是否是函数.
+		</li>
+
+		<li>
+			_.isMatch(object, source, [customizer], [thisArg])
+			是否匹配.
+		</li>
+
+		<li>
+			_.isNaN(value)
+			是否非数字.
+		</li>
+
+		<li>
+			_.isNative(value)
+			是否是原生函数.
+		</li>
+
+		<li>
+			_.isNull(value)
+			是否为空.
+		</li>
+
+		<li>
+			_.isNumber(value)
+			是否是数字.
+		</li>
+
+		<li>
+			_.isObject(value)
+			是否是对象.
+		</li>
+
+		<li>
+			_.isPlainObject(value)
+			是否是对象
+		</li>
+
+		<li>
+			_.isRegExp(value)
+			是否是正则表达式.
+		</li>
+
+		<li>
+			_.isString(value)
+			是否是字符串.
+		</li>
+
+
+		<li>
+			_.isTypedArray(value)
+			是否是数组.
+		</li>
+
+		<li>
+			_.isUndefined(value)
+			是否是 Undefined.
+		</li>
+
+
+		<li>
+			_.lt(value, other)
+			是否小于
+		</li>
+
+		<li>
+			_.lte(value, other)
+			是否小于等于
+		</li>
+
+
+		<li>
+			_.toArray(value)
+			转换为数组.
+		</li>
+
+		<li>
+			_.toPlainObject(value)
+			转换为对象.
+		</li>
+	</ul>
+
+
+
+<script type="text/javascript">
+
+
+	function testClone() {
+		console.group("_.clone(value, [isDeep], [customizer], [thisArg])");
+
+		var users = [
+			{ 'user': 'barney' },
+			{ 'user': 'fred' }
+		];
+
+		console.log("克隆前，users = ", users);
+
+		// 浅克隆.
+		var shallow = _.clone(users);
+		console.log("浅克隆，shallow = ", shallow);
+
+
+
+		// 浅克隆，修改数据，将影响原始数据.
+		shallow[0].user = "ABC";
+		console.log("浅克隆，修改数据后，原始数据 users = ", users);
+
+
+		// 深克隆.
+		var deep = _.clone(users, true);
+
+		console.log("深克隆，deep = ", deep);
+
+		// 深克隆，修改数据，将不影响原始数据.
+		deep[0].user = "123";
+
+
+		console.log("深克隆，修改数据后，原始数据 users = ", users);
+
+
+		console.groupEnd();
+	}
+
+
+
+	function testCloneDeep() {
+		console.group("_.cloneDeep(value, [customizer], [thisArg])");
+
+		var users = [
+			{ 'user': 'barney' },
+			{ 'user': 'fred' }
+		];
+
+		console.log("克隆前，users = ", users);
+
+		// 深克隆.
+		var deep = _.cloneDeep(users);
+
+		console.log("深克隆，deep = ", deep);
+
+		// 深克隆，修改数据，将不影响原始数据.
+		deep[0].user = "123";
+
+		console.log("深克隆，修改数据后，原始数据 users = ", users);
+
+		console.groupEnd();
+	}
+
+
+
+	function testGt() {
+		console.group("_.gt(value, other)");
+
+		console.log("_.gt(3, 1) = ", _.gt(3, 1));
+		console.log("_.gt(3, 3) = ", _.gt(3, 3));
+		console.log("_.gt(3, 5) = ", _.gt(3, 5));
+
+		console.groupEnd();
+	}
+
+
+
+	function testGte() {
+		console.group("_.gte(value, other)");
+
+		console.log("_.gte(3, 1) = ", _.gte(3, 1));
+		console.log("_.gte(3, 3) = ", _.gte(3, 3));
+		console.log("_.gte(3, 5) = ", _.gte(3, 5));
+
+		console.groupEnd();
+	}
+
+
+
+	function testIsArguments() {
+		console.group("_.isArguments(value)");
+
+		console.log("_.isArguments(testIsArguments) = ", _.isArguments(testIsArguments));
+		console.log("_.isArguments(arguments) = ", _.isArguments(arguments));
+		console.log("_.isArguments([3, 1]) = ", _.isArguments([3, 1]));
+
+		console.groupEnd();
+	}
+
+	function testIsArray() {
+		console.group("_.isArray(value)");
+
+		console.log("_.isArray(testIsArray) = ", _.isArray(testIsArray));
+		console.log("_.isArray(arguments) = ", _.isArray(arguments));
+		console.log("_.isArray([3, 1]) = ", _.isArray([3, 1]));
+
+		console.groupEnd();
+	}
+
+
+	function testIsBoolean() {
+		console.group("_.isBoolean(value)");
+
+		console.log("_.isBoolean(arguments) = ", _.isBoolean(arguments));
+		console.log("_.isBoolean([3, 1]) = ", _.isBoolean([3, 1]));
+		console.log("_.isBoolean(1 === 1) = ", _.isBoolean(1 === 1));
+
+		console.groupEnd();
+	}
+
+
+
+	function testIsDate() {
+		console.group("_.isDate(value)");
+
+		console.log("_.isDate(new Date()) = ", _.isDate(new Date()));
+		console.log("_.isDate(20170905) = ", _.isDate(20170905));
+		console.log("_.isDate('2017-09-05') = ", _.isDate('2017-09-05'));
+
+		console.groupEnd();
+	}
+
+
+
+	function testIsElement() {
+		console.group("_.isElement(value)");
+
+		console.log("_.isElement(document.body) = ", _.isElement(document.body));
+		console.log("_.isElement('<span>ABC</span>') = ", _.isElement('<span>ABC</span>'));
+
+		console.groupEnd();
+	}
+
+
+
+	function testIsEmpty() {
+		console.group("_.isEmpty(value)");
+
+		console.log("_.isEmpty(0) = ", _.isEmpty(0));
+		console.log("_.isEmpty(2) = ", _.isEmpty(2));
+
+		console.log("_.isEmpty(true) = ", _.isEmpty(true));
+		console.log("_.isEmpty(false) = ", _.isEmpty(false));
+
+		console.log("_.isEmpty('') = ", _.isEmpty(''));
+		console.log("_.isEmpty('C') = ", _.isEmpty('C'));
+
+		console.log("_.isEmpty(null) = ", _.isEmpty(null));
+
+		console.log("_.isEmpty(undefined) = ", _.isEmpty(undefined));
+
+		console.log("_.isEmpty([1,2,3]) = ", _.isEmpty([1,2,3]));
+		console.log("_.isEmpty( { 'a':1, 'b':2 } ) = ", _.isEmpty( { 'a':1, 'b':2 } ));
+
+		console.groupEnd();
+	}
+
+
+
+	function testIsEqual() {
+		console.group("_.isEqual(value, other, [customizer], [thisArg])");
+
+		var object = { 'user': 'fred' };
+		var other = { 'user': 'fred' };
+
+		console.log("object = ", object);
+		console.log("other = ", other);
+
+		console.log("object ==  other ? ",  (object ==  other));
+		console.log("_.isEqual(object, other) ? ",  _.isEqual(object, other));
+
+		console.groupEnd();
+	}
+
+
+
+	function testIsError() {
+		console.group("_.isError(value)");
+
+		console.log("_.isError(new Error()) ? ",  _.isError(new Error()) );
+		console.log("_.isError(Error) ? ",  _.isError(Error) );
+
+		console.groupEnd();
+	}
+
+
+
+	function testIsFinite() {
+		console.group("_.isFinite(value)");
+
+		console.log("_.isFinite(100) ? ",  _.isFinite(100) );
+		console.log("_.isFinite(3.14) ? ",  _.isFinite(3.14) );
+		console.log("_.isFinite('100') ? ",  _.isFinite('100') );
+		console.log("_.isFinite(true) ? ",  _.isFinite(true) );
+		console.log("_.isFinite(Object(10)) ? ",  _.isFinite(Object(10)) );
+		console.log("_.isFinite(Infinity) ? ",  _.isFinite(Infinity) );
+		console.log("_.isFinite(NaN) ? ",  _.isFinite(NaN) );
+
+		console.groupEnd();
+	}
+
+
+
+	function testIsFunction() {
+		console.group("_.isFunction(value)");
+
+		console.log("_.isFunction(testIsFunction) = ", _.isFunction(testIsFunction));
+		console.log("_.isFunction(_) = ", _.isFunction(_));
+		console.log("_.isFunction(/abc/) = ", _.isFunction(/abc/));
+
+		console.groupEnd();
+	}
+
+
+
+	function testIsMatch() {
+		console.group("_.isMatch(object, source, [customizer], [thisArg])");
+
+		var object = {
+			'user': '李四',
+			'age': 40
+		};
+
+		console.log("object = ", object);
+
+		console.log("_.isMatch(object, { 'age': 40 }) = ", _.isMatch(object, { 'age': 40 }));
+		console.log("_.isMatch(object, { 'age': 20 }) = ", _.isMatch(object, { 'age': 20 }));
+
+		console.groupEnd();
+	}
+
+
+
+	function testIsNaN() {
+		console.group("_.isNaN(value)");
+
+		console.log("_.isNaN(NaN) = ", _.isNaN(NaN));
+		console.log("_.isNaN(new Number(NaN)) = ", _.isNaN(new Number(NaN)));
+
+		console.log("_.isNaN(undefined) = ", _.isNaN(undefined));
+		console.log("isNaN(undefined) = ", isNaN(undefined));
+
+		console.log("_.isNaN(null) = ", _.isNaN(null));
+		console.log("isNaN(null) = ", isNaN(null));
+
+		console.groupEnd();
+	}
+
+
+
+	function testIsNative() {
+		console.group("_.isNative(value)");
+
+		console.log("_.isNative(testIsNative) = ", _.isNative(testIsNative));
+		console.log("_.isNative(_) = ", _.isNative(_));
+		console.log("_.isNative(Array.prototype.push) = ", _.isNative(Array.prototype.push));
+
+		console.groupEnd();
+	}
+
+
+	function testIsNull() {
+		console.group("_.isNull(value)");
+
+		console.log("_.isNull(null) = ", _.isNull(null));
+
+		console.log("_.isNull('') = ", _.isNull(''));
+		console.log("_.isNull(undefined) = ", _.isNull(undefined));
+		console.log("_.isNull(NaN) = ", _.isNull(NaN));
+
+		console.groupEnd();
+	}
+
+	function testIsNumber() {
+		console.group("_.isNumber(value)");
+
+		console.log("_.isNumber(100) ? ",  _.isNumber(100) );
+		console.log("_.isNumber(3.14) ? ",  _.isNumber(3.14) );
+		console.log("_.isNumber('100') ? ",  _.isNumber('100') );
+		console.log("_.isNumber(true) ? ",  _.isNumber(true) );
+		console.log("_.isNumber(Object(10)) ? ",  _.isNumber(Object(10)) );
+		console.log("_.isNumber(Infinity) ? ",  _.isNumber(Infinity) );
+		console.log("_.isNumber(NaN) ? ",  _.isNumber(NaN) );
+
+		console.groupEnd();
+	}
+
+
+
+	function testIsObject() {
+		console.group("_.isObject(value)");
+
+		console.log("_.isObject(100) ? ",  _.isObject(100) );
+		console.log("_.isObject('100') ? ",  _.isObject('100') );
+
+		console.log("_.isObject([100, 200, 300]) ? ",  _.isObject([100, 200, 300]) );
+		console.log("_.isObject(Object(10)) ? ",  _.isObject(Object(10)) );
+
+		console.log("_.isObject({}) ? ",  _.isObject({}) );
+
+		console.groupEnd();
+	}
+
+
+
+	function testIsPlainObject() {
+		console.group("_.isPlainObject(value)");
+
+		console.log("_.isPlainObject(100) ? ",  _.isPlainObject(100) );
+		console.log("_.isPlainObject('100') ? ",  _.isPlainObject('100') );
+
+		console.log("_.isPlainObject([100, 200, 300]) ? ",  _.isPlainObject([100, 200, 300]) );
+		console.log("_.isPlainObject(Object(10)) ? ",  _.isPlainObject(Object(10)) );
+
+		console.log("_.isPlainObject({}) ? ",  _.isPlainObject({}) );
+
+		console.groupEnd();
+	}
+
+
+
+	function testIsRegExp() {
+		console.group("_.isRegExp(value)");
+
+		console.log("_.isRegExp(/abc/) ? ",  _.isRegExp(/abc/) );
+		console.log("_.isRegExp('/abc/') ? ",  _.isRegExp('/abc/') );
+
+		console.groupEnd();
+	}
+
+
+
+	function testIsString() {
+		console.group("_.isString(value)");
+
+		console.log("_.isString(123) ? ",  _.isString(123) );
+		console.log("_.isString(/abc/) ? ",  _.isString(/abc/) );
+		console.log("_.isString('/abc/') ? ",  _.isString('/abc/') );
+
+		console.groupEnd();
+	}
+
+
+	function testIsTypedArray() {
+		console.group("_.isTypedArray(value)");
+
+		console.log("_.isTypedArray([3, 1]) = ", _.isTypedArray([3, 1]));
+		console.log("_.isTypedArray([]) = ", _.isTypedArray([]));
+		console.log("_.isTypedArray(new Uint8Array()) = ", _.isTypedArray(new Uint8Array()));
+
+		console.groupEnd();
+	}
+
+
+
+	function testIsUndefined() {
+		console.group("_.isUndefined(value)");
+
+		console.log("_.isUndefined(null) = ", _.isUndefined(null));
+
+		console.log("_.isUndefined(undefined) = ", _.isUndefined(undefined));
+
+
+		console.groupEnd();
+	}
+
+
+
+	function testLt() {
+		console.group("_.lt(value, other)");
+
+		console.log("_.lt(3, 1) = ", _.lt(3, 1));
+		console.log("_.lt(3, 3) = ", _.lt(3, 3));
+		console.log("_.lt(3, 5) = ", _.lt(3, 5));
+
+		console.groupEnd();
+	}
+
+	function testLte() {
+		console.group("_.lte(value, other)");
+
+		console.log("_.lte(3, 1) = ", _.lte(3, 1));
+		console.log("_.lte(3, 3) = ", _.lte(3, 3));
+		console.log("_.lte(3, 5) = ", _.lte(3, 5));
+
+		console.groupEnd();
+	}
+
+	function testToArray() {
+		console.group("_.toArray(value)");
+
+		console.log("_.toArray(1, 3, 5, 7, 9) = ", _.toArray(1, 3, 5, 7, 9));
+		console.log("_.toArray( {'name':'张三', 'age':'30'} ) = ", _.toArray( {'name':'张三', 'age':'30'} ));
+
+		console.groupEnd();
+	}
+
+
+	function testToPlainObject() {
+		console.group("_.toPlainObject(value)");
+
+
+
+		console.groupEnd();
+	}
+
+
+
+	// _.clone(value, [isDeep], [customizer], [thisArg])
+	testClone();
+
+	// _.cloneDeep(value, [customizer], [thisArg])
+	testCloneDeep();
+
+	// _.gt(value, other)
+	testGt();
+
+	// _.gte(value, other)
+	testGte();
+
+	// _.isArguments(value)
+	testIsArguments();
+
+	// _.isArray(value)
+	testIsArray();
+
+	// _.isBoolean(value)
+	testIsBoolean();
+
+	// _.isDate(value)
+	testIsDate();
+
+	// _.isElement(value)
+	testIsElement();
+
+	// _.isEmpty(value)
+	testIsEmpty();
+
+	// _.isEqual(value, other, [customizer], [thisArg])
+	testIsEqual();
+
+	// _.isError(value)
+	testIsError();
+
+	// _.isFinite(value)
+	testIsFinite();
+
+	// _.isFunction(value)
+	testIsFunction();
+
+	// _.isMatch(object, source, [customizer], [thisArg])
+	testIsMatch();
+
+	// _.isNaN(value)
+	testIsNaN();
+
+	// _.isNative(value)
+	testIsNative();
+
+	// _.isNull(value)
+	testIsNull();
+
+	// _.isNumber(value)
+	testIsNumber();
+
+	// _.isObject(value)
+	testIsObject();
+
+	// _.isPlainObject(value)
+	testIsPlainObject();
+
+	// _.isRegExp(value)
+	testIsRegExp();
+
+	// _.isString(value)
+	testIsString();
+
+	// _.isTypedArray(value)
+	testIsTypedArray();
+
+	// _.isUndefined(value)
+	testIsUndefined();
+
+	// _.lt(value, other)
+	testLt();
+
+	// _.lte(value, other)
+	testLte();
+
+	// _.toArray(value)
+	testToArray();
+
+	// _.toPlainObject(value)
+
+</script>
+
+
+</body>
+</html>
