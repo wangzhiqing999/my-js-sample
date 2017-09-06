@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <title> Object </title>
+    <script src="js/lodash.js"></script>
+</head>
+
+
+<body>
+
+	<p>
+	F12 看控制台的输出！
+	</p>
+
+
+	<ul>
+		<li>
+			_.assign(object, [sources], [customizer], [thisArg])
+			对象赋值. （覆盖已有数值）
+			# 此方法修改对象 #
+		</li>
+
+		<li>
+			_.create(prototype, [properties])
+		</li>
+
+		<li>
+			_.defaults(object, [sources])
+			对象赋值 （不覆盖已有数值）
+			# 此方法修改对象 #
+		</li>
+
+		<li>
+			_.defaultsDeep(object, [sources])
+			对象赋值 （不覆盖已有数值）
+			# 此方法修改对象 #
+		</li>
+
+		<li>
+			_.findKey(object, [predicate=_.identity], [thisArg])
+			查找对象 Key
+		</li>
+
+		<li>
+			_.findLastKey(object, [predicate=_.identity], [thisArg])
+			查找对象 Key（逆序）
+		</li>
+
+		<li>
+			_.forIn(object, [iteratee=_.identity], [thisArg])
+			遍历对象
+		</li>
+
+		<li>
+			_.forInRight(object, [iteratee=_.identity], [thisArg])
+			遍历对象（逆序）
+		</li>
+
+		<li>
+			_.forOwn(object, [iteratee=_.identity], [thisArg])
+			遍历对象
+		</li>
+
+		<li>
+			_.forOwnRight(object, [iteratee=_.identity], [thisArg])
+			遍历对象（逆序）
+		</li>
+
+		<li>
+			_.functions(object)
+			返回对象的函数.
+		</li>
+
+		<li>
+			_.get(object, path, [defaultValue])
+			取得对象属性值.
+		</li>
+
+		<li>
+			_.has(object, path)
+			是否有属性
+		</li>
+
+		<li>
+			_.invert(object, [multiValue])
+			反转处理
+		</li>
+
+		<li>
+			_.keys(object)
+			返回键. （Key / Value 中的 Key）
+		</li>
+
+		<li>
+			_.mapKeys(object, [iteratee=_.identity], [thisArg])
+			重构 Kay.
+		</li>
+
+		<li>
+			_.mapValues(object, [iteratee=_.identity], [thisArg])
+			重构 Value.
+		</li>
+
+		<li>
+			_.merge(object, [sources], [customizer], [thisArg])
+			组合.
+			# 此方法修改对象 #
+		</li>
+
+		<li>
+			_.omit(object, [predicate], [thisArg])
+			排除属性.
+		</li>
+
+		<li>
+			_.pairs(object)
+			Key / Value 创建二维数组.
+		</li>
+
+		<li>
+			_.pick(object, [predicate], [thisArg])
+			筛选属性.
+		</li>
+
+		<li>
+			_.result(object, path, [defaultValue])
+			取得结果.
+			与 _.get 的区别在于， 遇到函数的情况下， _.get 不执行， 而 _.result 执行.
+		</li>
+
+		<li>
+			_.set(object, path, value)
+			设置属性.
+		</li>
+
+		<li>
+			_.transform(object, [iteratee=_.identity], [accumulator], [thisArg])
+			数据转换.
+		</li>
+
+		<li>
+			_.values(object)
+			返回值.  （Key / Value 中的 Value）
+		</li>
+
+		<li>
+		</li>
+
+	</ul>
+
+
+
+<script type="text/javascript">
+
+
+
+	var testObject = {
+		'user' : '张三',
+		'age' : 30,
+		'home' : {
+			'cityCode' : 102,
+			'city' : '上海',
+			'address' : '南京西路1168号'
+		},
+		'helloWorld' : function() {
+			return "Hello World";
+		}
+	};
+
+	var testSource1 = {
+		'sex' : '男'
+	};
+
+	var testSource2 = {
+		'user' : '李四',
+		'home' : {
+			'city' : '上海',
+			'zip' : '200003',
+			'address' : '南京西路1618号',
+			'fax' : '12345678'
+		}
+	};
+
+
+	function testAssign() {
+		console.group("_.assign(object, [sources], [customizer], [thisArg])");
+
+		var object = _.cloneDeep(testObject);
+
+		console.log("object = ", object);
+		console.log("testSource1 = ", testSource1);
+		console.log("testSource2 = ", testSource2);
+
+		console.log("_.assign(object, testSource1) = ", _.assign(object, testSource1));
+
+		object = _.cloneDeep(testObject);
+		console.log("_.assign(object, testSource2) = ", _.assign(object, testSource2));
+
+		object = _.cloneDeep(testObject);
+		console.log("_.assign(object, testSource1, testSource2) = ", _.assign(object, testSource1, testSource2));
+
+		console.groupEnd();
+	}
+
+
+
+	function testDefaults() {
+		console.group("_.defaults(object, [sources])");
+
+		var object = _.cloneDeep(testObject);
+
+		console.log("object = ", object);
+		console.log("testSource1 = ", testSource1);
+		console.log("testSource2 = ", testSource2);
+
+		console.log("_.defaults(object, testSource1) = ", _.defaults(object, testSource1));
+
+		object = _.cloneDeep(testObject);
+		console.log("_.defaults(object, testSource2) = ", _.defaults(object, testSource2));
+
+		object = _.cloneDeep(testObject);
+		console.log("_.defaults(object, testSource1, testSource2) = ", _.defaults(object, testSource1, testSource2));
+
+		console.groupEnd();
+	}
+
+
+
+	function testDefaultsDeep() {
+		console.group("_.defaultsDeep(object, [sources])");
+
+		var object = _.cloneDeep(testObject);
+
+		console.log("object = ", object);
+		console.log("testSource1 = ", testSource1);
+		console.log("testSource2 = ", testSource2);
+
+		console.log("_.defaultsDeep(object, testSource1) = ", _.defaultsDeep(object, testSource1));
+
+		object = _.cloneDeep(testObject);
+		console.log("_.defaultsDeep(object, testSource2) = ", _.defaultsDeep(object, testSource2));
+
+		object = _.cloneDeep(testObject);
+		console.log("_.defaultsDeep(object, testSource1, testSource2) = ", _.defaultsDeep(object, testSource1, testSource2));
+
+		console.groupEnd();
+	}
+
+
+
+
+	var testFindUsers = {
+		'zhang3' : { 'age' : 30, 'sex' : '男', 'active': true },
+		'li4' : { 'age' : 40, 'sex' : '女', 'active': true },
+		'wang5' : { 'age' : 50, 'sex' : '男', 'active': false },
+		'zhao6' : { 'age' : 60, 'sex' : '女', 'active': false },
+	};
+
+	function testFindKey() {
+		console.group("_.findKey(object, [predicate=_.identity], [thisArg])");
+
+		console.log("testFindUsers = ", testFindUsers);
+
+		console.log("_.find(testFindUsers, function(chr) {return chr.age < 50;}) = ",
+					 _.find(testFindUsers, function(chr) {return chr.age < 50;}));
+		console.log("_.findKey(testFindUsers, function(chr) {return chr.age < 50;}) = ",
+					 _.findKey(testFindUsers, function(chr) {return chr.age < 50;}));
+
+
+		console.log("_.find(testFindUsers, { 'sex' : '男'}) = ", _.find(testFindUsers, { 'sex' : '男'}));
+		console.log("_.findKey(testFindUsers, { 'sex' : '男'}) = ", _.findKey(testFindUsers, { 'sex' : '男'}));
+
+		console.groupEnd();
+	}
+
+
+
+	function testFindLastKey() {
+		console.group("_.findLastKey(object, [predicate=_.identity], [thisArg])");
+
+		console.log("testFindUsers = ", testFindUsers);
+
+		console.log("_.findLast(testFindUsers, function(chr) {return chr.age < 50;}) = ",
+					 _.findLast(testFindUsers, function(chr) {return chr.age < 50;}));
+		console.log("_.findLastKey(testFindUsers, function(chr) {return chr.age < 50;}) = ",
+					 _.findLastKey(testFindUsers, function(chr) {return chr.age < 50;}));
+
+
+		console.log("_.findLast(testFindUsers, { 'sex' : '男'}) = ", _.findLast(testFindUsers, { 'sex' : '男'}));
+		console.log("_.findLastKey(testFindUsers, { 'sex' : '男'}) = ", _.findLastKey(testFindUsers, { 'sex' : '男'}));
+
+		console.groupEnd();
+	}
+
+
+
+	function testForIn() {
+		console.group("_.forIn(object, [iteratee=_.identity], [thisArg])");
+
+		_.forIn(testFindUsers, function(value, key) {
+			console.log("forIn key / value = ", key, value);
+		});
+
+		console.groupEnd();
+	}
+
+
+
+	function testForInRight() {
+		console.group("_.forInRight(object, [iteratee=_.identity], [thisArg])");
+
+		_.forInRight(testFindUsers, function(value, key) {
+			console.log("forInRight key / value = ", key, value);
+		});
+
+		console.groupEnd();
+	}
+
+
+
+	var testFunctionsObject = {
+		'name' : '张三',
+		'eat' : function(thing) {
+			console.log("Eat :", thing);
+		},
+		'say' : function(word) {
+			console.log("Say :", word);
+		}
+	};
+
+	function testFunctions() {
+		console.group("_.functions(object)");
+
+		console.log("_.functions(testFunctionsObject) = ", _.functions(testFunctionsObject));
+		console.log("_.functions(_) = ", _.functions(_));
+
+		console.groupEnd();
+	}
+
+
+
+	function testGet() {
+		console.group("_.get(object, path, [defaultValue])");
+
+		console.log("_.get(testObject, 'user') = ", _.get(testObject, 'user'));
+		console.log("_.get(testObject, 'home') = ", _.get(testObject, 'home'));
+		console.log("_.get(testObject, 'helloWorld') = ", _.get(testObject, 'helloWorld'));
+		console.log("_.get(testObject, 'home.city') = ", _.get(testObject, 'home.city'));
+		console.log("_.get(testObject, 'home.zip') = ", _.get(testObject, 'home.zip'));
+		console.log("_.get(testObject, 'home.zip', '没有的时候使用默认值') = ", _.get(testObject, 'home.zip', '没有的时候使用默认值'));
+		console.log("_.get(testObject, 'x.y.z', '没有的时候使用默认值') = ", _.get(testObject, 'x.y.z', '没有的时候使用默认值'));
+
+		console.groupEnd();
+	}
+
+
+
+	function testHas() {
+		console.group("_.has(object, path)");
+
+		console.log("_.has(testObject, 'user') = ", _.has(testObject, 'user'));
+		console.log("_.has(testObject, 'home') = ", _.has(testObject, 'home'));
+		console.log("_.has(testObject, 'home.city') = ", _.has(testObject, 'home.city'));
+		console.log("_.has(testObject, 'home.zip') = ", _.has(testObject, 'home.zip'));
+		console.log("_.has(testObject, 'x.y.z') = ", _.has(testObject, 'x.y.z'));
+
+		console.groupEnd();
+	}
+
+
+
+	var testInvertObject = {
+		'攻击' : 'B',
+		'防御' : 'C',
+		'敏捷' : 'A',
+		'幸运' : 'B'
+	};
+
+	function testInvert() {
+		console.group("_.invert(object, [multiValue])");
+
+		console.log("testInvertObject = ", testInvertObject);
+		console.log("_.invert(testInvertObject) = ", _.invert(testInvertObject));
+		console.log("_.invert(testInvertObject, true) = ", _.invert(testInvertObject, true));
+
+		console.groupEnd();
+	}
+
+
+
+	function testKeys() {
+		console.group("_.keys(object)");
+
+		console.log("testFunctionsObject = ", testFunctionsObject);
+		console.log("_.keys(testFunctionsObject) = ", _.keys(testFunctionsObject));
+
+		console.groupEnd();
+	}
+
+
+
+	function mapKeyFunc(value, key) {
+		return key + value;
+	}
+
+	function testMapKeys() {
+		console.group("_.mapKeys(object, [iteratee=_.identity], [thisArg])");
+
+		console.log("testInvertObject = ", testInvertObject);
+		console.log("_.mapKeys(testInvertObject, mapKeyFunc) = ", _.mapKeys(testInvertObject, mapKeyFunc));
+
+		console.groupEnd();
+	}
+
+
+	function mapValueFunc(value) {
+		switch(value) {
+			case 'A':
+				return 90;
+			case 'B':
+				return 80;
+			case 'C':
+				return 70;
+			default:
+				return 60;
+		}
+	}
+
+	function testMapValues() {
+		console.group("_.mapValues(object, [iteratee=_.identity], [thisArg])");
+
+		console.log("testInvertObject = ", testInvertObject);
+		console.log("_.mapValues(testInvertObject, mapValueFunc) = ", _.mapValues(testInvertObject, mapValueFunc));
+
+		console.groupEnd();
+	}
+
+
+
+	function testMerge() {
+		console.group("_.merge(object, [sources], [customizer], [thisArg])");
+
+		var users = {
+		  'data': [{ 'user': 'barney' }, { 'user': 'fred' }]
+		};
+
+		var ages = {
+		  'data': [{ 'age': 36 }, { 'age': 40 }]
+		};
+
+		console.log("users = ", users);
+		console.log("ages = ", ages);
+		console.log("_.merge(users, ages) = ", _.merge(users, ages));
+
+
+		// using a customizer callback
+		var object = {
+			'fruits': ['apple'],
+			'vegetables': ['beet']
+		};
+
+		var other = {
+			'fruits': ['banana'],
+			'vegetables': ['carrot']
+		};
+
+		var resultData = _.merge(object, other, function(a, b) {
+			if (_.isArray(a)) {
+				return a.concat(b);
+			}
+		});
+
+		console.log("object = ", object);
+		console.log("other = ", other);
+		console.log("merge result = ", resultData);
+
+		console.groupEnd();
+	}
+
+
+
+	function testOmit() {
+		console.group("_.omit(object, [predicate], [thisArg])");
+
+		console.log("testObject= ", testObject);
+		console.log("_.omit(testObject, 'age') = ", _.omit(testObject, 'age'));
+		console.log("_.omit(testObject, _.isNumber) = ", _.omit(testObject, _.isNumber));
+
+		console.groupEnd();
+	}
+
+
+
+	function testPairs() {
+		console.group("_.pairs(object)");
+
+		console.log("testInvertObject= ", testInvertObject);
+		console.log("_.pairs(testInvertObject) = ", _.pairs(testInvertObject));
+
+		console.groupEnd();
+	}
+
+
+
+	function testPick() {
+		console.group("_.pick(object, [predicate], [thisArg])");
+
+		console.log("testObject= ", testObject);
+		console.log("_.pick(testObject, 'age') = ", _.pick(testObject, 'age'));
+		console.log("_.pick(testObject, _.isString) = ", _.pick(testObject, _.isString));
+
+		console.groupEnd();
+	}
+
+
+
+	function testResult() {
+		console.group("_.result(object, path, [defaultValue])");
+
+		console.log("_.result(testObject, 'user') = ", _.result(testObject, 'user'));
+		console.log("_.result(testObject, 'home') = ", _.result(testObject, 'home'));
+		console.log("_.result(testObject, 'helloWorld') = ", _.result(testObject, 'helloWorld'));
+		console.log("_.result(testObject, 'home.city') = ", _.result(testObject, 'home.city'));
+		console.log("_.result(testObject, 'home.zip') = ", _.result(testObject, 'home.zip'));
+		console.log("_.result(testObject, 'home.zip', '没有的时候使用默认值') = ", _.result(testObject, 'home.zip', '没有的时候使用默认值'));
+		console.log("_.result(testObject, 'x.y.z', '没有的时候使用默认值') = ", _.result(testObject, 'x.y.z', '没有的时候使用默认值'));
+
+		console.groupEnd();
+	}
+
+
+
+	function testSet() {
+		console.group("_.set(object, path, value)");
+
+		console.log("testObject = ", testObject);
+
+		var object = _.cloneDeep(testObject);
+
+		_.set(object, 'user', 'Set 设置的新 user');
+		_.set(object, 'home.city', 'Set 设置的新 city');
+		_.set(object, 'home.zip', 'Set 设置的新 zip');
+		_.set(object, 'x.y.z', 'Set 设置的新 x.y.z');
+
+		console.log("After Set. object = ", object);
+
+		console.groupEnd();
+	}
+
+
+
+	function testTransformFunc(result, value, key) {
+		result[key] = mapValueFunc(value);
+	}
+
+	function testTransform() {
+		console.group("_.transform(object, [iteratee=_.identity], [accumulator], [thisArg])");
+
+		console.log("testInvertObject = ", testInvertObject);
+		console.log("_.transform(testInvertObject, testTransformFunc) = ", _.transform(testInvertObject, testTransformFunc));
+
+		console.groupEnd();
+	}
+
+
+
+	function testValues() {
+		console.group("_.values(object)");
+
+		console.log("testFunctionsObject = ", testFunctionsObject);
+		console.log("_.values(testFunctionsObject) = ", _.values(testFunctionsObject));
+
+		console.groupEnd();
+	}
+
+
+	function test() {
+		console.group("_");
+		console.groupEnd();
+	}
+
+
+	// _.assign(object, [sources], [customizer], [thisArg])
+	testAssign();
+
+	// _.create(prototype, [properties])
+
+	// _.defaults(object, [sources])
+	testDefaults();
+
+	// _.defaultsDeep(object, [sources])
+	testDefaultsDeep();
+
+	// _.findKey(object, [predicate=_.identity], [thisArg])
+	testFindKey();
+
+	// _.findLastKey(object, [predicate=_.identity], [thisArg])
+	testFindLastKey();
+
+	// _.forIn(object, [iteratee=_.identity], [thisArg])
+	testForIn();
+
+	// _.forInRight(object, [iteratee=_.identity], [thisArg])
+	testForInRight();
+
+	// _.forOwn(object, [iteratee=_.identity], [thisArg])
+	// _.forOwnRight(object, [iteratee=_.identity], [thisArg])
+
+	// _.functions(object)
+	testFunctions();
+
+	// _.get(object, path, [defaultValue])
+	testGet();
+
+	// _.has(object, path)
+	testHas();
+
+	// _.invert(object, [multiValue])
+	testInvert();
+
+	// _.keys(object)
+	testKeys();
+
+	// _.keysIn(object)
+
+	// _.mapKeys(object, [iteratee=_.identity], [thisArg])
+	testMapKeys();
+
+	// _.mapValues(object, [iteratee=_.identity], [thisArg])
+	testMapValues();
+
+	// _.merge(object, [sources], [customizer], [thisArg])
+	testMerge();
+
+	// _.omit(object, [predicate], [thisArg])
+	testOmit();
+
+	// _.pairs(object)
+	testPairs();
+
+	// _.pick(object, [predicate], [thisArg])
+	testPick();
+
+	// _.result(object, path, [defaultValue])
+	testResult();
+
+	// _.set(object, path, value)
+	testSet();
+
+	// _.transform(object, [iteratee=_.identity], [accumulator], [thisArg])
+	testTransform();
+
+	// _.values(object)
+	testValues();
+
+	// _.valuesIn(object)
+
+</script>
+
+
+</body>
+</html>

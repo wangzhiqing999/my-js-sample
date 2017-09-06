@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <title> String </title>
+    <script src="js/lodash.js"></script>
+</head>
+
+
+<body>
+
+	<p>
+	F12 看控制台的输出！
+	</p>
+
+
+	<ul>
+
+		<li>
+			_.camelCase([string=''])
+			驼峰格式.
+			HelloWorld
+		</li>
+
+		<li>
+			_.capitalize([string=''])
+			首字母大写.
+		</li>
+
+		<li>
+			_.deburr([string=''])
+		</li>
+
+		<li>
+			_.endsWith([string=''], [target], [position=string.length])
+			是否以指定字符串结尾.
+		</li>
+
+		<li>
+			_.escape([string=''])
+			HTML 字符转义.
+			"&", "<", ">", '"', "'", "`",
+		</li>
+
+		<li>
+			_.escapeRegExp([string=''])
+			正则表达式转义.
+			"\", "/", "^", "$", ".", "|", "?", "*", "+", "(", ")", "[", "]", "{" , "}"
+		</li>
+
+		<li>
+			_.kebabCase([string=''])
+			减号分隔.
+			hello-world
+		</li>
+
+		<li>
+			_.pad([string=''], [length=0], [chars=' '])
+			左右填充字符.
+		</li>
+
+		<li>
+			_.padLeft([string=''], [length=0], [chars=' '])
+			左填充字符.
+		</li>
+
+		<li>
+			_.padRight([string=''], [length=0], [chars=' '])
+			右填充字符.
+		</li>
+
+		<li>
+			_.parseInt(string, [radix])
+			字符转换为 Int.
+		</li>
+
+		<li>
+			_.repeat([string=''], [n=0])
+			重复字符串.
+		</li>
+
+		<li>
+			_.snakeCase([string=''])
+			下划线分割.
+			hello_world
+		</li>
+
+		<li>
+			_.startCase([string=''])
+			空格分隔.
+			Hello World
+		</li>
+
+		<li>
+			_.startsWith([string=''], [target], [position=0])
+			是否以指定字符串开头.
+		</li>
+
+		<li>
+			_.template([string=''], [options])
+			模板处理.
+		</li>
+
+		<li>
+			_.trim([string=''], [chars=whitespace])
+			清除左右字符 （默认清除空格）
+		</li>
+
+		<li>
+			_.trimLeft([string=''], [chars=whitespace])
+			清除左字符 （默认清除空格）
+		</li>
+
+		<li>
+			_.trimRight([string=''], [chars=whitespace])
+			清除右字符 （默认清除空格）
+		</li>
+
+		<li>
+			_.trunc([string=''], [options], [options.length=30], [options.omission='...'], [options.separator])
+			缩略字符串.
+		</li>
+
+		<li>
+			_.unescape([string=''])
+			HTML 转义符号恢复.
+		</li>
+
+		<li>
+			_.words([string=''], [pattern])
+			分隔单词.
+		</li>
+
+	</ul>
+
+
+
+<script type="text/javascript">
+
+
+	function testCamelCase() {
+		console.group("_.camelCase([string=''])");
+
+		console.log("_.camelCase('Foo Bar') = ", _.camelCase('Foo Bar'));
+		console.log("_.camelCase('--foo-bar') = ", _.camelCase('--foo-bar'));
+		console.log("_.camelCase('__foo_bar__') = ", _.camelCase('__foo_bar__'));
+
+		console.groupEnd();
+	}
+
+
+
+	function testCapitalize() {
+		console.group("_.capitalize([string=''])");
+
+		console.log("_.capitalize('foo bar') = ", _.capitalize('foo bar'));
+
+		console.groupEnd();
+	}
+
+
+
+	function testDeburr() {
+		console.group("_.deburr([string=''])");
+
+		console.log("_.deburr('déjà vu') = ", _.deburr('déjà vu'));
+
+		console.groupEnd();
+	}
+
+
+
+	function testEndsWith() {
+		console.group("_.endsWith([string=''], [target], [position=string.length])");
+
+		console.log("_.endsWith('abcde', 'e') = ", _.endsWith('abcde', 'e'));
+		console.log("_.endsWith('abcde', 'd') = ", _.endsWith('abcde', 'd'));
+		console.log("_.endsWith('abcde', 'd', 4) = ", _.endsWith('abcde', 'd', 4));
+
+		console.groupEnd();
+	}
+
+
+
+	function testEscape() {
+		console.group("_.escape([string=''])");
+
+		console.log("_.escape('N <= 100 && N >= 60') = ", _.escape('N <= 100 && N >= 60'));
+
+		console.groupEnd();
+	}
+
+
+
+	function testEscapeRegExp() {
+		console.group("_.escapeRegExp([string=''])");
+
+		console.log("_.escapeRegExp('[lodash](https://lodash.com/)') = ", _.escapeRegExp('[lodash](https://lodash.com/)'));
+
+		console.groupEnd();
+	}
+
+
+
+	function testKebabCase() {
+		console.group("_.kebabCase([string=''])");
+
+		console.log("_.kebabCase('Foo Bar') = ", _.kebabCase('Foo Bar'));
+		console.log("_.kebabCase('--foo-bar') = ", _.kebabCase('--foo-bar'));
+		console.log("_.kebabCase('__foo_bar__') = ", _.kebabCase('__foo_bar__'));
+
+		console.groupEnd();
+	}
+
+
+
+	function testPad() {
+		console.group("_.pad([string=''], [length=0], [chars=' '])");
+
+		console.log("_.pad('abc', 8) = ", _.pad('abc', 8));
+		console.log("_.pad('abc', 8, '*') = ", _.pad('abc', 8, '*'));
+		console.log("_.pad('abc', 8, '_-') = ", _.pad('abc', 8, '_-'));
+
+		console.groupEnd();
+	}
+
+
+
+	function testPadLeft() {
+		console.group("_.padLeft([string=''], [length=0], [chars=' '])");
+
+		console.log("_.padLeft('abc', 8) = ", _.padLeft('abc', 8));
+		console.log("_.padLeft('abc', 8, '*') = ", _.padLeft('abc', 8, '*'));
+		console.log("_.padLeft('abc', 8, '_-') = ", _.padLeft('abc', 8, '_-'));
+
+		console.groupEnd();
+	}
+
+
+
+	function testPadRight() {
+		console.group("_.padRight([string=''], [length=0], [chars=' '])");
+
+		console.log("_.padRight('abc', 8) = ", _.padRight('abc', 8));
+		console.log("_.padRight('abc', 8, '*') = ", _.padRight('abc', 8, '*'));
+		console.log("_.padRight('abc', 8, '_-') = ", _.padRight('abc', 8, '_-'));
+
+		console.groupEnd();
+	}
+
+
+
+	function testParseInt() {
+		console.group("_.parseInt(string, [radix])");
+
+		console.log("_.parseInt('12', 8) = ", _.parseInt('12', 8));
+		console.log("_.parseInt('12', 10) = ", _.parseInt('12', 10));
+		console.log("_.parseInt('12', 16) = ", _.parseInt('12', 16));
+
+		console.groupEnd();
+	}
+
+
+
+	function testRepeat() {
+		console.group("_.repeat([string=''], [n=0])");
+
+		console.log("_.repeat('*', 8) = ", _.repeat('*', 8));
+		console.log("_.repeat('123', 3) = ", _.repeat('123', 3));
+		console.log("_.repeat('123', 0) = ", _.repeat('123', 0));
+
+		console.groupEnd();
+	}
+
+
+
+	function testSnakeCase() {
+		console.group("_.snakeCase([string=''])");
+
+		console.log("_.snakeCase('Foo Bar') = ", _.snakeCase('Foo Bar'));
+		console.log("_.snakeCase('--foo-bar') = ", _.snakeCase('--foo-bar'));
+		console.log("_.snakeCase('__foo_bar__') = ", _.snakeCase('__foo_bar__'));
+
+		console.groupEnd();
+	}
+
+
+
+	function testStartCase() {
+		console.group("_.startCase([string=''])");
+
+		console.log("_.startCase('Foo Bar') = ", _.startCase('Foo Bar'));
+		console.log("_.startCase('--foo-bar') = ", _.startCase('--foo-bar'));
+		console.log("_.startCase('__foo_bar__') = ", _.startCase('__foo_bar__'));
+
+		console.groupEnd();
+	}
+
+
+
+	function testStartsWith() {
+		console.group("_.startsWith([string=''], [target], [position=0])");
+
+		console.log("_.startsWith('abcde', 'a') = ", _.startsWith('abcde', 'a'));
+		console.log("_.startsWith('abcde', 'b') = ", _.startsWith('abcde', 'b'));
+		console.log("_.startsWith('abcde', 'b', 1) = ", _.startsWith('abcde', 'b', 1));
+
+		console.groupEnd();
+	}
+
+
+
+	function testTemplate() {
+		console.group("_.template([string=''], [options])");
+
+		var compiled = _.template('hello <%= user %>!');
+		console.log( compiled({ 'user': 'fred' }) );
+
+		console.groupEnd();
+	}
+
+
+
+	function testTrim() {
+		console.group("_.trim([string=''], [chars=whitespace])");
+
+		console.log("_.trim('  abc  ') = ", _.trim('  abc  '));
+		console.log("_.trim('***abc***', '*') = ", _.trim('***abc***', '*'));
+		console.log("_.trim('-_-abc_-_', '_-') = ", _.trim('-_-abc_-_', '_-'));
+
+		console.groupEnd();
+	}
+
+
+
+	function testTrimLeft() {
+		console.group("_.trimLeft([string=''], [chars=whitespace])");
+
+		console.log("_.trimLeft('  abc  ') = ", _.trimLeft('  abc  '));
+		console.log("_.trimLeft('***abc***', '*') = ", _.trimLeft('***abc***', '*'));
+		console.log("_.trimLeft('-_-abc_-_', '_-') = ", _.trimLeft('-_-abc_-_', '_-'));
+
+		console.groupEnd();
+	}
+
+
+
+	function testTrimRight() {
+		console.group("_.trimRight([string=''], [chars=whitespace])");
+
+		console.log("_.trimRight('  abc  ') = ", _.trimRight('  abc  '));
+		console.log("_.trimRight('***abc***', '*') = ", _.trimRight('***abc***', '*'));
+		console.log("_.trimRight('-_-abc_-_', '_-') = ", _.trimRight('-_-abc_-_', '_-'));
+
+		console.groupEnd();
+	}
+
+
+
+	function testTrunc() {
+		console.group("_.trunc([string=''], [options], [options.length=30], [options.omission='...'], [options.separator])");
+
+		console.log("_.trunc('hi-diddly-ho there, neighborino') = ", _.trunc('hi-diddly-ho there, neighborino'));
+		console.log("_.trunc('hi-diddly-ho there, neighborino', 24) = ", _.trunc('hi-diddly-ho there, neighborino', 24));
+		console.log("_.trunc('hi-diddly-ho there, neighborino', {'length': 24,'separator': ' '}) = ",
+					_.trunc('hi-diddly-ho there, neighborino', {'length': 24,'separator': ' '}));
+		console.log("_.trunc('hi-diddly-ho there, neighborino', {'length': 24,'separator': /,? +/}) = ",
+					_.trunc('hi-diddly-ho there, neighborino', {'length': 24,'separator': /,? +/}));
+		console.log("_.trunc('hi-diddly-ho there, neighborino', {'omission': ' [...]') = ",
+					_.trunc('hi-diddly-ho there, neighborino', {'omission': ' [...]'}));
+
+		console.groupEnd();
+	}
+
+
+
+	function testUnescape() {
+		console.group("_.unescape([string=''])");
+
+		console.log("_.escape('N <= 100 && N >= 60') = ", _.escape('N <= 100 && N >= 60'));
+		console.log("_.unescape('N &lt;= 100 &amp;&amp; N &gt;= 60') = ", _.unescape('N &lt;= 100 &amp;&amp; N &gt;= 60'));
+
+		console.groupEnd();
+	}
+
+
+
+	function testWord() {
+		console.group("_.words([string=''], [pattern])");
+
+
+		console.log("_.words('Splits string into an array of its words.') = ", _.words('Splits string into an array of its words.'));
+
+
+		console.groupEnd();
+	}
+
+
+
+	// _.camelCase([string=''])
+	testCamelCase();
+
+	// _.capitalize([string=''])
+	testCapitalize();
+
+	// _.deburr([string=''])
+	testDeburr();
+
+	// _.endsWith([string=''], [target], [position=string.length])
+	testEndsWith();
+
+	// _.escape([string=''])
+	testEscape();
+
+	// _.escapeRegExp([string=''])
+	testEscapeRegExp();
+
+	// _.kebabCase([string=''])
+	testKebabCase();
+
+	// _.pad([string=''], [length=0], [chars=' '])
+	testPad();
+
+	// _.padLeft([string=''], [length=0], [chars=' '])
+	testPadLeft();
+
+	// _.padRight([string=''], [length=0], [chars=' '])
+	testPadRight();
+
+	// _.parseInt(string, [radix])
+	testParseInt();
+
+	// _.repeat([string=''], [n=0])
+	testRepeat();
+
+	// _.snakeCase([string=''])
+	testSnakeCase();
+
+	// _.startCase([string=''])
+	testStartCase();
+
+	// _.startsWith([string=''], [target], [position=0])
+	testStartsWith();
+
+	// _.template([string=''], [options])
+	testTemplate();
+
+	// _.trim([string=''], [chars=whitespace])
+	testTrim();
+
+	// _.trimLeft([string=''], [chars=whitespace])
+	testTrimLeft();
+
+	// _.trimRight([string=''], [chars=whitespace])
+	testTrimRight();
+
+	// _.trunc([string=''], [options], [options.length=30], [options.omission='...'], [options.separator])
+	testTrunc();
+
+	// _.unescape([string=''])
+	testUnescape();
+
+	// _.words([string=''], [pattern])
+	testWord();
+
+</script>
+
+
+</body>
+</html>
