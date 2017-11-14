@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Promise - Promise.all </title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+
+<body>
+	<p>
+	F12 看控制台的输出！
+	</p>
+
+	<p>
+
+		Promise.race 方法，它的使用方法和Promise.all一样，接收一个promise对象数组为参数。
+
+Promise.all 在接收到的所有的对象promise都变为 FulFilled 或者 Rejected 状态之后才会继续进行后面的处理，
+与之相对的是 Promise.race 只要有一个promise对象进入 FulFilled 或者 Rejected 状态的话，就会继续进行后面的处理。
+
+<pre><code>
+
+
+
+</code></pre>
+	</p>
+
+
+
+
+	<script type="text/javascript">
+
+		// 模拟的异步处理.
+		function asyncFunction(seconds) {
+			return new Promise(function (resolve, reject) {
+				console.log("asyncFunction 处理开始", seconds);
+				if(seconds > 0) {
+					// 等待的秒数大于零.
+					setTimeout(
+						function () {
+							//处理结果正常的话，调用resolve(处理结果值)
+							console.log("asyncFunction 处理结束", seconds);
+							resolve(seconds + 1);
+						}, 1000 * seconds);
+				} else {
+					// 处理结果错误的话，调用reject(Error对象)
+					reject(new Error("处理超时..." + seconds));
+				}
+			});
+		}
+
+
+		function main() {
+			return Promise.race([asyncFunction(1), asyncFunction(2), asyncFunction(3)]);
+		}
+
+		function main2() {
+			return Promise.race([asyncFunction(-4), asyncFunction(5), asyncFunction(-6)]);
+		}
+
+
+		// 运行示例
+		main().then(function (value) {
+			console.log("### Promise.race 处理完成：", value);
+		}).catch(function(error){
+			console.log("### Promise.race 处理异常！",error);
+		});
+
+
+		main2().then(function (value) {
+			console.log("$$$ Promise.race 处理完成：", value);
+		}).catch(function(error){
+			console.log("$$$ Promise.race 处理异常！", error);
+		});
+
+
+	</script>
+
+
+
+
+
+</body>
+</html>

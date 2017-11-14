@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Promise - promise chain </title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+
+<body>
+	<p>
+	F12 看控制台的输出！
+	</p>
+
+	<p>
+
+		promise chain 执行过程中， 中间发生异常的情况下， 将跳过后续的正常处理逻辑， 直接进入 onRejected 的处理逻辑。
+
+<pre><code>
+
+
+
+</code></pre>
+	</p>
+
+
+
+
+	<script type="text/javascript">
+
+		function doubleUp(value) {
+			console.log("doubleUp Start!", value);
+
+			if(value < 0) {
+				// 当参数小于零时， 抛出异常.
+				throw new Error("doubleUp 参数异常！");
+			}
+
+			return value * 2;
+		}
+		function increment(value) {
+			console.log("increment Start!", value);
+			return value + 1;
+		}
+
+		function output(value) {
+			console.log("output Start!", value);
+			return value;
+		}
+		function finalProc(value) {
+			console.log("### 最终处理完毕！", value);
+		}
+
+
+		function testExec(initValue) {
+
+			// 这里传递入口的参数.
+			var promise = Promise.resolve(initValue);
+
+			promise
+				// 先 参数 + 1.
+				.then(increment)
+				// 上一步的结果 * 2
+				.then(doubleUp)
+				// 输出当前结果.
+				.then(output)
+				.catch(function(error){
+					// promise chain中出现异常的时候会被调用
+					console.error(error);
+				})
+				// 不管正常/异常，最终都要执行的部分。
+				.then(finalProc);
+		}
+
+
+		testExec(10);
+
+		testExec(-10);
+
+
+	</script>
+
+
+
+
+
+</body>
+</html>

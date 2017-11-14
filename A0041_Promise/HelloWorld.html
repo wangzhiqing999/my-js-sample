@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Promise - Hello World </title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+
+<body>
+	<p>
+	F12 看控制台的输出！
+	</p>
+
+	<p>
+
+要想创建一个promise对象、可以使用new来调用Promise的构造器来进行实例化。
+<pre><code>
+var promise = new Promise(function(resolve, reject) {
+    // 异步处理
+    // 处理结束后、调用resolve 或 reject
+});
+</code></pre>
+	</p>
+
+
+
+
+	<script type="text/javascript">
+
+		// 一个使用 Promise 的异步的函数.
+		function asyncFunction(seconds) {
+			// new Promise(fn) 返回一个promise对象
+			// 在fn 中指定异步等处理
+			// 处理结果正常的话，调用resolve(处理结果值)
+			// 处理结果错误的话，调用reject(Error对象)
+			return new Promise(function (resolve, reject) {
+				if(seconds > 0) {
+					// 等待的秒数大于零.
+					setTimeout(
+						function () {
+							//处理结果正常的话，调用resolve(处理结果值)
+							resolve('Async Hello world');
+						}, 1000 * seconds);
+				} else {
+					// 处理结果错误的话，调用reject(Error对象)
+					reject(new Error("处理超时..."));
+				}
+			});
+		}
+
+
+		asyncFunction(1).then(function (value) {
+			console.log(value);    // => 'Async Hello world'
+		}).catch(function (error) {
+			console.log(error);
+		});
+
+		asyncFunction(-1).then(function (value) {
+			console.log(value);    // => 'Async Hello world'
+		}).catch(function (error) {
+			console.log(error);
+		});
+
+	</script>
+
+
+
+
+
+</body>
+</html>
