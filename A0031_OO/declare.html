@@ -87,6 +87,11 @@
 
 			this.name = name,
 			this.age = age;
+
+			this.output = function () {
+				return "姓名：" + this.name + "；年龄：" + this.age + "。";
+			};
+
 		}
 
         // 它有一个名叫 prototype 的属性
@@ -100,7 +105,7 @@
 		*/
 		Person.prototype.gender = "男";
 		Person.prototype.eat = function( stuff ) {
-				alert( "我在吃" + stuff );
+				console.log(  this.name + "在吃" + stuff );
 			};
 
 
@@ -113,10 +118,15 @@
 		console.log("p1.name =",  p1.name);
 		console.log("p1.age = ",  p1.age);
 		console.log("p1.gender = ",  p1.gender);
+		console.log("p1.output() = ",  p1.output());
+		p1.eat("苹果");
+
 
 		console.log("p2.name =",  p2.name);
 		console.log("p2.age = ",  p2.age);
 		console.log("p2.gender = ",  p2.gender);
+		console.log("p2.output() = ",  p2.output());
+		p2.eat("橘子");
 		console.groupEnd();
 
 
