@@ -27,6 +27,8 @@
 通过UserAgent，判断浏览器是否是微信， 以及设备是 IOS，Android，还是 PC 。
 
 
+### B0011_QRCodejs
+使用 qrcodejs , 来生成二维码的例子.
 
 
 ### C0001_Check
