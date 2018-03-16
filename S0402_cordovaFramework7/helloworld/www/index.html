@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="Content-Security-Policy" content="default-src * 'self' 'unsafe-inline' 'unsafe-eval' data: gap: content:">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui, viewport-fit=cover">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="theme-color" content="#2196f3">
+  <meta name="format-detection" content="telephone=no">
+  <meta name="msapplication-tap-highlight" content="no">
+  
+  <title>我的日课</title>
+
+  <link rel="stylesheet" href="framework7/css/framework7.min.css">
+  <link rel="stylesheet" href="css/icons.css">
+  <link rel="stylesheet" href="css/app.css">
+</head>
+
+
+<body>
+  <div id="app">
+    <!-- Status bar overlay for fullscreen mode-->
+    <div class="statusbar"></div>
+
+    <!-- Your main view, should have "view-main" class -->
+    <div class="view view-main ios-edges">
+      <!-- Page, data-name contains page name which can be used in callbacks -->
+      <div class="page" data-name="home">
+        <!-- Top Navbar -->
+        <div class="navbar">
+          <div class="navbar-inner">
+
+            <div class="title sliding"> 我的日课 </div>
+
+          </div>
+        </div>
+		
+        <!-- Scrollable page content-->
+        <div class="page-content">
+
+          <div class="block-title">经文</div>
+          <div class="list">
+            <ul>
+              <li>
+                <a href="/doc001/" class="item-content item-link">
+                  <div class="item-inner">
+                    <div class="item-title">十小咒</div>
+                  </div>
+                </a>
+              </li>
+              
+			  <li>
+                <a href="/doc002/" class="item-content item-link">
+                  <div class="item-inner">
+                    <div class="item-title">佛说阿弥陀经</div>
+                  </div>
+                </a>
+              </li>
+			  
+			  <li>
+                <a href="/doc003/" class="item-content item-link">
+                  <div class="item-inner">
+                    <div class="item-title">妙法莲华经观世音菩萨普门品</div>
+                  </div>
+                </a>
+              </li>
+			  
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>    
+  </div>
+  <!-- Cordova -->
+  
+  <!--
+  <script src="cordova.js"></script>
+  -->
+
+  <!-- Framework7 library -->
+  <script src="framework7/js/framework7.min.js"></script>
+
+  <!-- App routes -->
+  <script src="js/routes.js"></script>
+
+  <!-- Your custom app scripts -->
+  <script src="js/app.js"></script>
+</body>
+</html>
