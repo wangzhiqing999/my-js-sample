@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>  RxJS  创建可观察对象的基本操作  </title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<script type="text/javascript" src="js/jquery-1.10.2.js"></script>
+	<script type="text/javascript" src="js/rx.all.js"></script>
+	<script type="text/javascript" src="js/rx.jquery.js"></script>
+</head>
+
+
+<body>
+
+	<h3>   RxJS  创建可观察对象的基本操作    </h3>
+
+	<p>
+	结果看控制台输出.
+	</p>
+
+	<ul>
+
+		<li>
+			<button id="btnCreating"> 使用 create 来提供数据. </button>
+		</li>
+
+		<li>
+			<button id="btnRange"> 使用 range 来提供数据. </button>
+		</li>
+
+		<li>
+			<button id="btnTimer"> 使用 timer 来提供数据. </button>
+		</li>
+
+		<li>
+			<button id="btnFrom"> 使用 from 来提供数据. </button>
+		</li>
+
+		<li>
+			<button id="btnInterval"> 使用 interval 来提供数据. </button>
+		</li>
+
+	</ul>
+
+
+
+<script>
+
+
+	// 使用 create 来提供数据.
+	$("#btnCreating").click(function(){
+
+		console.log("使用 create 来提供数据.");
+
+		var source = Rx.Observable.create(function (observer) {
+		  // 测试提供数据.
+		  observer.onNext(1024);
+		  observer.onNext(10086);
+		  // 处理结束.
+		  observer.onCompleted();
+		  // Any cleanup logic might go here
+		  return function () {
+			console.log('disposed');
+		  }
+		});
+
+		// 3个参数， 处理3个事件.
+		var subscription = source.subscribe(
+			function (x) { console.log('onNext: ' + x); },
+			function (e) { console.log('onError: ' + e.message); },
+			function () { console.log('onCompleted'); }
+		);
+
+	});
+
+
+	// 使用 range 来提供数据.
+	$("#btnRange").click(function(){
+
+		console.log("使用 range 来提供数据.");
+
+		// Creates an observable sequence of 5 integers, starting from 1
+		var source = Rx.Observable.range(1, 5);
+
+		// 3个参数， 处理3个事件.
+		var subscription = source.subscribe(
+			function (x) { console.log('onNext: ' + x); },
+			function (e) { console.log('onError: ' + e.message); },
+			function () { console.log('onCompleted'); }
+		);
+
+	});
+
+
+
+	// 使用 timer 来提供数据.
+	$("#btnTimer").click(function(){
+
+		console.log("使用 timer 来提供数据.");
+
+		var source = Rx.Observable.timer(
+			5000, /* 5 seconds */
+			1000 /* 1 second */)
+			.timestamp();
+
+		// 3个参数， 处理3个事件.
+		var subscription = source.subscribe(
+			function (x) { console.log('onNext: ' + x.value + ': ' + x.timestamp); },
+			function (e) { console.log('onError: ' + e.message); },
+			function () { console.log('onCompleted'); }
+		);
+	});
+
+
+
+	// 使用 from 来提供数据.
+	$("#btnFrom").click(function(){
+
+		console.log("使用 from 来提供数据.");
+
+		var array = [1,2,3,5,7,11,13,17];
+
+		// Converts an array to an observable sequence
+		var source = Rx.Observable.from(array);
+
+		// 3个参数， 处理3个事件.
+		var subscription = source.subscribe(
+			function (x) { console.log('onNext: ' + x); },
+			function (e) { console.log('onError: ' + e.message); },
+			function () { console.log('onCompleted'); }
+		);
+	});
+
+
+
+	$("#btnInterval").click(function(){
+
+		console.log("使用 interval 来提供数据.");
+
+		var source = Rx.Observable.interval(1000);
+
+		// 3个参数， 处理3个事件.
+		var subscription = source.subscribe(
+			function (x) { console.log('onNext: ' + x); },
+			function (e) { console.log('onError: ' + e.message); },
+			function () { console.log('onCompleted'); }
+		);
+
+		setTimeout(function () {
+			subscription.dispose();
+		}, 5000);
+	});
+
+</script>
+
+
+
+</body>
+</html>

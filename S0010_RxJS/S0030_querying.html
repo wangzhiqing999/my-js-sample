@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>  RxJS  查询处理  </title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<script type="text/javascript" src="js/jquery-1.10.2.js"></script>
+	<script type="text/javascript" src="js/rx.all.js"></script>
+	<script type="text/javascript" src="js/rx.jquery.js"></script>
+</head>
+
+
+<body>
+
+	<h1>   RxJS  查询处理    </h1>
+
+	<ul>
+		<li>
+			<button id="btnConcat"> concat - 合并操作  </button>
+		</li>
+
+		<li>
+			<button id="btnMerge"> merge - 合并操作  </button>
+		</li>
+
+		<li>
+			<button id="btnCatch"> catch - 异常处理.  </button>
+		</li>
+
+		<li>
+			<button id="btnOnErrorResumeNext"> onErrorResumeNext - 异常处理.  </button>
+		</li>
+
+		<li>
+			<button id="btnMap"> map - Select 操作.  </button>
+		</li>
+
+		<li>
+			<button id="btnFlatMap"> flatMap - SelectMany 操作.  </button>
+		</li>
+
+		<li>
+			<button id="btnFilter"> filter - 筛选操作.  </button>
+		</li>
+
+
+	</ul>
+
+
+<script>
+
+	// concat - 合并操作
+	$("#btnConcat").click(function(){
+
+		console.log("concat - 合并操作");
+
+		// 两个数据源.
+		var source1 = Rx.Observable.range(1, 3);
+		var source2 = Rx.Observable.range(1, 3);
+
+		// 合并后进行处理.
+		source1.concat(source2)
+			.subscribe(function (x) { console.log(x); });
+
+	});
+
+	// merge - 合并操作
+	$("#btnMerge").click(function(){
+
+		console.log("merge - 合并操作");
+
+		// 两个数据源.
+		var source1 = Rx.Observable.range(1, 3);
+		var source2 = Rx.Observable.range(1, 3);
+
+		// 合并后进行处理.
+		source1.merge(source2)
+			.subscribe(function (x) { console.log(x); });
+
+	});
+
+
+	// catch - 异常处理
+	$("#btnCatch").click(function(){
+
+		console.log("catch - 异常处理");
+
+		// 两个数据源.
+		var source1 = Rx.Observable.range(1, 3);
+		var source2 = Rx.Observable.range(4, 6);
+
+
+		console.log("catch - 正常执行的情况.");
+		// source1 发生异常的情况下，跳转 source2.
+		// source1 不发生异常的情况下，忽略 source2.
+		source1.catch(source2)
+			.subscribe(function (x) { console.log(x); });
+
+
+
+		// 一个会出错的数据源.
+		var source3 = Rx.Observable.create(function (observer) {
+		  // 测试提供数据.
+		  observer.onNext(1);
+		  observer.onNext(2);
+		  observer.onError(new Error("出错了."));
+		  observer.onNext(3);
+		  // 处理结束.
+		  observer.onCompleted();
+		  // Any cleanup logic might go here
+		  return function () {
+			console.log('disposed');
+		  }
+		});
+
+		console.log("catch - 发生异常的情况");
+		// source3 发生异常的情况下，跳转 source2.
+		// source3 不发生异常的情况下，忽略 source2.
+		source3.catch(source2)
+			.subscribe(
+				function (x) { console.log('onNext: ' + x); },
+				function (e) { console.log('onError: ' + e.message); },
+				function () { console.log('onCompleted'); }
+			);
+
+	});
+
+
+	// onErrorResumeNext - 异常处理
+	$("#btnOnErrorResumeNext").click(function(){
+
+		console.log("onErrorResumeNext - 异常处理");
+
+		// 两个数据源.
+		var source1 = Rx.Observable.range(1, 3);
+		var source2 = Rx.Observable.range(4, 6);
+
+
+		console.log("onErrorResumeNext - 正常执行的情况.");
+		// source1 发生异常的情况下，跳转 source2.
+		// source1 不发生异常的情况下，忽略 source2.
+		source1.onErrorResumeNext(source2)
+			.subscribe(function (x) { console.log(x); });
+
+
+
+		// 一个会出错的数据源.
+		var source3 = Rx.Observable.create(function (observer) {
+		  // 测试提供数据.
+		  observer.onNext(1);
+		  observer.onNext(2);
+		  observer.onError(new Error("出错了."));
+		  observer.onNext(3);
+		  // 处理结束.
+		  observer.onCompleted();
+		  // Any cleanup logic might go here
+		  return function () {
+			console.log('disposed');
+		  }
+		});
+
+		console.log("onErrorResumeNext - 发生异常的情况");
+		// source3 发生异常的情况下，跳转 source2.
+		// source3 不发生异常的情况下，忽略 source2.
+		source3.onErrorResumeNext(source2)
+			.subscribe(
+				function (x) { console.log('onNext: ' + x); },
+				function (e) { console.log('onError: ' + e.message); },
+				function () { console.log('onCompleted'); }
+			);
+
+	});
+
+
+	// map - Select 操作
+	$("#btnMap").click(function(){
+
+		console.log("map - Select 操作");
+
+		var array = ['Reactive', 'Extensions', 'RxJS'];
+		var seqString = Rx.Observable.from(array);
+
+		// 这里的 map 操作，相当于 select( p=> p.length )
+		var seqNum = seqString.map(function (x) { return x.length; });
+
+		seqNum
+			.subscribe(function (x) { console.log(x); });
+	});
+
+
+	// flatMap - SelectMany 操作.
+	$("#btnFlatMap").click(function(){
+
+		console.log("flatMap - SelectMany 操作.");
+
+		var source1 = Rx.Observable.interval(2000).take(2);
+		var source2 = Rx.Observable.range(1, 3);
+
+		var resultSeq = source1.flatMap(source2);
+
+		var subscription = resultSeq.subscribe(
+			function (x) { console.log('onNext: ' + x); },
+			function (e) { console.log('onError: ' + e.message); },
+			function () { console.log('onCompleted'); });
+	});
+
+
+	// filter - 筛选操作 操作
+	$("#btnFilter").click(function(){
+
+		console.log("filter - 筛选操作");
+
+		// 数据源.
+		var source = Rx.Observable.range(1, 10);
+
+		var source1 = source.filter(function (n) { return n < 5; });
+		var subscription1 = source1.subscribe(
+			function (x) { console.log('#1 onNext: ' + x); },
+			function (e) { console.log('#1 onError: ' + e.message); },
+			function () { console.log('#1 onCompleted'); });
+
+
+		var source2 = source.filter(function (n) { return n % 2 == 0; });
+		var subscription2 = source2.subscribe(
+			function (x) { console.log('#2 onNext: ' + x); },
+			function (e) { console.log('#2 onError: ' + e.message); },
+			function () { console.log('#2 onCompleted'); });
+
+	});
+
+
+</script>
+
+</body>
+</html>

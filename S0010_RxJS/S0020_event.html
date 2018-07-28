@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>  RxJS  基本事件定义  </title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<script type="text/javascript" src="js/jquery-1.10.2.js"></script>
+	<script type="text/javascript" src="js/rx.all.js"></script>
+	<script type="text/javascript" src="js/rx.jquery.js"></script>
+</head>
+
+
+<body>
+
+	<h3>   RxJS  基本事件定义    </h3>
+	<ul>
+		<li>
+			<button id="btnBasic"> 使用标准 js 的事件处理机制.  </button>
+		</li>
+
+		<li>
+			<button id="btnRxJS"> 使用 RxJS 的事件处理机制.  </button>
+		</li>
+
+		<li>
+			<button id="btnJquery"> 使用 jQuery 的事件处理机制.  </button>
+		</li>
+
+		<li>
+			<button id="btnRxJSJquery"> 使用 RxJS-jquery 的事件处理机制.  </button>
+		</li>
+	</ul>
+
+
+
+
+	<h3>   RxJS  scan 的测试    </h3>
+	<ul>
+		<li>
+			<button id="btnJqueryCount"> 使用 jQuery 处理累计点击数.  </button>
+		</li>
+
+		<li>
+			<button id="btnRxJSJqueryCount"> 使用 RxJS-jquery 处理累计点击数.  </button>
+		</li>
+	</ul>
+
+
+
+
+	<h3>   RxJS  throttle 的测试    </h3>
+	<ul>
+		<li>
+			<button id="btnJqueryCountInTimes"> 使用 jQuery 处理累计点击数 (每秒最多点击一次).  </button>
+		</li>
+
+		<li>
+			<button id="btnRxJSJqueryCountInTimes"> 使用 RxJS-jquery 处理累计点击数 (每秒最多点击一次).  </button>
+		</li>
+	</ul>
+
+
+
+
+	<div>
+		<span id="result"></span>
+	</div>
+
+
+
+<script>
+
+	// 显示处理结果.
+	function showResult(resultText) {
+		$("#result").html(resultText);
+	}
+
+	// 使用标准 js 的事件处理机制.
+	var btnBasic = document.getElementById("btnBasic");
+	btnBasic.addEventListener('click', () => showResult("btnBasic 被点击了."));
+
+
+	// 使用 RxJS 的事件处理机制.
+	var btnRxJS = document.getElementById("btnRxJS");
+	Rx.Observable.fromEvent(btnRxJS, 'click')
+		.subscribe(() => showResult("btnRxJS 被点击了."));
+
+
+	// 使用 jQuery 的事件处理机制.
+	$("#btnJquery").click(function(){
+		showResult("btnJquery 被点击了.");
+	});
+
+
+	// 使用 RxJS-jquery 的事件处理机制.
+	var ob = $("#btnRxJSJquery").clickAsObservable();
+	ob.subscribe(() => showResult("btnRxJSJquery 被点击了."));
+
+</script>
+
+
+
+<script>
+
+	// 使用 jQuery 处理累计点击数.	(需要在外部定义一个变量)
+	var jqueryCount = 0;
+	$("#btnJqueryCount").click(function(){
+		jqueryCount ++;
+		showResult("btnJqueryCount 被点击了 " + jqueryCount + "次！" );
+	});
+
+
+	// 使用 RxJS-jquery 处理累计点击数.
+	var obCount = $("#btnRxJSJqueryCount").clickAsObservable();
+	obCount
+		.scan(count => count + 1, 0)
+		.subscribe((count) => showResult("btnRxJSJqueryCount 被点击了" + count + "次！"));
+
+</script>
+
+
+
+
+<script>
+
+	// 使用 jQuery 处理累计点击数.	(每秒最多点击一次)
+	var jqueryCountInTimes = 0;
+	var rate = 1000;
+	var lastClick = Date.now() - rate;
+	$("#btnJqueryCountInTimes").click(function(){
+		if (Date.now() - lastClick >= rate){
+			jqueryCountInTimes ++;
+			showResult("btnJqueryCountInTimes 被点击了 " + jqueryCountInTimes + "次！" );
+			lastClick = Date.now();
+		}
+	});
+
+
+	// 使用 RxJS-jquery 处理累计点击数.  (每秒最多点击一次).
+	var obCountInTimes = $("#btnRxJSJqueryCountInTimes").clickAsObservable();
+	obCountInTimes
+		.throttle(1000)
+		.scan(count => count + 1, 0)
+		.subscribe((count) => showResult("btnRxJSJqueryCountInTimes 被点击了" + count + "次！"));
+
+</script>
+
+
+
+
+
+</body>
+</html>
