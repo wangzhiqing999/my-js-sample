@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>  RxJS  - Amb  </title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<script type="text/javascript" src="js/jquery-1.10.2.js"></script>
+	<script type="text/javascript" src="js/rx.all.js"></script>
+	<script type="text/javascript" src="js/rx.jquery.js"></script>
+</head>
+
+
+<body>
+
+	<h1>   RxJS  - Amb   </h1>
+
+	<p>
+	文档： http://reactivex.io/documentation/operators/amb.html
+	</p>
+
+
+	<p>
+	看控制台输出.
+	</p>
+
+
+	<ul>
+		<li>
+			<button onclick="testAmb()">  测试 amb    </button>
+		</li>
+	</ul>
+
+
+
+<script>
+
+
+	// 测试 amb
+	function testAmb() {
+		console.log("----- testAmb start -----");
+
+		// 通过 Rx.Observable.interval 创建可观察对象.
+		// 这里只获取前 10 个数据.
+		var source1 = Rx.Observable.interval(500).take(10).map(function(x) { return "x:" + x; });
+		var source2 = Rx.Observable.interval(550).take(10).map(function(x) { return "y:" + x; });
+		var source3 = Rx.Observable.interval(600).take(10).map(function(x) { return "z:" + x; });
+
+		// 测试 amb
+		var ambSource = Rx.Observable.amb(source1, source2, source3);
+
+		// 三个方法（ onNext / onError / onCompleted  ）. 订阅 可观察对象.
+		var subscription = ambSource.subscribe(
+			function (x) { console.log('Next: ', x); },
+			function (err) { console.log('Error: ', err); },
+			function () { console.log('Completed'); });
+
+		console.log("----- testAmb finish -----");
+	}
+
+
+
+</script>
+
+
+</body>
+</html>

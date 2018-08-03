@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>  RxJS  - Filter  </title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<script type="text/javascript" src="js/jquery-1.10.2.js"></script>
+	<script type="text/javascript" src="js/rx.all.js"></script>
+	<script type="text/javascript" src="js/rx.jquery.js"></script>
+</head>
+
+
+<body>
+
+	<h1>   RxJS  - Filter    </h1>
+
+	<p>
+	文档： http://reactivex.io/documentation/operators/filter.html
+	</p>
+
+
+	<p>
+	看控制台输出.
+	</p>
+
+
+	<ul>
+		<li>
+			<button onclick="testFilter()">  测试 filter  </button>
+		</li>
+	</ul>
+
+
+
+<script>
+
+
+	// 测试 filter
+	function testFilter() {
+		console.log("----- testFilter start -----");
+
+		// 通过 Rx.Observable.interval 创建可观察对象.
+		// 这里累计共发送 5 个数据.
+		var source = Rx.Observable
+			.interval(500 /* ms */)
+			.take(5);
+
+		// filter
+		var filterSource = source.filter(function (x) {
+			return x % 2 === 0;
+		});
+
+		// 三个方法（ onNext / onError / onCompleted  ）. 订阅 可观察对象.
+		var subscription = filterSource.subscribe(
+			function (x) { console.log('Next: ' + x); },
+			function (err) { console.log('Error: ' + err); },
+			function () { console.log('Completed'); });
+
+		console.log("----- testFilter finish -----");
+	}
+
+
+
+</script>
+
+
+</body>
+</html>

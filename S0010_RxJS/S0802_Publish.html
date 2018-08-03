@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>  RxJS  - Publish  </title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<script type="text/javascript" src="js/jquery-1.10.2.js"></script>
+	<script type="text/javascript" src="js/rx.all.js"></script>
+	<script type="text/javascript" src="js/rx.jquery.js"></script>
+</head>
+
+
+<body>
+
+	<h1>   RxJS  - Publish   </h1>
+
+	<p>
+	文档： http://reactivex.io/documentation/operators/publish.html
+	</p>
+
+
+	<p>
+	看控制台输出.
+	</p>
+
+
+	<ul>
+		<li>
+			<button onclick="testPublish()">  测试 publish  </button>
+		</li>
+
+		<li>
+			<button onclick="testPublishValue()">  测试 publishValue  (发布之前，额外发送一指定数据) </button>
+		</li>
+
+		<li>
+			<button onclick="testPublishLast()">  测试 publishLast (只发布最后一个数据) </button>
+		</li>
+	</ul>
+
+
+
+<script>
+
+	// 创建观察者.
+	function createObserver(tag) {
+		return Rx.Observer.create(
+			function (x) { console.log('Next - %s: %s', tag, x); },
+			function (err) { console.log('Error - %s: ', tag, err); },
+			function () { console.log('Completed - %s', tag); });
+	}
+
+	// 测试 publish
+	function testPublish() {
+		console.log("----- testPublish start -----");
+
+		// 通过 Rx.Observable.interval 创建可观察对象.
+		// 这里只获取前 10 个数据.
+		var source = Rx.Observable.interval(500).take(10).map(function(x) {console.log("S1:", x); return x;});
+
+		// 测试 publish
+		var published = source.publish();
+
+		published.subscribe(createObserver('SourceA'));
+		published.subscribe(createObserver('SourceB'));
+
+		// Connect the source
+		var connection = published.connect();
+
+		console.log("----- testPublish finish -----");
+	}
+
+
+
+	// 测试 publishValue
+	function testPublishValue() {
+		console.log("----- testPublishValue start -----");
+
+		// 通过 Rx.Observable.interval 创建可观察对象.
+		// 这里只获取前 10 个数据.
+		var source = Rx.Observable.interval(500).take(10).map(function(x) {console.log("S1:", x); return x;});
+
+		// 测试 publishValue
+		var published = source.publishValue(999999);
+
+		published.subscribe(createObserver('SourceA'));
+		published.subscribe(createObserver('SourceB'));
+
+		// Connect the source
+		var connection = published.connect();
+
+		console.log("----- testPublishValue finish -----");
+	}
+
+
+
+	// 测试 publishLast
+	function testPublishLast() {
+		console.log("----- testPublishLast start -----");
+
+		// 通过 Rx.Observable.interval 创建可观察对象.
+		// 这里只获取前 10 个数据.
+		var source = Rx.Observable.interval(500).take(10).map(function(x) {console.log("S1:", x); return x;});
+
+		// 测试 publishLast
+		var published = source.publishLast();
+
+		published.subscribe(createObserver('SourceA'));
+		published.subscribe(createObserver('SourceB'));
+
+		// Connect the source
+		var connection = published.connect();
+
+		console.log("----- testPublishLast finish -----");
+	}
+
+
+
+
+
+</script>
+
+
+</body>
+</html>

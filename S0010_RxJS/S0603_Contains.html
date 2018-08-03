@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>  RxJS  - Contains  </title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<script type="text/javascript" src="js/jquery-1.10.2.js"></script>
+	<script type="text/javascript" src="js/rx.all.js"></script>
+	<script type="text/javascript" src="js/rx.jquery.js"></script>
+</head>
+
+
+<body>
+
+	<h1>   RxJS  - Contains   </h1>
+
+	<p>
+	文档： http://reactivex.io/documentation/operators/contains.html
+	</p>
+
+
+	<p>
+	看控制台输出.
+	</p>
+
+
+	<ul>
+		<li>
+			<button onclick="testContains()">  测试 contains     </button>
+		</li>
+
+		<li>
+			<button onclick="testIndexOf()">  测试 indexOf     </button>
+		</li>
+
+		<li>
+			<button onclick="testFindIndex()">  测试 findIndex      </button>
+		</li>
+
+		<li>
+			<button onclick="testIsEmpty()">  测试 isEmpty (有数据)     </button>
+		</li>
+
+		<li>
+			<button onclick="testIsEmpty2()">  测试 isEmpty (无数据)     </button>
+		</li>
+	</ul>
+
+
+
+<script>
+
+
+	// 测试 contains
+	function testContains() {
+		console.log("----- testContains start -----");
+
+		// 通过 Rx.Observable.interval 创建可观察对象.
+		// 这里只获取前 10 个数据.
+		var source = Rx.Observable
+			.interval(500)
+			.take(10);
+
+		// 测试 contains
+		var containsSource = source.contains(3);
+
+		// 三个方法（ onNext / onError / onCompleted  ）. 订阅 可观察对象.
+		var subscription = containsSource.subscribe(
+			function (x) { console.log('Next: ', x); },
+			function (err) { console.log('Error: ', err); },
+			function () { console.log('Completed'); });
+
+		console.log("----- testContains finish -----");
+	}
+
+
+
+	// 测试 indexOf
+	function testIndexOf() {
+		console.log("----- testIndexOf start -----");
+
+		// 通过 Rx.Observable.interval 创建可观察对象.
+		// 这里只获取前 10 个数据.
+		var source = Rx.Observable
+			.interval(500)
+			.take(10);
+
+		// 测试 indexOf
+		var indexOfSource = source.indexOf(3);
+
+		// 三个方法（ onNext / onError / onCompleted  ）. 订阅 可观察对象.
+		var subscription = indexOfSource.subscribe(
+			function (x) { console.log('Next: ', x); },
+			function (err) { console.log('Error: ', err); },
+			function () { console.log('Completed'); });
+
+		console.log("----- testIndexOf finish -----");
+	}
+
+
+
+	// 测试 findIndex
+	function testFindIndex() {
+		console.log("----- testFindIndex start -----");
+
+		// 通过 Rx.Observable.interval 创建可观察对象.
+		// 这里只获取前 10 个数据.
+		var source = Rx.Observable
+			.interval(500)
+			.take(10);
+
+		// 测试 findIndex
+		var findIndexSource = source.findIndex(
+			function (x, i, obs) {
+				return x === 3;
+			});
+
+		// 三个方法（ onNext / onError / onCompleted  ）. 订阅 可观察对象.
+		var subscription = findIndexSource.subscribe(
+			function (x) { console.log('Next: ', x); },
+			function (err) { console.log('Error: ', err); },
+			function () { console.log('Completed'); });
+
+		console.log("----- testFindIndex finish -----");
+	}
+
+
+
+	// 测试 isEmpty
+	function testIsEmpty() {
+		console.log("----- testIsEmpty start -----");
+
+		// 通过 Rx.Observable.interval 创建可观察对象.
+		// 这里只获取前 10 个数据.
+		var source = Rx.Observable
+			.interval(500)
+			.take(10);
+
+		// 测试 isEmpty
+		var isEmptySource = source.isEmpty();
+
+		// 三个方法（ onNext / onError / onCompleted  ）. 订阅 可观察对象.
+		var subscription = isEmptySource.subscribe(
+			function (x) { console.log('Next: ', x); },
+			function (err) { console.log('Error: ', err); },
+			function () { console.log('Completed'); });
+
+		console.log("----- testIsEmpty finish -----");
+	}
+
+
+	// 测试 isEmpty
+	function testIsEmpty2() {
+		console.log("----- testIsEmpty2 start -----");
+
+		// 通过 Rx.Observable.empty 创建可观察对象.
+		var source = Rx.Observable.empty();
+
+		// 测试 isEmpty
+		var isEmptySource = source.isEmpty();
+
+		// 三个方法（ onNext / onError / onCompleted  ）. 订阅 可观察对象.
+		var subscription = isEmptySource.subscribe(
+			function (x) { console.log('Next: ', x); },
+			function (err) { console.log('Error: ', err); },
+			function () { console.log('Completed'); });
+
+		console.log("----- testIsEmpty2 finish -----");
+	}
+
+</script>
+
+
+</body>
+</html>

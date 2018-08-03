@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>  RxJS  - Concat  </title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<script type="text/javascript" src="js/jquery-1.10.2.js"></script>
+	<script type="text/javascript" src="js/rx.all.js"></script>
+	<script type="text/javascript" src="js/rx.jquery.js"></script>
+</head>
+
+
+<body>
+
+	<h1>   RxJS  - Concat   </h1>
+
+	<p>
+	文档： http://reactivex.io/documentation/operators/concat.html
+	</p>
+
+
+	<p>
+	看控制台输出.
+	</p>
+
+
+	<ul>
+		<li>
+			<button onclick="testConcat()">  测试 concat   </button>
+		</li>
+
+		<li>
+			<button onclick="testConcatAll()">  测试 concatAll   </button>
+		</li>
+	</ul>
+
+
+
+<script>
+
+
+	// 测试 concat
+	function testConcat() {
+		console.log("----- testConcat start -----");
+
+		// 通过 Rx.Observable.interval 创建可观察对象.
+		// 这里只获取前 5 个数据.
+		var source1 = Rx.Observable.interval(500).take(5).map(function(x) {return "S1:" + x;});
+		var source2 = Rx.Observable.interval(666).take(5).map(function(x) {return "S2:" + x;});
+
+		// 测试 concat
+		var concatSource = source1.concat(source2);
+
+		// 三个方法（ onNext / onError / onCompleted  ）. 订阅 可观察对象.
+		var subscription = concatSource.subscribe(
+			function (x) { console.log('Next: ', x); },
+			function (err) { console.log('Error: ', err); },
+			function () { console.log('Completed'); });
+
+		console.log("----- testConcat finish -----");
+	}
+
+
+
+	// 测试 concatAll
+	function testConcatAll() {
+		console.log("----- testConcatAll start -----");
+
+		// 通过 Rx.Observable.interval 创建可观察对象.
+		// 这里只获取前 5 个数据.
+		var source1 = Rx.Observable.interval(500).take(5).map(function(x) {return "S1:" + x;});
+		var source2 = Rx.Observable.interval(666).take(5).map(function(x) {return "S2:" + x;});
+		var source3 = Rx.Observable.interval(333).take(5).map(function(x) {return "S3:" + x;});
+
+		// 测试 concatAll
+		var concatAllSource = Rx.Observable.concatAll(source1, source2, source3);
+
+		// 三个方法（ onNext / onError / onCompleted  ）. 订阅 可观察对象.
+		var subscription = concatAllSource.subscribe(
+			function (x) { console.log('Next: ', x); },
+			function (err) { console.log('Error: ', err); },
+			function () { console.log('Completed'); });
+
+		console.log("----- testConcatAll finish -----");
+	}
+
+</script>
+
+
+</body>
+</html>

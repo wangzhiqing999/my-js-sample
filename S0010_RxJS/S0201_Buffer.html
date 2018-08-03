@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>  RxJS  - Buffer  </title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<script type="text/javascript" src="js/jquery-1.10.2.js"></script>
+	<script type="text/javascript" src="js/rx.all.js"></script>
+	<script type="text/javascript" src="js/rx.jquery.js"></script>
+</head>
+
+
+<body>
+
+	<h1>   RxJS  - Buffer    </h1>
+
+	<p>
+	文档： http://reactivex.io/documentation/operators/buffer.html
+	</p>
+
+
+	<p>
+	看控制台输出.
+	</p>
+
+
+	<ul>
+		<li>
+			<button onclick="testBufferWithCount()">  测试 bufferWithCount(count) </button>
+		</li>
+		<li>
+			<button onclick="testBufferWithCount2()">  测试 bufferWithCount(count, skip) </button>
+		</li>
+		<li>
+			<button onclick="testBufferWithTime()">  测试 bufferWithTime(timeSpan) </button>
+		</li>
+		<li>
+			<button onclick="testBufferWithTime2()">  测试 bufferWithTime(timeSpan, timeShift) </button>
+		</li>
+		<li>
+			<button onclick="testBufferWithTimeOrCount()">  测试 bufferWithTimeOrCount </button>
+		</li>
+	</ul>
+
+
+
+<script>
+
+
+	// 测试 bufferWithCount(count)
+	function testBufferWithCount() {
+		console.log("----- testBufferWithCount start -----");
+
+		// 通过 Rx.Observable.interval 创建可观察对象.
+		// 这里累计共发送 10 个数据.
+		var source = Rx.Observable
+			.interval(500 /* ms */)
+			.timeInterval()
+			.take(10);
+
+		// 使用 bufferWithCount(3).
+		// 实现可观察对象 source 那里，每接收到3个 数据的时候，才 批量发送一次。
+		// 可观察对象 source 只会发送 10个数据
+		// source 发送最后一个数据，然后 Completed 的时候， bufferSource 把这个数据发送，然后也 Completed.
+		var bufferSource = source.bufferWithCount(3);
+
+
+		// 三个方法（ onNext / onError / onCompleted  ）. 订阅 可观察对象.
+		var subscription = bufferSource.subscribe(
+			function (x) {
+				console.log('Next: ----------');
+				for(var i = 0 ; i < x.length; i ++) {
+					console.log('value = ' + x[i].value + '; interval = '+ x[i].interval);
+				}
+			},
+			function (err) { console.log('Error: ' + err); },
+			function () { console.log('Completed'); });
+
+		console.log("----- testBufferWithCount finish -----");
+	}
+
+
+
+	// 测试 bufferWithCount(count, skip)
+	function testBufferWithCount2() {
+		console.log("----- testBufferWithCount2 start -----");
+
+		// 通过 Rx.Observable.interval 创建可观察对象.
+		// 这里累计共发送 10 个数据.
+		var source = Rx.Observable
+			.interval(500 /* ms */)
+			.timeInterval()
+			.take(10);
+
+		// 使用 bufferWithCount(2, 3).
+		// 实现可观察对象 source 那里，每接收到3个 数据的时候，才 批量发送一次。
+		// 由于是 bufferWithCount(count = 2, skip = 3), 每接收到3个 数据的时候，只会发送前面的2个。
+		// 可观察对象 source 只会发送 10个数据
+		// source 发送最后一个数据，然后 Completed 的时候， bufferSource 把这个数据发送，然后也 Completed.
+		var bufferSource = source.bufferWithCount(2,3);
+
+
+		// 三个方法（ onNext / onError / onCompleted  ）. 订阅 可观察对象.
+		var subscription = bufferSource.subscribe(
+			function (x) {
+				console.log('Next: ----------');
+				for(var i = 0 ; i < x.length; i ++) {
+					console.log('value = ' + x[i].value + '; interval = '+ x[i].interval);
+				}
+			},
+			function (err) { console.log('Error: ' + err); },
+			function () { console.log('Completed'); });
+
+		console.log("----- testBufferWithCount2 finish -----");
+	}
+
+
+
+	// 测试 bufferWithTime(timeSpan)
+	function testBufferWithTime() {
+		console.log("----- testBufferWithTime start -----");
+
+		// 通过 Rx.Observable.interval 创建可观察对象.
+		var source = Rx.Observable
+			.interval(500 /* ms */)
+			.timeInterval()
+			.take(10);
+
+		// 使用 bufferWithTime(1500).
+		// 实现可观察对象 source 那里，每 1500 毫秒，才 批量发送一次。
+		var bufferSource = source.bufferWithTime(1500);
+
+
+		// 三个方法（ onNext / onError / onCompleted  ）. 订阅 可观察对象.
+		var subscription = bufferSource.subscribe(
+			function (x) {
+				console.log('Next: ----------');
+				for(var i = 0 ; i < x.length; i ++) {
+					console.log('value = ' + x[i].value + '; interval = '+ x[i].interval);
+				}
+			},
+			function (err) { console.log('Error: ' + err); },
+			function () { console.log('Completed'); });
+
+		console.log("----- testBufferWithTime finish -----");
+	}
+
+
+
+	// 测试 bufferWithTime(timeSpan, timeShift)
+	function testBufferWithTime2() {
+		console.log("----- testBufferWithTime2 start -----");
+
+		// 通过 Rx.Observable.interval 创建可观察对象.
+		var source = Rx.Observable
+			.interval(500 /* ms */)
+			.timeInterval()
+			.take(10);
+
+		// 使用 bufferWithTime(1500).
+		// 实现可观察对象 source 那里，每 1500 毫秒， 处理一次，  批量发送前 1000毫秒的数据， 忽略后 500 毫秒内的数据。
+		var bufferSource = source.bufferWithTime(1000, 1500);
+
+
+		// 三个方法（ onNext / onError / onCompleted  ）. 订阅 可观察对象.
+		var subscription = bufferSource.subscribe(
+			function (x) {
+				console.log('Next: ----------');
+				for(var i = 0 ; i < x.length; i ++) {
+					console.log('value = ' + x[i].value + '; interval = '+ x[i].interval);
+				}
+			},
+			function (err) { console.log('Error: ' + err); },
+			function () { console.log('Completed'); });
+
+		console.log("----- testBufferWithTime2 finish -----");
+	}
+
+
+
+	// 测试 bufferWithTimeOrCount
+	function testBufferWithTimeOrCount() {
+		console.log("----- testBufferWithTimeOrCount start -----");
+
+		// 通过 Rx.Observable.interval 创建可观察对象.
+		// 这里累计共发送 10 个数据.
+		var source = Rx.Observable
+			.interval(500 /* ms */)
+			.timeInterval()
+			.take(10);
+
+		// 使用 bufferWithTimeOrCount(900, 2).
+		// 就是 每 900 毫秒，必发送一次。
+		// 如果累计的数据，达到了2个， 就发送一次。（同时时间被重新开始计算）
+		var bufferSource = source.bufferWithTimeOrCount(900, 2);
+
+
+		// 三个方法（ onNext / onError / onCompleted  ）. 订阅 可观察对象.
+		var subscription = bufferSource.subscribe(
+			function (x) {
+				console.log('Next: ----------');
+				for(var i = 0 ; i < x.length; i ++) {
+					console.log('value = ' + x[i].value + '; interval = '+ x[i].interval);
+				}
+			},
+			function (err) { console.log('Error: ' + err); },
+			function () { console.log('Completed'); });
+
+		console.log("----- testBufferWithTimeOrCount finish -----");
+	}
+
+
+
+</script>
+
+
+</body>
+</html>

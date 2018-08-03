@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>  RxJS  - GroupBy  </title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<script type="text/javascript" src="js/jquery-1.10.2.js"></script>
+	<script type="text/javascript" src="js/rx.all.js"></script>
+	<script type="text/javascript" src="js/rx.jquery.js"></script>
+</head>
+
+
+<body>
+
+	<h1>   RxJS  - GroupBy    </h1>
+
+	<p>
+	文档： http://reactivex.io/documentation/operators/groupby.html
+	</p>
+
+
+	<p>
+	看控制台输出.
+	</p>
+
+
+	<ul>
+		<li>
+			<button onclick="testGroupBy()">  测试 GroupBy </button>
+		</li>
+	</ul>
+
+
+
+<script>
+
+
+	// 测试 groupBy
+	function testGroupBy() {
+		console.log("----- testGroupBy start -----");
+
+		var codes = [
+			{ keyCode: 38}, // up
+			{ keyCode: 38}, // up
+			{ keyCode: 40}, // down
+			{ keyCode: 40}, // down
+			{ keyCode: 37}, // left
+			{ keyCode: 39}, // right
+			{ keyCode: 37}, // left
+			{ keyCode: 39}, // right
+			{ keyCode: 66}, // b
+			{ keyCode: 65}  // a
+		];
+
+		// 使用 fromArray 生成可观察对象.
+		var source = Rx.Observable.fromArray(codes)
+
+		// groupBy 操作.
+		var groupBySource = source.groupBy(
+			function (x) { return x.keyCode; },
+			function (x) { return x.keyCode; }
+		);
+
+		// 三个方法（ onNext / onError / onCompleted  ）. 订阅 可观察对象.
+		var subscription = groupBySource.subscribe(
+			function (obs) {
+				console.log('Next: ', obs);
+				obs.count().subscribe(function (x) {
+					console.log('Count: ' + x);
+				});
+			},
+			function (err) { console.log('Error: ' + err); },
+			function () { console.log('Completed'); });
+
+		console.log("----- testGroupBy finish -----");
+	}
+
+
+
+</script>
+
+
+</body>
+</html>

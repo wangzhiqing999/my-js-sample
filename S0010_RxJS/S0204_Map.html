@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>  RxJS  - Map  </title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<script type="text/javascript" src="js/jquery-1.10.2.js"></script>
+	<script type="text/javascript" src="js/rx.all.js"></script>
+	<script type="text/javascript" src="js/rx.jquery.js"></script>
+</head>
+
+
+<body>
+
+	<h1>   RxJS  - Map    </h1>
+
+	<p>
+	文档： http://reactivex.io/documentation/operators/map.html
+	</p>
+
+
+	<p>
+	看控制台输出.
+	</p>
+
+
+	<ul>
+		<li>
+			<button onclick="testMap()">  测试 map </button>
+		</li>
+		<li>
+			<button onclick="testPluck()">  测试 pluck </button>
+		</li>
+	</ul>
+
+
+
+<script>
+
+
+	// 测试 map
+	function testMap() {
+		console.log("----- testMap start -----");
+
+		// 通过 Rx.Observable.interval 创建可观察对象.
+		// 这里累计共发送 10 个数据.
+		var source = Rx.Observable
+			.interval(500 /* ms */)
+			.take(10);
+
+		// Map 操作.
+		var mapSource = source.map(
+			function (x) { return x * x; }
+		);
+
+		// 三个方法（ onNext / onError / onCompleted  ）. 订阅 可观察对象.
+		var subscription = mapSource.subscribe(
+			function (x) {
+				console.log('Next: ', x);
+			},
+			function (err) { console.log('Error: ' + err); },
+			function () { console.log('Completed'); });
+
+		console.log("----- testMap finish -----");
+	}
+
+
+
+	// 测试 pluck
+	function testPluck() {
+		console.log("----- testPluck start -----");
+
+		// 通过 Rx.Observable.interval 创建可观察对象.
+		// 这里累计共发送 10 个数据.
+		var source = Rx.Observable
+			.interval(500 /* ms */)
+			.timeInterval()
+			.take(10);
+
+		// pluck 操作.
+		// var pluckSource = source.pluck('value');
+		var pluckSource = source.pluck('interval');
+
+
+		// 三个方法（ onNext / onError / onCompleted  ）. 订阅 可观察对象.
+		var subscription = pluckSource.subscribe(
+			function (x) {
+				console.log('Next: ', x);
+			},
+			function (err) { console.log('Error: ' + err); },
+			function () { console.log('Completed'); });
+
+		console.log("----- testPluck finish -----");
+	}
+
+</script>
+
+
+</body>
+</html>

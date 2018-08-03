@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>  RxJS  - Defer  </title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<script type="text/javascript" src="js/jquery-1.10.2.js"></script>
+	<script type="text/javascript" src="js/rx.all.js"></script>
+	<script type="text/javascript" src="js/rx.jquery.js"></script>
+</head>
+
+
+<body>
+
+	<h1>   RxJS  - Defer    </h1>
+
+	<p>
+	文档： http://reactivex.io/documentation/operators/defer.html
+	</p>
+
+
+	<p>
+	看控制台输出.
+	</p>
+
+
+	<ul>
+		<li>
+			<button onclick="testDefer()">  测试 defer </button>
+		</li>
+		<li>
+			<button onclick="testIf()">  测试 if </button>
+		</li>
+		<li>
+			<button onclick="testCase()">  测试 case </button>
+		</li>
+	</ul>
+
+
+
+<script>
+
+
+	// 测试 defer
+	function testDefer() {
+		console.log("----- testDefer start -----");
+
+		// 通过 Rx.Observable.defer 创建可观察对象.
+		var source = Rx.Observable.defer(function (observer) {
+			return Rx.Observable.return(42);
+		});
+
+		// 三个方法（ onNext / onError / onCompleted  ）. 订阅 可观察对象.
+		var subscription = source.subscribe(
+			function (x) { console.log('Next: ' + x); },
+			function (err) { console.log('Error: ' + err); },
+			function () { console.log('Completed'); });
+
+		console.log("----- testDefer finish -----");
+	}
+
+
+
+	// 测试 if
+	function testIf() {
+		console.log("----- testIf start -----");
+
+		var shouldRun = false;
+
+		// 通过 Rx.Observable.if 创建可观察对象.
+		// 第一个参数，条件.
+		// 第二个参数，（第一个参数返回 true 的时候的， 使用的可观察对象）
+		// 第三个参数，（第一个参数返回 false 的时候的， 使用的可观察对象）
+		var source = Rx.Observable.if(
+			function () { return shouldRun; },
+			Rx.Observable.generate(
+				0,
+				function (x) { return x < 5; },
+				function (x) { return x + 1; },
+				function (x) { return x * 10; }
+			),
+			Rx.Observable.generate(
+				0,
+				function (x) { return x < 5; },
+				function (x) { return x + 1; },
+				function (x) { return x * 111; }
+			)
+		);
+
+
+		// 三个方法（ onNext / onError / onCompleted  ）. 订阅 可观察对象.
+		var subscription = source.subscribe(
+			function (x) { console.log('Next: ' + x); },
+			function (err) { console.log('Error: ' + err); },
+			function () { console.log('Completed'); });
+
+		console.log("----- testIf finish -----");
+	}
+
+
+
+	// 测试 case
+	function testCase() {
+		console.log("----- testCase start -----");
+
+		var sources = {
+			'foo': Rx.Observable.generate(
+				0,
+				function (x) { return x < 5; },
+				function (x) { return x + 1; },
+				function (x) { return x * 10; }
+			),
+			'bar': Rx.Observable.generate(
+				0,
+				function (x) { return x < 5; },
+				function (x) { return x + 1; },
+				function (x) { return x * 111; }
+			)
+		};
+
+		var defaultSource = Rx.Observable.empty();
+
+		// 通过 Rx.Observable.case 创建可观察对象.
+		// 参数1. 返回 case 的关键字.
+		// 参数2. key-valeu 的集合. key 是用于判断 case 的， value 是 可观察对象.
+		// 参数3. 可选（当 参数1的返回值， 在参数2的 key-valeu 中， 没有匹配的情况下，使用 ）
+		var source = Rx.Observable.case(
+			function () {
+				return 'foo';
+			},
+			sources,
+			defaultSource
+		);
+
+		// 三个方法（ onNext / onError / onCompleted  ）. 订阅 可观察对象.
+		var subscription = source.subscribe(
+			function (x) { console.log('Next: ' + x); },
+			function (err) { console.log('Error: ' + err); },
+			function () { console.log('Completed'); });
+
+		console.log("----- testCase finish -----");
+	}
+
+
+</script>
+
+
+</body>
+</html>

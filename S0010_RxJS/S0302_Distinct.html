@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>  RxJS  - Distinct  </title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<script type="text/javascript" src="js/jquery-1.10.2.js"></script>
+	<script type="text/javascript" src="js/rx.all.js"></script>
+	<script type="text/javascript" src="js/rx.jquery.js"></script>
+</head>
+
+
+<body>
+
+	<h1>   RxJS  - Distinct    </h1>
+
+	<p>
+	文档： http://reactivex.io/documentation/operators/distinct.html
+	</p>
+
+
+	<p>
+	看控制台输出.
+	</p>
+
+
+	<ul>
+		<li>
+			<button onclick="testDistinct()">  测试 distinct (基本数据类型) </button>
+		</li>
+		<li>
+			<button onclick="testDistinct2()">  测试 distinct (对象) </button>
+		</li>
+
+		<li>
+			<button onclick="testDistinctUntilChanged()">  测试 distinctUntilChanged </button>
+		</li>
+	</ul>
+
+
+
+<script>
+
+
+	// 测试 distinct (基本数据类型)
+	function testDistinct() {
+		console.log("----- testDistinct start -----");
+
+		// 由数组创建可观察对象.
+		var source = Rx.Observable.fromArray([
+			42, 24, 42, 24
+		])
+
+		// distinct 处理.
+		var distinctSource = source.distinct();
+
+		// 三个方法（ onNext / onError / onCompleted  ）. 订阅 可观察对象.
+		var subscription = distinctSource.subscribe(
+			function (x) { console.log('Next: ' + x); },
+			function (err) { console.log('Error: ' + err); },
+			function () { console.log('Completed'); });
+
+		console.log("----- testDistinct finish -----");
+	}
+
+
+
+	// 测试 distinct (对象)
+	function testDistinct2() {
+		console.log("----- testDistinct2 start -----");
+
+		// 由数组创建可观察对象.
+		var source = Rx.Observable.fromArray([
+			{value: 42}, {value: 24}, {value: 42}, {value: 24}
+		])
+
+		// distinct 处理.
+		var distinctSource = source.distinct(function (x) {
+			return x.value;
+		});
+
+		// 三个方法（ onNext / onError / onCompleted  ）. 订阅 可观察对象.
+		var subscription = distinctSource.subscribe(
+			function (x) { console.log('Next: ', x); },
+			function (err) { console.log('Error: ' + err); },
+			function () { console.log('Completed'); });
+
+		console.log("----- testDistinct2 finish -----");
+	}
+
+
+
+	// 测试 distinctUntilChanged (基本数据类型)
+	function testDistinctUntilChanged() {
+		console.log("----- testDistinctUntilChanged start -----");
+
+		// 由数组创建可观察对象.
+		var source = Rx.Observable.fromArray([
+			42, 42, 42, 24, 24, 42, 42, 24, 24
+		])
+
+		// distinctUntilChanged 处理.
+		var distinctSource = source.distinctUntilChanged();
+
+		// 三个方法（ onNext / onError / onCompleted  ）. 订阅 可观察对象.
+		var subscription = distinctSource.subscribe(
+			function (x) { console.log('Next: ' + x); },
+			function (err) { console.log('Error: ' + err); },
+			function () { console.log('Completed'); });
+
+		console.log("----- testDistinctUntilChanged finish -----");
+	}
+
+</script>
+
+
+</body>
+</html>

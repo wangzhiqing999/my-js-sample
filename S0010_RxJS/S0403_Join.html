@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>  RxJS  - Join  </title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<script type="text/javascript" src="js/jquery-1.10.2.js"></script>
+	<script type="text/javascript" src="js/rx.all.js"></script>
+	<script type="text/javascript" src="js/rx.jquery.js"></script>
+</head>
+
+
+<body>
+
+	<h1>   RxJS  - Join    </h1>
+
+	<p>
+	文档： http://reactivex.io/documentation/operators/join.html
+	</p>
+
+
+	<p>
+	看控制台输出.
+	</p>
+
+
+	<ul>
+		<li>
+			<button onclick="testJoin()">  测试 join   </button>
+		</li>
+		<li>
+			<button onclick="testGroupJoin()">  测试 groupJoin    </button>
+		</li>
+	</ul>
+
+
+
+<script>
+
+
+	// 测试  join
+	function testJoin() {
+		console.log("----- testJoin start -----");
+
+		// 500毫秒一次。10次.
+		var source1 = Rx.Observable
+			.interval(500)
+			.take(10)
+			.map(function (i) { return 'First: ' + i; });
+
+		// 100毫秒一次。50次.
+		var source2 = Rx.Observable
+			.interval(100)
+			.take(50)
+			.map(function (i) { return 'Second: ' + i; });
+
+
+		// join 处理.
+		var source = source1.join(
+			source2,
+			function () { return Rx.Observable.timer(0); },
+			function () { return Rx.Observable.timer(0); },
+			function (s1, s2) { return s1 + ', ' + s2; }
+		);
+
+		// 三个方法（ onNext / onError / onCompleted  ）. 订阅 可观察对象.
+		var subscription = source.subscribe(
+			function (x) { console.log('Next: ', x); },
+			function (err) { console.log('Error: ', err); },
+			function () { console.log('Completed'); });
+
+		console.log("----- testJoin finish -----");
+	}
+
+
+
+	// 测试  groupJoin
+	function testGroupJoin() {
+		console.log("----- testGroupJoin start -----");
+
+		// 500毫秒一次。10次.
+		var source1 = Rx.Observable
+			.interval(500)
+			.take(10)
+			.map(function (i) { return 'First: ' + i; });
+
+		// 100毫秒一次。50次.
+		var source2 = Rx.Observable
+			.interval(100)
+			.take(50)
+			.map(function (i) { return 'Second: ' + i; });
+
+		// groupJoin 处理.
+		var source = source1.groupJoin(
+			source2,
+			function () { return Rx.Observable.timer(0); },
+			function () { return Rx.Observable.timer(0); },
+			function (x, yy) {
+				return yy.select(function (y) {
+					return x + ', ' + y;
+				});
+			}
+		).mergeAll();
+
+
+		// 三个方法（ onNext / onError / onCompleted  ）. 订阅 可观察对象.
+		var subscription = source.subscribe(
+			function (x) { console.log('Next: ', x); },
+			function (err) { console.log('Error: ', err); },
+			function () { console.log('Completed'); });
+
+		console.log("----- testGroupJoin finish -----");
+	}
+
+</script>
+
+
+</body>
+</html>

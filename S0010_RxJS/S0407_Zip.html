@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>  RxJS  - Zip  </title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<script type="text/javascript" src="js/jquery-1.10.2.js"></script>
+	<script type="text/javascript" src="js/rx.all.js"></script>
+	<script type="text/javascript" src="js/rx.jquery.js"></script>
+</head>
+
+
+<body>
+
+	<h1>   RxJS  - Zip    </h1>
+
+	<p>
+	文档： http://reactivex.io/documentation/operators/zip.html
+	</p>
+
+
+	<p>
+	看控制台输出.
+	</p>
+
+
+	<ul>
+		<li>
+			<button onclick="testZip()">  测试 zip   </button>
+		</li>
+		<li>
+			<button onclick="testZipArray()">  测试 zipArray    </button>
+		</li>
+		<li>
+			<button onclick="testForkJoin()">  测试 forkJoin    </button>
+		</li>
+
+	</ul>
+
+
+
+<script>
+
+
+	// 测试  zip
+	function testZip() {
+		console.log("----- testZip start -----");
+
+
+		// 500毫秒一次。10次.
+		var source1 = Rx.Observable
+			.interval(500)
+			.take(10)
+			.map(function (i) { return 'First: ' + i; });
+
+		// 1000毫秒一次。5次.
+		var source2 = Rx.Observable
+			.interval(1000)
+			.take(5)
+			.map(function (i) { return 'Second: ' + i; });
+
+		// zip
+		var source = Rx.Observable.zip(
+			source1,
+			source2,
+			function(s1, s2) { return s1 + ", " + s2;});
+
+
+		// 三个方法（ onNext / onError / onCompleted  ）. 订阅 可观察对象.
+		var subscription = source.subscribe(
+			function (x) { console.log('Next: ', x); },
+			function (err) { console.log('Error: ', err); },
+			function () { console.log('Completed'); });
+
+		console.log("----- testZip finish -----");
+	}
+
+
+
+	// 测试  zipArray
+	function testZipArray() {
+		console.log("----- testZipArray start -----");
+
+
+		// 500毫秒一次。10次.
+		var source1 = Rx.Observable
+			.interval(500)
+			.take(10)
+			.map(function (i) { return 'First: ' + i; });
+
+		// 1000毫秒一次。5次.
+		var source2 = Rx.Observable
+			.interval(1000)
+			.take(5)
+			.map(function (i) { return 'Second: ' + i; });
+
+		// zipArray
+		var source = Rx.Observable.zipArray(source1, source2);
+
+
+		// 三个方法（ onNext / onError / onCompleted  ）. 订阅 可观察对象.
+		var subscription = source.subscribe(
+			function (x) { console.log('Next: ', x); },
+			function (err) { console.log('Error: ', err); },
+			function () { console.log('Completed'); });
+
+		console.log("----- testZipArray finish -----");
+	}
+
+
+
+	// 测试  forkJoin
+	function testForkJoin() {
+		console.log("----- testForkJoin start -----");
+
+
+		// 500毫秒一次。10次.
+		var source1 = Rx.Observable
+			.interval(500)
+			.take(10)
+			.map(function (i) { return 'First: ' + i; });
+
+		// 1000毫秒一次。5次.
+		var source2 = Rx.Observable
+			.interval(1000)
+			.take(5)
+			.map(function (i) { return 'Second: ' + i; });
+
+		// forkJoin
+		var source = Rx.Observable.forkJoin(
+			source1, source2,
+			function(s1, s2) { return s1 + ", " + s2;});
+
+
+		// 三个方法（ onNext / onError / onCompleted  ）. 订阅 可观察对象.
+		var subscription = source.subscribe(
+			function (x) { console.log('Next: ', x); },
+			function (err) { console.log('Error: ', err); },
+			function () { console.log('Completed'); });
+
+		console.log("----- testForkJoin finish -----");
+	}
+
+</script>
+
+
+</body>
+</html>

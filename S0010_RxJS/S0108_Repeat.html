@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>  RxJS  - Repeat  </title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<script type="text/javascript" src="js/jquery-1.10.2.js"></script>
+	<script type="text/javascript" src="js/rx.all.js"></script>
+	<script type="text/javascript" src="js/rx.jquery.js"></script>
+</head>
+
+
+<body>
+
+	<h1>   RxJS  - Repeat    </h1>
+
+	<p>
+	文档： http://reactivex.io/documentation/operators/repeat.html
+	</p>
+
+
+	<p>
+	看控制台输出.
+	</p>
+
+
+	<ul>
+		<li>
+			<button onclick="testRepeat()">  测试 Repeat </button>
+		</li>
+
+		<li>
+			<button onclick="testDoWhile()">  测试 doWhile  </button>
+		</li>
+
+		<li>
+			<button onclick="testWhile()">  测试 while  </button>
+		</li>
+
+	</ul>
+
+
+
+<script>
+
+
+	// 测试 Repeat
+	function testRepeat() {
+		console.log("----- testRepeat start -----");
+
+		// 通过 Rx.Observable.range 创建可观察对象.
+		var source = Rx.Observable.repeat(123, 5);
+
+
+		// 三个方法（ onNext / onError / onCompleted  ）. 订阅 可观察对象.
+		var subscription = source.subscribe(
+			function (x) { console.log('Next: ' + x); },
+			function (err) { console.log('Error: ' + err); },
+			function () { console.log('Completed'); });
+
+		console.log("----- testRepeat finish -----");
+	}
+
+	// 测试 doWhile
+	function testDoWhile() {
+		console.log("----- testDoWhile start -----");
+		var i = 0;
+
+		// 通过 doWhile 创建可观察对象.
+		var source = Rx.Observable.return(42)
+			.doWhile( function (x) { return ++i < 5; });
+
+		// 三个方法（ onNext / onError / onCompleted  ）. 订阅 可观察对象.
+		var subscription = source.subscribe(
+			function (x) { console.log('Next: ' + x); },
+			function (err) { console.log('Error: ' + err); },
+			function () { console.log('Completed'); });
+
+		console.log("----- testDoWhile finish -----");
+	}
+
+
+	// 测试 while
+	function testWhile() {
+		console.log("----- testWhile start -----");
+		var i = 0;
+
+		// 通过 Rx.Observable.while 创建可观察对象.
+		var source = Rx.Observable.while(
+			function () { return i++ < 3 },
+			Rx.Observable.return(100)
+		);
+
+		// 三个方法（ onNext / onError / onCompleted  ）. 订阅 可观察对象.
+		var subscription = source.subscribe(
+			function (x) { console.log('Next: ' + x); },
+			function (err) { console.log('Error: ' + err); },
+			function () { console.log('Completed'); });
+
+		console.log("----- testWhile finish -----");
+	}
+
+</script>
+
+
+</body>
+</html>

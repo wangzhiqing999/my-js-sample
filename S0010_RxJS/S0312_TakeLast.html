@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>  RxJS  - TakeLast  </title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<script type="text/javascript" src="js/jquery-1.10.2.js"></script>
+	<script type="text/javascript" src="js/rx.all.js"></script>
+	<script type="text/javascript" src="js/rx.jquery.js"></script>
+</head>
+
+
+<body>
+
+	<h1>   RxJS  - TakeLast    </h1>
+
+	<p>
+	文档： http://reactivex.io/documentation/operators/takelast.html
+	</p>
+
+
+	<p>
+	看控制台输出.
+	</p>
+
+
+	<ul>
+		<li>
+			<button onclick="testTakeLast()">  测试 takeLast  </button>
+		</li>
+		<li>
+			<button onclick="testTakeLastWithTime ()">  测试 takeLastWithTime   </button>
+		</li>
+		<li>
+			<button onclick="testTakeLastBuffer()">  测试 takeLastBuffer  </button>
+		</li>
+		<li>
+			<button onclick="testTakeLastBufferWithTime()">  测试 takeLastBufferWithTime  </button>
+		</li>
+	</ul>
+
+
+
+<script>
+
+
+	// 测试 takeLast
+	function testTakeLast() {
+		console.log("----- testTakeLast start -----");
+
+		// 通过 Rx.Observable.interval 创建可观察对象.
+		// 这里累计共发送 10 个数据.
+		var source = Rx.Observable
+			.interval(500 /* ms */)
+			.take(10);
+
+		// 获取 takeLast(3)
+		var takeSource = source.takeLast(3);
+
+		// 三个方法（ onNext / onError / onCompleted  ）. 订阅 可观察对象.
+		var subscription = takeSource.subscribe(
+			function (x) { console.log('Next: ',  x); },
+			function (err) { console.log('Error: ', err); },
+			function () { console.log('Completed'); });
+
+		console.log("----- testTakeLast finish -----");
+	}
+
+
+	// 测试 takeLastWithTime
+	function testTakeLastWithTime() {
+		console.log("----- testTakeLastWithTime start -----");
+
+		// 通过 Rx.Observable.interval 创建可观察对象.
+		// 这里累计共发送 10 个数据.
+		var source = Rx.Observable
+			.interval(500 /* ms */)
+			.take(10);
+
+		// 获取 takeLastWithTime(3000)
+		var takeSource = source.takeLastWithTime(3000);
+
+		// 三个方法（ onNext / onError / onCompleted  ）. 订阅 可观察对象.
+		var subscription = takeSource.subscribe(
+			function (x) { console.log('Next: ',  x); },
+			function (err) { console.log('Error: ', err); },
+			function () { console.log('Completed'); });
+
+		console.log("----- testTakeLastWithTime finish -----");
+	}
+
+
+
+	// 测试 takeLastBuffer
+	function testTakeLastBuffer() {
+		console.log("----- testTakeLastBuffer start -----");
+
+		// 通过 Rx.Observable.interval 创建可观察对象.
+		// 这里累计共发送 10 个数据.
+		var source = Rx.Observable
+			.interval(500 /* ms */)
+			.take(10);
+
+		// 获取 takeLastBuffer(3)
+		var takeSource = source.takeLastBuffer(3);
+
+		// 三个方法（ onNext / onError / onCompleted  ）. 订阅 可观察对象.
+		var subscription = takeSource.subscribe(
+			function (x) { console.log('Next: ',  x); },
+			function (err) { console.log('Error: ', err); },
+			function () { console.log('Completed'); });
+
+		console.log("----- testTakeLastBuffer finish -----");
+	}
+
+
+
+	// 测试 takeLastBufferWithTime
+	function testTakeLastBufferWithTime() {
+		console.log("----- testTakeLastBufferWithTime start -----");
+
+		// 通过 Rx.Observable.interval 创建可观察对象.
+		// 这里累计共发送 10 个数据.
+		var source = Rx.Observable
+			.interval(500 /* ms */)
+			.take(10);
+
+		// 获取 takeLastBufferWithTime(3000)
+		var takeSource = source.takeLastBufferWithTime(3000);
+
+		// 三个方法（ onNext / onError / onCompleted  ）. 订阅 可观察对象.
+		var subscription = takeSource.subscribe(
+			function (x) { console.log('Next: ',  x); },
+			function (err) { console.log('Error: ', err); },
+			function () { console.log('Completed'); });
+
+		console.log("----- testTakeLastBufferWithTime finish -----");
+	}
+
+</script>
+
+
+</body>
+</html>

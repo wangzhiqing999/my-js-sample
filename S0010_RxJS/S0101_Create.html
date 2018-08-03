@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>  RxJS  - Create  </title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<script type="text/javascript" src="js/jquery-1.10.2.js"></script>
+	<script type="text/javascript" src="js/rx.all.js"></script>
+	<script type="text/javascript" src="js/rx.jquery.js"></script>
+</head>
+
+
+<body>
+
+	<h1>   RxJS  - Create    </h1>
+
+	<p>
+	文档： http://reactivex.io/documentation/operators/create.html
+	</p>
+
+
+	<p>
+	看控制台输出.
+	</p>
+
+
+	<ul>
+		<li>
+			<button onclick="testCreate()">  测试 create - Using a function </button>
+		</li>
+		<li>
+			<button onclick="testCreate2()">  测试 create - Using a disposable </button>
+		</li>
+		<li>
+			<button onclick="testGenerate()">  测试 generate </button>
+		</li>
+		<li>
+			<button onclick="testGenerateWithRelativeTime()">  测试 generateWithRelativeTime </button>
+		</li>
+		<li>
+			<button onclick="testGenerateWithAbsoluteTime ()">  测试 generateWithAbsoluteTime  </button>
+		</li>
+	</ul>
+
+
+
+<script>
+
+	// 测试 create - Using a function
+	function testCreate() {
+		console.log("----- testCreate start -----");
+
+		// 通过 Rx.Observable.create 创建可观察对象.
+		var source = Rx.Observable.create(function (observer) {
+			observer.onNext(41);
+			observer.onNext(42);
+			observer.onNext(43);
+			observer.onCompleted();
+
+			// Note that this is optional, you do not have to return this if you require no cleanup
+			return function () { console.log('disposed'); };
+		});
+
+		// 三个方法（ onNext / onError / onCompleted  ）. 订阅 可观察对象.
+		var subscription = source.subscribe(
+			function (x) { console.log('Next: ' + x); },
+			function (err) { console.log('Error: ' + err); },
+			function () { console.log('Completed'); });
+
+		console.log("----- testCreate finish -----");
+	}
+
+
+
+	// 测试 create - Using a disposable
+	function testCreate2() {
+		console.log("----- testCreate2 start -----");
+
+		// 通过 Rx.Observable.create 创建可观察对象.
+		var source = Rx.Observable.create(function (observer) {
+			observer.onNext(44);
+			observer.onNext(45);
+			observer.onNext(46);
+			observer.onCompleted();
+
+			// Note that this is optional, you do not have to return this if you require no cleanup
+			return Rx.Disposable.create(function () {
+				console.log('disposed');
+			});
+		});
+
+		// 三个方法（ onNext / onError / onCompleted  ）. 订阅 可观察对象.
+		var subscription = source.subscribe(
+			function (x) { console.log('Next: ' + x); },
+			function (err) { console.log('Error: ' + err); },
+			function () { console.log('Completed'); });
+
+		console.log("----- testCreate2 finish -----");
+	}
+
+
+
+	// 测试 generate
+	function testGenerate() {
+		console.log("----- testGenerate start -----");
+
+		// 通过 Rx.Observable.generate 创建可观察对象.
+		// 4个参数：
+		// 第一个：初始值. 相当于 for(var i =0; i < 10; i ++) 里面的 i=0
+		// 第二个：判断条件. 相当于 for(var i =0; i < 10; i ++) 里面的 i < 10
+		// 第三个：递增的处理. 相当于 for(var i =0; i < 10; i ++) 里面的 i ++
+		// 第四个：传递的 可观察数据，相当于 onNext( 具体值 ) 的操作.
+		var source = Rx.Observable.generate(
+			0,
+			function (x) { return x < 10; },
+			function (x) { return x + 1; },
+			function (x) { return x * 10; }
+		);
+
+		// 三个方法（ onNext / onError / onCompleted  ）. 订阅 可观察对象.
+		var subscription = source.subscribe(
+			function (x) { console.log('Next: ' + x); },
+			function (err) { console.log('Error: ' + err); },
+			function () { console.log('Completed'); });
+
+		console.log("----- testGenerate finish -----");
+	}
+
+
+
+	// 测试 generateWithRelativeTime
+	function testGenerateWithRelativeTime() {
+		console.log("----- testGenerateWithRelativeTime start -----");
+
+		// 通过 Rx.Observable.generateWithRelativeTime 创建可观察对象.
+		// 5个参数：
+		// 第一个：初始值. 相当于 for(var i =0; i < 10; i ++) 里面的 i=0
+		// 第二个：判断条件. 相当于 for(var i =0; i < 10; i ++) 里面的 i < 10
+		// 第三个：递增的处理. 相当于 for(var i =0; i < 10; i ++) 里面的 i ++
+		// 第四个：传递的 可观察数据，相当于 onNext( 具体值 ) 的操作.
+		// 第五个：onNext() 操作的间隔时间，单位是毫秒.
+		var source = Rx.Observable.generateWithRelativeTime(
+			0,
+			function (x) { return x < 10; },
+			function (x) { return x + 1; },
+			function (x) { return x; },
+			function (x) { return x * 100; }
+		).timeInterval();
+
+
+		// 三个方法（ onNext / onError / onCompleted  ）. 订阅 可观察对象.
+		var subscription = source.subscribe(
+			function (x) { console.log('Next: value =' + x.value + '; interval = ' + x.interval ); },
+			function (err) { console.log('Error: ' + err); },
+			function () { console.log('Completed'); });
+
+		console.log("----- testGenerateWithRelativeTime finish -----");
+	}
+
+
+
+	// 测试 generateWithAbsoluteTime
+	function testGenerateWithAbsoluteTime() {
+		console.log("----- testGenerateWithAbsoluteTime start -----");
+
+		// 通过 Rx.Observable.generate 创建可观察对象.
+		// 5个参数：
+		// 第一个：初始值. 相当于 for(var i =0; i < 10; i ++) 里面的 i=0
+		// 第二个：判断条件. 相当于 for(var i =0; i < 10; i ++) 里面的 i < 10
+		// 第三个：递增的处理. 相当于 for(var i =0; i < 10; i ++) 里面的 i ++
+		// 第四个：传递的 可观察数据，相当于 onNext( 具体值 ) 的操作.
+		// 第五个：onNext() 操作的具体时间.
+		var source = Rx.Observable.generateWithAbsoluteTime (
+			1,
+			function (x) { return x < 10; },
+			function (x) { return x + 1; },
+			function (x) { return x; },
+			function (x) {
+				var resultDate = new Date();
+				var sec = resultDate.getSeconds();
+				if(sec + x >= 60) {
+					var min = resultDate.getMinutes();
+					if(min + 1 >= 60) {
+						var hour = resultDate.getHours();
+						resultDate.setHours(hour + 1);
+						resultDate.setMinutes(0);
+						resultDate.setSeconds(sec + x - 60);
+					} else {
+						resultDate.setMinutes(min + 1);
+						resultDate.setSeconds(sec + x - 60);
+					}
+				} else {
+					resultDate.setSeconds(sec + x);
+				}
+				return resultDate;
+			}
+		).timeInterval();
+
+		// 三个方法（ onNext / onError / onCompleted  ）. 订阅 可观察对象.
+		var subscription = source.subscribe(
+			function (x) { console.log('Next: value =' + x.value + '; interval = ' + x.interval ); },
+			function (err) { console.log('Error: ' + err); },
+			function () { console.log('Completed'); });
+
+		console.log("----- testGenerateWithAbsoluteTime finish -----");
+	}
+
+
+
+</script>
+
+
+</body>
+</html>

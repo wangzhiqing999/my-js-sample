@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>  RxJS  - FlatMap  </title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<script type="text/javascript" src="js/jquery-1.10.2.js"></script>
+	<script type="text/javascript" src="js/rx.all.js"></script>
+	<script type="text/javascript" src="js/rx.jquery.js"></script>
+</head>
+
+
+<body>
+
+	<h1>   RxJS  - FlatMap    </h1>
+
+	<p>
+	文档： http://reactivex.io/documentation/operators/flatmap.html
+	</p>
+
+
+	<p>
+	看控制台输出.
+	</p>
+
+
+	<ul>
+		<li>
+			<button onclick="testFlatMap()">  测试 flatMap - return Rx.Observable.range</button>
+		</li>
+		<li>
+			<button onclick="testFlatMap2()">  测试 flatMap - return Promise.resolve </button>
+		</li>
+		<li>
+			<button onclick="testFlatMap3()">  测试 flatMap - Using an array </button>
+		</li>
+
+
+		<li>
+			<button onclick="testFlatMapLatest()">  测试 flatMapLatest - return Rx.Observable.range </button>
+		</li>
+
+		<li>
+			<button onclick="testFlatMapObserver()">  测试 flatMapObserver  - return Rx.Observable.range </button>
+		</li>
+
+
+		<li>
+			<button onclick="testConcatMap()">  测试 concatMap </button>
+		</li>
+
+	</ul>
+
+
+
+<script>
+
+
+	// 测试 flatMap
+	function testFlatMap() {
+		console.log("----- testFlatMap start -----");
+
+		// 通过 Rx.Observable.interval 创建可观察对象.
+		// 这里累计共发送 5 个数据.
+		var source = Rx.Observable
+			.interval(1000)
+			.take(5);
+
+		// flatMap
+		// 对于 source 中的每一个数据 x.  都额外处理成  获取三个数据返回.
+		var flatMapSource = source.flatMap(function (x) {
+			console.log("### flatMap x = ", x);
+			return Rx.Observable.interval(500).take(3);
+		});
+
+		// 三个方法（ onNext / onError / onCompleted  ）. 订阅 可观察对象.
+		var subscription = flatMapSource.subscribe(
+			function (x) { console.log('Next: ' + x); },
+			function (err) { console.log('Error: ' + err); },
+			function () { console.log('Completed'); });
+
+		console.log("----- testFlatMap finish -----");
+	}
+
+
+
+	// 测试 flatMap
+	function testFlatMap2() {
+		console.log("----- testFlatMap2 start -----");
+
+		// 通过 Rx.Observable.of 创建可观察对象.
+		// 这里累计共发送 5 个数据.
+		var source = Rx.Observable.of(11,22,33,44,55);
+
+		// flatMap
+		var flatMapSource = source.flatMap(function (x, i) {
+			console.log("### flatMap x, i = ", x, i);
+			return Promise.resolve(x + i);
+		});
+
+		// 三个方法（ onNext / onError / onCompleted  ）. 订阅 可观察对象.
+		var subscription = flatMapSource.subscribe(
+			function (x) { console.log('Next: ' + x); },
+			function (err) { console.log('Error: ' + err); },
+			function () { console.log('Completed'); });
+
+		console.log("----- testFlatMap2 finish -----");
+	}
+
+
+
+	// 测试 flatMap
+	function testFlatMap3() {
+		console.log("----- testFlatMap3 start -----");
+
+		// 通过 Rx.Observable.of 创建可观察对象.
+		// 这里累计共发送 5 个数据.
+		var source = Rx.Observable.of(11,22,33,44,55);
+
+		// flatMap
+		var flatMapSource = source.flatMap(
+			function (x, i) {
+				console.log("### flatMap x, i = ", x, i);
+				return [x,i];
+				},
+			function (x, y, ix, iy) {
+				console.log("### flatMap x, y, ix, iy = ", x, y, ix, iy);
+				return x + y + ix + iy;
+				}
+		  );
+
+		// 三个方法（ onNext / onError / onCompleted  ）. 订阅 可观察对象.
+		var subscription = flatMapSource.subscribe(
+			function (x) { console.log('Next: ' + x); },
+			function (err) { console.log('Error: ' + err); },
+			function () { console.log('Completed'); });
+
+		console.log("----- testFlatMap3 finish -----");
+	}
+
+
+
+	// 测试 flatMapLatest
+	function testFlatMapLatest() {
+		console.log("----- testFlatMapLatest start -----");
+
+		// 通过 Rx.Observable.range 创建可观察对象.
+		// 这里累计共发送 5 个数据.
+		var source = Rx.Observable.range(1, 5);
+
+		// flatMapLatest
+		// 对于 source 中的每一个数据 x.  都额外处理成 [ x, x+1, x+2 ] 三个数据， 然后返回 最后一个数据.
+		var flatMapSource = source.flatMapLatest(function (x) {
+			console.log("### flatMapLatest x = ", x);
+			return Rx.Observable.range(x, 3);
+		});
+
+		// 三个方法（ onNext / onError / onCompleted  ）. 订阅 可观察对象.
+		var subscription = flatMapSource.subscribe(
+			function (x) { console.log('Next: ' + x); },
+			function (err) { console.log('Error: ' + err); },
+			function () { console.log('Completed'); });
+
+		console.log("----- testFlatMapLatest finish -----");
+	}
+
+
+
+	// 测试 flatMapObserver
+	function testFlatMapObserver() {
+		console.log("----- testFlatMapObserver start -----");
+
+		// 通过 Rx.Observable.range 创建可观察对象.
+		// 这里累计共发送 5 个数据.
+		var source = Rx.Observable.range(1, 5);
+
+		// flatMapObserver
+		var flatMapSource = source.flatMapObserver(
+			function (x, i) {
+				console.log("### flatMapSource x, i = ", x, i);
+				return Rx.Observable.repeat(x, i);
+			},
+			function (err) {
+				return Rx.Observable.return(42);
+			},
+			function () {
+				return Rx.Observable.empty();
+			}
+		);
+
+		// 三个方法（ onNext / onError / onCompleted  ）. 订阅 可观察对象.
+		var subscription = flatMapSource.subscribe(
+			function (x) { console.log('Next: ', x); },
+			function (err) { console.log('Error: ' + err); },
+			function () { console.log('Completed'); });
+
+		console.log("----- testFlatMapObserver finish -----");
+	}
+
+
+
+	// 测试 concatMap
+	// concatMap 与 flatMap 的区别在于
+	// 接受到一个数据， 拆分多个数据后。
+	// concatMap 拆分后的数据， 不能有穿插， 也就是 始终是 0，1，2  0，1，2  0，1，2  的顺序
+	// flatMap 拆分后的数据， 会有穿插，也就是存在有  0，1，0，2，1 这样的顺序。
+	function testConcatMap() {
+		console.log("----- testConcatMap start -----");
+
+		// 通过 Rx.Observable.interval 创建可观察对象.
+		// 这里累计共发送 5 个数据.
+		var source = Rx.Observable
+			.interval(1000)
+			.take(5);
+
+		// concatMap
+		// 对于 source 中的每一个数据 x.  都额外处理成  获取三个数据返回.
+		var concatMapSource = source.concatMap(function (x) {
+			console.log("### concatMap x = ", x);
+			return Rx.Observable.interval(500).take(3);
+		});
+
+		// 三个方法（ onNext / onError / onCompleted  ）. 订阅 可观察对象.
+		var subscription = concatMapSource.subscribe(
+			function (x) { console.log('Next: ' + x); },
+			function (err) { console.log('Error: ' + err); },
+			function () { console.log('Completed'); });
+
+		console.log("----- testConcatMap finish -----");
+	}
+
+</script>
+
+
+</body>
+</html>

@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>  RxJS  - Scan  </title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<script type="text/javascript" src="js/jquery-1.10.2.js"></script>
+	<script type="text/javascript" src="js/rx.all.js"></script>
+	<script type="text/javascript" src="js/rx.jquery.js"></script>
+</head>
+
+
+<body>
+
+	<h1>   RxJS  - Scan    </h1>
+
+	<p>
+	文档： http://reactivex.io/documentation/operators/scan.html
+	</p>
+
+
+	<p>
+	看控制台输出.
+	</p>
+
+
+	<ul>
+		<li>
+			<button onclick="testScan()">  测试 Scan </button>
+		</li>
+		<li>
+			<button onclick="testScan2()">  测试 Scan (指定初始值) </button>
+		</li>
+		<li>
+			<button onclick="testExpand()">  测试 expand </button>
+		</li>
+	</ul>
+
+
+
+<script>
+
+
+	// 测试 scan
+	function testScan() {
+		console.log("----- testScan start -----");
+
+		// 通过 Rx.Observable.interval 创建可观察对象.
+		// 这里累计共发送 10 个数据.
+		var source = Rx.Observable
+			.interval(500 /* ms */)
+			.take(10);
+
+		// scan 操作.
+		var scanSource = source.scan(function (acc, x) {
+			console.log("scan (acc, x) = ", acc, x);
+            return acc + x;
+        });
+
+		// 三个方法（ onNext / onError / onCompleted  ）. 订阅 可观察对象.
+		var subscription = scanSource.subscribe(
+			function (x) {
+				console.log('Next: ', x);
+			},
+			function (err) { console.log('Error: ' + err); },
+			function () { console.log('Completed'); });
+
+		console.log("----- testScan finish -----");
+	}
+
+
+
+	// 测试 scan
+	function testScan2() {
+		console.log("----- testScan2 start -----");
+
+		// 通过 Rx.Observable.interval 创建可观察对象.
+		// 这里累计共发送 10 个数据.
+		var source = Rx.Observable
+			.interval(500 /* ms */)
+			.take(10);
+
+		// scan 操作.
+		var scanSource = source.scan(
+			function (acc, x) {
+				console.log("scan (acc, x) = ", acc, x);
+				return acc + x;
+			}, 100);
+
+		// 三个方法（ onNext / onError / onCompleted  ）. 订阅 可观察对象.
+		var subscription = scanSource.subscribe(
+			function (x) {
+				console.log('Next: ', x);
+			},
+			function (err) { console.log('Error: ' + err); },
+			function () { console.log('Completed'); });
+
+		console.log("----- testScan2 finish -----");
+	}
+
+
+	// 测试 expand
+	function testExpand() {
+		console.log("----- testExpand start -----");
+
+		// 通过 Rx.Observable.return 创建可观察对象.
+		// 只发送1个数据.
+		var source = Rx.Observable.return(100);
+
+		// expand 操作.
+		var expandSource = source.expand(
+			function (x) {
+				console.log("expand (x) = ", x);
+				return Rx.Observable.return(x + 1);
+			}).take(5);
+
+		// 三个方法（ onNext / onError / onCompleted  ）. 订阅 可观察对象.
+		var subscription = expandSource.subscribe(
+			function (x) {
+				console.log('Next: ', x);
+			},
+			function (err) { console.log('Error: ' + err); },
+			function () { console.log('Completed'); });
+
+		console.log("----- testExpand finish -----");
+	}
+
+
+</script>
+
+
+</body>
+</html>

@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>  RxJS  - From  </title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<script type="text/javascript" src="js/jquery-1.10.2.js"></script>
+	<script type="text/javascript" src="js/rx.all.js"></script>
+	<script type="text/javascript" src="js/rx.jquery.js"></script>
+</head>
+
+
+<body>
+
+	<h1>   RxJS  - From   </h1>
+
+	<p>
+	文档： http://reactivex.io/documentation/operators/from.html
+	</p>
+
+
+	<p>
+	看控制台输出.
+	</p>
+
+
+	<ul>
+		<li>
+			<button onclick="testFromArguments(1,3,5,7,9)">  测试 from arguments </button>
+		</li>
+		<li>
+			<button onclick="testFromSet()">  测试 from Set </button>
+		</li>
+		<li>
+			<button onclick="testFromMap()">  测试 from Map </button>
+		</li>
+		<li>
+			<button onclick="testFromString()">  测试 from String </button>
+		</li>
+		<li>
+			<button onclick="testFromFunction()">  测试 from function  </button>
+		</li>
+		<li>
+			<button onclick="testFromFunction2()">  测试 from function2  </button>
+		</li>
+
+		<li>
+			<button id="input">  测试 fromEvent  </button>
+		</li>
+		<li>
+			<button id="input2">  测试 fromEventPattern  </button>
+		</li>
+
+		<li>
+			<button onclick="testOf()">  测试 of  </button>
+		</li>
+
+
+		<li>
+			<button onclick="testOfArrayChanges()">  测试 ofArrayChanges   </button>
+		</li>
+		<li>
+			<button onclick="testOfObjectChanges()">  测试 ofObjectChanges   </button>
+		</li>
+
+		<li>
+			<button onclick="testPairs()">  测试 pairs   </button>
+		</li>
+
+	</ul>
+
+
+
+<script>
+
+
+	// 测试 from arguments
+	function testFromArguments() {
+		console.log("----- testFromArguments start -----");
+
+		// 通过 Rx.Observable.from 创建可观察对象.
+		var source = Rx.Observable.from(arguments);
+
+		// 三个方法（ onNext / onError / onCompleted  ）. 订阅 可观察对象.
+		var subscription = source.subscribe(
+			function (x) { console.log('Next: ' + x); },
+			function (err) { console.log('Error: ' + err); },
+			function () { console.log('Completed'); });
+
+		console.log("----- testFromArguments finish -----");
+	}
+
+
+
+	// 测试 from Set
+	function testFromSet() {
+		console.log("----- testFromSet start -----");
+
+		var s = new Set(['foo', window]);
+
+		// 通过 Rx.Observable.from 创建可观察对象.
+		var source = Rx.Observable.from(s);
+
+		// 三个方法（ onNext / onError / onCompleted  ）. 订阅 可观察对象.
+		var subscription = source.subscribe(
+			function (x) { console.log('Next: ' + x); },
+			function (err) { console.log('Error: ' + err); },
+			function () { console.log('Completed'); });
+
+		console.log("----- testFromSet finish -----");
+	}
+
+
+
+	// 测试 from Map
+	function testFromMap() {
+		console.log("----- testFromMap start -----");
+
+		var m = new Map([[1, 2], [2, 4], [4, 8]]);
+
+		// 通过 Rx.Observable.from 创建可观察对象.
+		var source = Rx.Observable.from(m);
+
+		// 三个方法（ onNext / onError / onCompleted  ）. 订阅 可观察对象.
+		var subscription = source.subscribe(
+			function (x) { console.log('Next: ' + x); },
+			function (err) { console.log('Error: ' + err); },
+			function () { console.log('Completed'); });
+
+		console.log("----- testFromMap finish -----");
+	}
+
+
+
+	// 测试 from String
+	function testFromString() {
+		console.log("----- testFromString start -----");
+
+		var s = "Hello World!";
+
+		// 通过 Rx.Observable.from 创建可观察对象.
+		var source = Rx.Observable.from(s);
+
+		// 三个方法（ onNext / onError / onCompleted  ）. 订阅 可观察对象.
+		var subscription = source.subscribe(
+			function (x) { console.log('Next: ' + x); },
+			function (err) { console.log('Error: ' + err); },
+			function () { console.log('Completed'); });
+
+		console.log("----- testFromString finish -----");
+	}
+
+
+
+	// 测试 from function
+	function testFromFunction() {
+		console.log("----- testFromFunction start -----");
+
+		var data = [1,3,5,7,9];
+
+		// 通过 Rx.Observable.from 创建可观察对象.
+		var source = Rx.Observable.from(data, function(x) { return x * 100 } );
+
+		// 三个方法（ onNext / onError / onCompleted  ）. 订阅 可观察对象.
+		var subscription = source.subscribe(
+			function (x) { console.log('Next: ' + x); },
+			function (err) { console.log('Error: ' + err); },
+			function () { console.log('Completed'); });
+
+		console.log("----- testFromFunction finish -----");
+	}
+
+
+	// 测试 from function2
+	function testFromFunction2() {
+		console.log("----- testFromFunction2 start -----");
+
+		var data = {length: 5};  // [1,3,5,7,9];
+		var func = function(v, k) {
+			console.log("from function: v = " +  v  + "; k = " + k);
+			return k;
+		};
+
+		// 通过 Rx.Observable.from 创建可观察对象.
+		var source = Rx.Observable.from(data, func);
+
+		// 三个方法（ onNext / onError / onCompleted  ）. 订阅 可观察对象.
+		var subscription = source.subscribe(
+			function (x) { console.log('Next: ' + x); },
+			function (err) { console.log('Error: ' + err); },
+			function () { console.log('Completed'); });
+
+		console.log("----- testFromFunction2 finish -----");
+	}
+
+
+	// 测试 fromEvent
+	var input = $('#input');
+	var source = Rx.Observable.fromEvent(input, 'click');
+	var subscription = source.subscribe(
+		function (x) { console.log('Next: Clicked!', x); },
+		function (err) { console.log('Error: ' + err); },
+		function () { console.log('Completed'); });
+
+
+
+	// 测试 fromEventPattern
+	var input2 = $('#input2');
+	var source2 = Rx.Observable.fromEventPattern(
+		function add (h) {
+			console.log("add()", h);
+			input2.bind('click', h);
+		},
+		function remove (h) {
+			console.log("remove()", h);
+			input2.unbind('click', h);
+		}
+	);
+	var subscription2 = source2.subscribe(
+		function (x) { console.log('Next: Clicked!', x); },
+		function (err) { console.log('Error: ' + err); },
+		function () { console.log('Completed'); });
+
+
+
+	// 测试 of
+	function testOf() {
+		console.log("----- testOf start -----");
+
+		var source = Rx.Observable.of(1,2,3);
+
+		// 三个方法（ onNext / onError / onCompleted  ）. 订阅 可观察对象.
+		var subscription = source.subscribe(
+			function (x) { console.log('Next: ' + x); },
+			function (err) { console.log('Error: ' + err); },
+			function () { console.log('Completed'); });
+
+		console.log("----- testOf finish -----");
+	}
+
+
+
+	// 测试 ofArrayChanges
+	function testOfArrayChanges() {
+		console.log("----- testOfArrayChanges start -----");
+
+		var arr = [1,2,3];
+		var source = Rx.Observable.ofArrayChanges(arr);
+
+		// 三个方法（ onNext / onError / onCompleted  ）. 订阅 可观察对象.
+		var subscription = source.subscribe(
+			function (x) { console.log('Next: ' + x); },
+			function (err) { console.log('Error: ' + err); },
+			function () { console.log('Completed'); });
+
+
+		arr.push(4);
+		arr.push(5);
+
+		console.log("----- testOfArrayChanges finish -----");
+	}
+
+	// 测试 ofObjectChanges
+	function testOfObjectChanges() {
+		console.log("----- testOfObjectChanges start -----");
+
+		var obj = {x: 1};
+		var source = Rx.Observable.ofObjectChanges(obj);
+
+
+		// 三个方法（ onNext / onError / onCompleted  ）. 订阅 可观察对象.
+		var subscription = source.subscribe(
+			function (x) { console.log('Next: ' + x); },
+			function (err) { console.log('Error: ' + err); },
+			function () { console.log('Completed'); });
+
+
+		obj.x = 42;
+
+		console.log("----- testOfObjectChanges finish -----");
+	}
+
+
+	// 测试 pairs
+	function testPairs() {
+		console.log("----- testPairs start -----");
+
+		var obj = {
+		  foo: 42,
+		  bar: 56,
+		  baz: 78
+		};
+
+		var source = Rx.Observable.pairs(obj);
+
+
+
+		// 三个方法（ onNext / onError / onCompleted  ）. 订阅 可观察对象.
+		var subscription = source.subscribe(
+			function (x) { console.log('Next: ' + x); },
+			function (err) { console.log('Error: ' + err); },
+			function () { console.log('Completed'); });
+
+
+		obj.x = 42;
+
+		console.log("----- testPairs finish -----");
+	}
+
+
+</script>
+
+
+</body>
+</html>

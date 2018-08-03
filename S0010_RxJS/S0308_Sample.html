@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>  RxJS  - Sample  </title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<script type="text/javascript" src="js/jquery-1.10.2.js"></script>
+	<script type="text/javascript" src="js/rx.all.js"></script>
+	<script type="text/javascript" src="js/rx.jquery.js"></script>
+</head>
+
+
+<body>
+
+	<h1>   RxJS  - Sample    </h1>
+
+	<p>
+	文档： http://reactivex.io/documentation/operators/sample.html
+	</p>
+
+
+	<p>
+	看控制台输出.
+	</p>
+
+
+	<ul>
+		<li>
+			<button onclick="testSample()">  测试 sample (指定时间)  </button>
+		</li>
+		<li>
+			<button onclick="testSample2()">  测试 sample (指定 Observable)  </button>
+		</li>
+
+		<li>
+			<button onclick="testThrottleFirst()">  测试 throttleFirst   </button>
+		</li>
+
+	</ul>
+
+
+
+<script>
+
+
+	// 测试 sample (指定时间)
+	function testSample() {
+		console.log("----- testSample start -----");
+
+		// 通过 Rx.Observable.interval 创建可观察对象.
+		// 这里累计共发送 10 个数据.
+		var source = Rx.Observable
+			.interval(500 /* ms */)
+			.take(10);
+
+		// 获取 sample()
+		var sampleSource = source.sample(3000);
+
+		// 三个方法（ onNext / onError / onCompleted  ）. 订阅 可观察对象.
+		var subscription = sampleSource.subscribe(
+			function (x) { console.log('Next: ',  x); },
+			function (err) { console.log('Error: ', err); },
+			function () { console.log('Completed'); });
+
+		console.log("----- testSample finish -----");
+	}
+
+
+
+	// 测试 sample (指定 Observable)
+	function testSample2() {
+		console.log("----- testSample2 start -----");
+
+		// 通过 Rx.Observable.interval 创建可观察对象.
+		// 这里累计共发送 10 个数据.
+		var source = Rx.Observable
+			.interval(500 /* ms */)
+			.take(10);
+
+		// 获取 sample()
+		var sampleSource = source.sample(Rx.Observable.interval(3000));
+
+		// 三个方法（ onNext / onError / onCompleted  ）. 订阅 可观察对象.
+		var subscription = sampleSource.subscribe(
+			function (x) { console.log('Next: ',  x); },
+			function (err) { console.log('Error: ', err); },
+			function () { console.log('Completed'); });
+
+		console.log("----- testSample2 finish -----");
+	}
+
+
+
+	// 测试 throttleFirst
+	function testThrottleFirst() {
+		console.log("----- testThrottleFirst start -----");
+
+		var times = [
+			{ value: 0, time: 100 },
+			{ value: 1, time: 700 },
+			{ value: 2, time: 1100 },
+			{ value: 3, time: 1800 },
+			{ value: 4, time: 2000 }
+		];
+
+		// Delay each item by time and project value;
+		var source = Rx.Observable.from(times)
+			.flatMap(function (item) {
+				console.log("### flatMap(item = )", item);
+				return Rx.Observable.of(item.value)
+						.delay(item.time);
+			});
+
+		// 获取 throttleFirst()
+		// var throttleFirstSource = source.throttleFirst(500);
+		var throttleFirstSource = source.throttle(500);
+
+		// 三个方法（ onNext / onError / onCompleted  ）. 订阅 可观察对象.
+		var subscription = throttleFirstSource.subscribe(
+			function (x) { console.log('Next: ',  x); },
+			function (err) { console.log('Error: ', err); },
+			function () { console.log('Completed'); });
+
+		console.log("----- testThrottleFirst finish -----");
+	}
+
+
+</script>
+
+
+</body>
+</html>

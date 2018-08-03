@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>  RxJS  - Do  </title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<script type="text/javascript" src="js/jquery-1.10.2.js"></script>
+	<script type="text/javascript" src="js/rx.all.js"></script>
+	<script type="text/javascript" src="js/rx.jquery.js"></script>
+</head>
+
+
+<body>
+
+	<h1>   RxJS  - Do    </h1>
+
+	<p>
+	文档： http://reactivex.io/documentation/operators/do.html
+	</p>
+
+
+	<p>
+	看控制台输出.
+	</p>
+
+
+	<ul>
+		<li>
+			<button onclick="testDo()">  测试 do （Using an observer） </button>
+		</li>
+
+		<li>
+			<button onclick="testDo2()">  测试 do （Using a function）</button>
+		</li>
+
+		<li>
+			<button onclick="testDoOnNext()">  测试 doOnNext </button>
+		</li>
+
+		<li>
+			<button onclick="testDoOnError()">  测试 doOnError </button>
+		</li>
+
+		<li>
+			<button onclick="testDoOnCompleted()">  测试 doOnCompleted </button>
+		</li>
+
+		<li>
+			<button onclick="testFinally()">  测试 finally (发生异常) </button>
+		</li>
+		<li>
+			<button onclick="testFinally2()">  测试 finally (正常执行) </button>
+		</li>
+	</ul>
+
+
+
+<script>
+
+
+	// 测试 do
+	function testDo() {
+		console.log("----- testDo start -----");
+
+		/* Using an observer */
+		var observer = Rx.Observer.create(
+			function (x) { console.log('Do Next: %s', x); },
+			function (err) { console.log('Do Error: %s', err); },
+			function () { console.log('Do Completed'); }
+		);
+
+
+		// 通过 Rx.Observable.interval 创建可观察对象.
+		// 这里只获取前 10 个数据.
+		var source = Rx.Observable
+			.interval(500)
+			.take(10);
+
+		// 测试 do.
+		var doSource = source.do(observer);
+
+		// 三个方法（ onNext / onError / onCompleted  ）. 订阅 可观察对象.
+		var subscription = doSource.subscribe(
+			function (x) { console.log('Next: ', x); },
+			function (err) { console.log('Error: ', err); },
+			function () { console.log('Completed'); });
+
+		console.log("----- testDo finish -----");
+	}
+
+
+
+	// 测试 do
+	function testDo2() {
+		console.log("----- testDo2 start -----");
+
+		// 通过 Rx.Observable.interval 创建可观察对象.
+		// 这里只获取前 10 个数据.
+		var source = Rx.Observable
+			.interval(500)
+			.take(10);
+
+		// 测试 do.
+		/* Using a function */
+		var doSource = source.do(
+			function (x) { console.log('Do Next: %s', x); },
+			function (err) { console.log('Do Error: %s', err); },
+			function () { console.log('Do Completed'); }
+		);
+
+		// 三个方法（ onNext / onError / onCompleted  ）. 订阅 可观察对象.
+		var subscription = doSource.subscribe(
+			function (x) { console.log('Next: ', x); },
+			function (err) { console.log('Error: ', err); },
+			function () { console.log('Completed'); });
+
+		console.log("----- testDo2 finish -----");
+	}
+
+
+
+	// 测试 doOnNext
+	function testDoOnNext() {
+		console.log("----- testDoOnNext start -----");
+
+		// 通过 Rx.Observable.interval 创建可观察对象.
+		// 这里只获取前 10 个数据.
+		var source = Rx.Observable
+			.interval(500)
+			.take(10);
+
+		// 测试 doOnNext.
+		var doSource = source.doOnNext(
+			function (x) { console.log('Do Next: %s', x); }
+		);
+
+		// 三个方法（ onNext / onError / onCompleted  ）. 订阅 可观察对象.
+		var subscription = doSource.subscribe(
+			function (x) { console.log('Next: ', x); },
+			function (err) { console.log('Error: ', err); },
+			function () { console.log('Completed'); });
+
+		console.log("----- testDoOnNext finish -----");
+	}
+
+
+
+	// 测试 doOnError
+	function testDoOnError() {
+		console.log("----- testDoOnError start -----");
+
+		// 通过 Rx.Observable.create 创建可观察对象.
+		var source = Rx.Observable.create(function (observer) {
+			observer.onNext(41);
+			observer.onNext(42);
+			observer.onError(new Error("43 not found"));
+			observer.onNext(44);
+			observer.onNext(45);
+			observer.onCompleted();
+
+			// Note that this is optional, you do not have to return this if you require no cleanup
+			return function () { console.log('disposed'); };
+		});
+
+		// 测试 doOnError.
+		var doSource = source.doOnError(
+			function (err) { console.log('Do Error: %s', err); }
+		);
+
+		// 三个方法（ onNext / onError / onCompleted  ）. 订阅 可观察对象.
+		var subscription = doSource.subscribe(
+			function (x) { console.log('Next: ', x); },
+			function (err) { console.log('Error: ', err); },
+			function () { console.log('Completed'); });
+
+		console.log("----- testDoOnError finish -----");
+	}
+
+
+
+	// 测试 doOnCompleted
+	function testDoOnCompleted() {
+		console.log("----- testDoOnCompleted start -----");
+
+		// 通过 Rx.Observable.interval 创建可观察对象.
+		// 这里只获取前 10 个数据.
+		var source = Rx.Observable
+			.interval(500)
+			.take(10);
+
+		// 测试 doOnCompleted.
+		// (第二个参数，是第一个参数中的 this)
+		var doSource = source.doOnCompleted(
+			function (x) { this.log('Do Completed！'); },
+			console
+		);
+
+		// 三个方法（ onNext / onError / onCompleted  ）. 订阅 可观察对象.
+		var subscription = doSource.subscribe(
+			function (x) { console.log('Next: ', x); },
+			function (err) { console.log('Error: ', err); },
+			function () { console.log('Completed'); });
+
+		console.log("----- testDoOnCompleted finish -----");
+	}
+
+
+
+
+
+	// 测试 finally
+	function testFinally() {
+		console.log("----- testFinally start -----");
+
+		// 通过 Rx.Observable.create 创建可观察对象.
+		var source = Rx.Observable.create(function (observer) {
+			observer.onNext(41);
+			observer.onNext(42);
+			observer.onError(new Error("43 not found"));
+			observer.onNext(44);
+			observer.onNext(45);
+			observer.onCompleted();
+
+			// Note that this is optional, you do not have to return this if you require no cleanup
+			return function () { console.log('disposed'); };
+		});
+
+		// 测试 finally.
+		var doSource = source.finally(
+			function () { console.log('Finally !!!!!'); }
+		);
+
+		// 三个方法（ onNext / onError / onCompleted  ）. 订阅 可观察对象.
+		var subscription = doSource.subscribe(
+			function (x) { console.log('Next: ', x); },
+			function (err) { console.log('Error: ', err); },
+			function () { console.log('Completed'); });
+
+		console.log("----- testFinally finish -----");
+	}
+
+
+	// 测试 finally
+	function testFinally2() {
+		console.log("----- testFinally2 start -----");
+
+		// 通过 Rx.Observable.interval 创建可观察对象.
+		// 这里只获取前 10 个数据.
+		var source = Rx.Observable
+			.interval(500)
+			.take(10);
+
+		// 测试 finally.
+		var doSource = source.finally(
+			function () { console.log('Finally !!!!!'); }
+		);
+
+		// 三个方法（ onNext / onError / onCompleted  ）. 订阅 可观察对象.
+		var subscription = doSource.subscribe(
+			function (x) { console.log('Next: ', x); },
+			function (err) { console.log('Error: ', err); },
+			function () { console.log('Completed'); });
+
+		console.log("----- testFinally2 finish -----");
+	}
+
+
+</script>
+
+
+</body>
+</html>

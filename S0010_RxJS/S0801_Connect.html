@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>  RxJS  - Connect  </title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<script type="text/javascript" src="js/jquery-1.10.2.js"></script>
+	<script type="text/javascript" src="js/rx.all.js"></script>
+	<script type="text/javascript" src="js/rx.jquery.js"></script>
+</head>
+
+
+<body>
+
+	<h1>   RxJS  - Connect   </h1>
+
+	<p>
+	文档： http://reactivex.io/documentation/operators/connect.html
+	</p>
+
+
+	<p>
+	看控制台输出.
+	</p>
+
+
+	<ul>
+		<li>
+			<button onclick="testConnect()">  测试 connect  </button>
+		</li>
+	</ul>
+
+
+
+<script>
+
+	// 创建观察者.
+	function createObserver(tag) {
+		return Rx.Observer.create(
+			function (x) { console.log('Next - %s: %s', tag, x); },
+			function (err) { console.log('Error - %s: ', tag, err); },
+			function () { console.log('Completed - %s', tag); });
+	}
+
+
+	// 测试 connect
+	function testConnect() {
+		console.log("----- testConnect start -----");
+
+		// 通过 Rx.Observable.interval 创建可观察对象.
+		// 这里只获取前 10 个数据.
+		var source = Rx.Observable.interval(500).take(10).map(function(x) {console.log("S1:", x); return x;});
+
+		var published = source.publish();
+
+		published.subscribe(createObserver('SourceA'));
+		published.subscribe(createObserver('SourceB'));
+
+		// Connect the source
+		var connection = published.connect();
+
+
+		console.log("----- testConnect finish -----");
+	}
+
+</script>
+
+
+</body>
+</html>

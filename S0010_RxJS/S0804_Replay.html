@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>  RxJS  - Replay  </title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<script type="text/javascript" src="js/jquery-1.10.2.js"></script>
+	<script type="text/javascript" src="js/rx.all.js"></script>
+	<script type="text/javascript" src="js/rx.jquery.js"></script>
+</head>
+
+
+<body>
+
+	<h1>   RxJS  - Replay   </h1>
+
+	<p>
+	文档： http://reactivex.io/documentation/operators/replay.html
+	</p>
+
+
+	<p>
+	看控制台输出.
+	</p>
+
+
+	<ul>
+		<li>
+			<button onclick="testShareReplay()"> 测试 shareReplay </button>
+		</li>
+	</ul>
+
+
+
+<script>
+
+	// 创建观察者.
+	function createObserver(tag) {
+		return Rx.Observer.create(
+			function (x) { console.log('Next - %s: %s', tag, x); },
+			function (err) { console.log('Error - %s: ', tag, err); },
+			function () { console.log('Completed - %s', tag); });
+	}
+
+
+	// 测试 shareReplay
+	function testShareReplay() {
+		console.log("----- testShareReplay start -----");
+
+		// 通过 Rx.Observable.interval 创建可观察对象.
+		// 这里只获取前 10 个数据.
+		var source = Rx.Observable.interval(500).take(10).map(function(x) {console.log("S1:", x); return x;});
+
+		// 测试 shareReplay , bufferSize =3
+		var published = source.shareReplay(3);
+
+		published.subscribe(createObserver('SourceA'));
+		published.subscribe(createObserver('SourceB'));
+
+
+		// 2秒之后，新的订阅.
+		Rx.Observable
+			.return(true)
+			.delay(2000)
+			.flatMap(published)
+			.subscribe(createObserver('SourceC'));
+
+		console.log("----- testShareReplay finish -----");
+	}
+
+
+</script>
+
+
+</body>
+</html>

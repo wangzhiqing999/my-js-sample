@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>  RxJS  - Empty/Never/Throw  </title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<script type="text/javascript" src="js/jquery-1.10.2.js"></script>
+	<script type="text/javascript" src="js/rx.all.js"></script>
+	<script type="text/javascript" src="js/rx.jquery.js"></script>
+</head>
+
+
+<body>
+
+	<h1>   RxJS  - Empty/Never/Throw    </h1>
+
+	<p>
+	文档： http://reactivex.io/documentation/operators/empty-never-throw.html
+	</p>
+
+
+	<p>
+	看控制台输出.
+	</p>
+
+
+	<ul>
+		<li>
+			<button onclick="testEmpty()">  测试 Empty </button>
+		</li>
+		<li>
+			<button onclick="testNever()">  测试 Never </button>
+		</li>
+		<li>
+			<button onclick="testThrow()">  测试 Throw </button>
+		</li>
+	</ul>
+
+
+
+<script>
+
+
+	// 测试 Empty
+	function testEmpty() {
+		console.log("----- testEmpty start -----");
+
+		// 通过 Rx.Observable.empty 创建可观察对象.
+		var source = Rx.Observable.empty();
+
+		// 三个方法（ onNext / onError / onCompleted  ）. 订阅 可观察对象.
+		var subscription = source.subscribe(
+			function (x) { console.log('Next: ' + x); },
+			function (err) { console.log('Error: ' + err); },
+			function () { console.log('Completed'); });
+
+		console.log("----- testEmpty finish -----");
+	}
+
+
+	// 测试 Never
+	function testNever() {
+		console.log("----- testNever start -----");
+
+		// 通过 Rx.Observable.never 创建可观察对象.
+		var source = Rx.Observable.never();
+
+		// 三个方法（ onNext / onError / onCompleted  ）. 订阅 可观察对象.
+		var subscription = source.subscribe(
+			function (x) { console.log('Next: ' + x); },
+			function (err) { console.log('Error: ' + err); },
+			function () { console.log('Completed'); });
+
+		console.log("----- testNever finish -----");
+	}
+
+
+	// 测试 Throw
+	function testThrow() {
+		console.log("----- testThrow start -----");
+
+		var source = Rx.Observable.return(42)
+			.selectMany(Rx.Observable.throw(new Error('error!')));
+
+		// 三个方法（ onNext / onError / onCompleted  ）. 订阅 可观察对象.
+		var subscription = source.subscribe(
+			function (x) { console.log('Next: ' + x); },
+			function (err) { console.log('Error: ' + err); },
+			function () { console.log('Completed'); });
+
+		console.log("----- testThrow finish -----");
+	}
+
+
+</script>
+
+
+</body>
+</html>

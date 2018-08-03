@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>  RxJS  - Max  </title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<script type="text/javascript" src="js/jquery-1.10.2.js"></script>
+	<script type="text/javascript" src="js/rx.all.js"></script>
+	<script type="text/javascript" src="js/rx.jquery.js"></script>
+</head>
+
+
+<body>
+
+	<h1>   RxJS  - Max   </h1>
+
+	<p>
+	文档： http://reactivex.io/documentation/operators/max.html
+	</p>
+
+
+	<p>
+	看控制台输出.
+	</p>
+
+
+	<ul>
+		<li>
+			<button onclick="testMax()">  测试 max </button>
+		</li>
+
+		<li>
+			<button onclick="testMaxBy()">  测试 maxBy </button>
+		</li>
+	</ul>
+
+
+
+<script>
+
+
+	// 测试 max
+	function testMax() {
+		console.log("----- testMax start -----");
+
+		// 通过 Rx.Observable.interval 创建可观察对象.
+		// 这里只获取前 10 个数据.
+		var source = Rx.Observable.interval(500).take(10).map(function(x) {console.log("S1:", x); return x;});
+
+		// 测试 max
+		var maxSource = source.max();
+
+		// 三个方法（ onNext / onError / onCompleted  ）. 订阅 可观察对象.
+		var subscription = maxSource.subscribe(
+			function (x) { console.log('Next: ', x); },
+			function (err) { console.log('Error: ', err); },
+			function () { console.log('Completed'); });
+
+		console.log("----- testMax finish -----");
+	}
+
+
+	// 测试 maxBy
+	function testMaxBy() {
+		console.log("----- testMaxBy start -----");
+
+		// 通过 Rx.Observable.interval 创建可观察对象.
+		// 这里只获取前 10 个数据.
+		var source1 = Rx.Observable.interval(500).take(10).map(function(x) {console.log("S1:", x); return x;});
+		var source2 = Rx.Observable.interval(300).take(10).map(function(x) {console.log("S2:", x); return x;});
+		var source =  Rx.Observable.merge(source1, source2);
+
+		// 测试 maxBy
+		var maxBySource = source.maxBy(function(x) {return x;});
+
+		// 三个方法（ onNext / onError / onCompleted  ）. 订阅 可观察对象.
+		var subscription = maxBySource.subscribe(
+			function (x) { console.log('Next: ', x); },
+			function (err) { console.log('Error: ', err); },
+			function () { console.log('Completed'); });
+
+		console.log("----- testMaxBy finish -----");
+	}
+
+
+
+</script>
+
+
+</body>
+</html>

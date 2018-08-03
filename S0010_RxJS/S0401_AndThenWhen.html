@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>  RxJS  - And/Then/When  </title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<script type="text/javascript" src="js/jquery-1.10.2.js"></script>
+	<script type="text/javascript" src="js/rx.all.js"></script>
+	<script type="text/javascript" src="js/rx.jquery.js"></script>
+</head>
+
+
+<body>
+
+	<h1>   RxJS  - And/Then/When    </h1>
+
+	<p>
+	文档： http://reactivex.io/documentation/operators/and-then-when.html
+	</p>
+
+
+	<p>
+	看控制台输出.
+	</p>
+
+
+	<ul>
+		<li>
+			<button onclick="testAndThenWhen()">  测试 And/Then/When  </button>
+		</li>
+	</ul>
+
+
+
+<script>
+
+
+	// 测试  And/Then/When 
+	function testAndThenWhen() {
+		console.log("----- testAndThenWhen start -----");
+
+
+		var source = Rx.Observable.just("TODO : ......");
+
+		
+		// 三个方法（ onNext / onError / onCompleted  ）. 订阅 可观察对象.
+		var subscription = source.subscribe(
+			function (x) { console.log('Next: ', x); },
+			function (err) { console.log('Error: ', err); },
+			function () { console.log('Completed'); });
+
+		console.log("----- testAndThenWhen finish -----");
+	}
+
+
+
+</script>
+
+
+</body>
+</html>

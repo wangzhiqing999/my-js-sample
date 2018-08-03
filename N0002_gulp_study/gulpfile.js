@@ -151,3 +151,63 @@ gulp.task('compile-sass', function () {
 });
 
 
+
+
+// ##########  gulp-babel ：这里是测试 es6 编译为 js 的处理 . ##########
+// 安装：npm install --save-dev gulp-babel babel-core babel-preset-env
+gulp.task('babel', function () {
+    gulp.src('es6/*.es6')
+	.pipe(plugins.babel({
+        presets: ['env']
+    }))
+	.pipe(plugins.rename(function(path) {
+		path.extname = ".js";
+	}))
+    .pipe(gulp.dest('dist/js'));
+});
+
+
+
+// ##########  gulp-babel-2 ：这里是测试 es6 编译为 js 的处理 . ##########
+// 安装：npm install --save-dev gulp-babel babel-preset-es2015
+gulp.task('babel-2', function () {
+    gulp.src('es6/*.es6')
+	.pipe(plugins.babel({
+        presets: ['es2015']
+    }))
+	.pipe(plugins.rename(function(path) {
+		path.extname = ".js";
+	}))
+    .pipe(gulp.dest('dist/js'));
+});
+
+
+
+// ##########  gulp-polyfiller ：这里是测试生成 Promise，Fetch 的 polyfills.js 的例子 . （别的好像生成不了）##########
+// 安装：npm install --save-dev gulp-polyfiller
+gulp.task('polyfiller', function () {
+    plugins.polyfiller.bundle(['Promise', 'Fetch'])
+    .pipe(gulp.dest('dist/js'));
+});
+
+
+// ########## gulp-autopolyfiller : 根据已有的 js 代码， 生成 polyfills.js  ##########
+// 安装：npm install --save-dev gulp-autopolyfiller
+gulp.task('autopolyfiller', function () {
+
+	// 这里是使用 babel， 将 es6 编译为 js.
+	var myBabel = gulp.src('es6/*.es6')
+	.pipe(plugins.babel({
+        presets: ['es2015']
+    }))
+	.pipe(plugins.rename(function(path) {
+		path.extname = ".js";
+	}))
+    .pipe(gulp.dest('dist/js'));
+
+	// 这里是分析 es6 生成的 js 文件.
+	// 判断有哪些是 babel 所不支持的， 自动生成相应的 polyfills.js 文件.
+	var myPolyfills = myBabel.pipe(plugins.autopolyfiller('result_polyfill_file.js'))
+    .pipe(gulp.dest('dist/js'));
+});
+

@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>  RxJS  - Window  </title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<script type="text/javascript" src="js/jquery-1.10.2.js"></script>
+	<script type="text/javascript" src="js/rx.all.js"></script>
+	<script type="text/javascript" src="js/rx.jquery.js"></script>
+</head>
+
+
+<body>
+
+	<h1>   RxJS  - Window    </h1>
+
+	<p>
+	文档： http://reactivex.io/documentation/operators/window.html
+	</p>
+
+
+	<p>
+	看控制台输出.
+	</p>
+
+
+	<ul>
+		<li>
+			<button onclick="testWindowWithCount()">  测试 windowWithCount(count) </button>
+		</li>
+
+		<li>
+			<button onclick="testWindowWithCount2()">  测试 windowWithCount(count, skip) </button>
+		</li>
+
+		<li>
+			<button onclick="testWindowWithTime()">  测试 windowWithTime(timeSpan) </button>
+		</li>
+
+		<li>
+			<button onclick="testWindowWithTime2()">  测试 windowWithTime(timeSpan, timeShift) </button>
+		</li>
+
+		<li>
+			<button onclick="testWindowWithTimeOrCount()">  测试 windowWithTimeOrCount </button>
+		</li>
+	</ul>
+
+
+
+<script>
+
+
+	// 测试 windowWithCount(count)
+	function testWindowWithCount() {
+		console.log("----- testWindowWithCount start -----");
+
+		// 通过 Rx.Observable.interval 创建可观察对象.
+		// 这里累计共发送 10 个数据.
+		var source = Rx.Observable
+			.interval(500 /* ms */)
+			.timeInterval()
+			.take(10);
+
+		// 使用 windowWithCount(3).
+		var bufferSource = source.windowWithCount(3);
+
+		// 三个方法（ onNext / onError / onCompleted  ）. 订阅 可观察对象.
+		var subscription = bufferSource.subscribe(
+			function (x) {
+				console.log('Root Next ======');
+				var xsubscription = x.subscribe(
+					function (xx) { console.log('Nex: ', xx); },
+					function (err) { console.log('Error: ', err); },
+					function () { console.log('Completed'); }
+				);
+			},
+			function (err) { console.log('Root Error: ', err); },
+			function () { console.log('Root Completed'); });
+
+		console.log("----- testWindowWithCount finish -----");
+	}
+
+
+
+	// 测试 windowWithCount(count, skip)
+	function testWindowWithCount2() {
+		console.log("----- testWindowWithCount2 start -----");
+
+		// 通过 Rx.Observable.interval 创建可观察对象.
+		// 这里累计共发送 10 个数据.
+		var source = Rx.Observable
+			.interval(500 /* ms */)
+			.timeInterval()
+			.take(10);
+
+		// 使用 windowWithCount(2,3).
+		var bufferSource = source.windowWithCount(2,3);
+
+		// 三个方法（ onNext / onError / onCompleted  ）. 订阅 可观察对象.
+		var subscription = bufferSource.subscribe(
+			function (x) {
+				console.log('Root Next ======');
+				var xsubscription = x.subscribe(
+					function (xx) { console.log('Nex: ', xx); },
+					function (err) { console.log('Error: ', err); },
+					function () { console.log('Completed'); }
+				);
+			},
+			function (err) { console.log('Root Error: ', err); },
+			function () { console.log('Root Completed'); });
+
+		console.log("----- testWindowWithCount2 finish -----");
+	}
+
+
+
+	// 测试 windowWithTime(timeSpan)
+	function testWindowWithTime() {
+		console.log("----- testWindowWithTime start -----");
+
+		// 通过 Rx.Observable.interval 创建可观察对象.
+		// 这里累计共发送 10 个数据.
+		var source = Rx.Observable
+			.interval(500 /* ms */)
+			.timeInterval()
+			.take(10);
+
+		// 使用 windowWithTime(1500).
+		var bufferSource = source.windowWithTime(1500);
+
+		// 三个方法（ onNext / onError / onCompleted  ）. 订阅 可观察对象.
+		var subscription = bufferSource.subscribe(
+			function (x) {
+				console.log('Root Next ======');
+				var xsubscription = x.subscribe(
+					function (xx) { console.log('Nex: ', xx); },
+					function (err) { console.log('Error: ', err); },
+					function () { console.log('Completed'); }
+				);
+			},
+			function (err) { console.log('Root Error: ', err); },
+			function () { console.log('Root Completed'); });
+
+		console.log("----- testWindowWithTime finish -----");
+	}
+
+
+
+	// 测试 windowWithTime(timeSpan, timeShift)
+	function testWindowWithTime2() {
+		console.log("----- testWindowWithTime2 start -----");
+
+		// 通过 Rx.Observable.interval 创建可观察对象.
+		// 这里累计共发送 10 个数据.
+		var source = Rx.Observable
+			.interval(500 /* ms */)
+			.timeInterval()
+			.take(10);
+
+		// 使用 windowWithTime(1000, 1500).
+		// 每 1500 毫秒， 处理一次，  批量发送前 1000毫秒的数据， 忽略后 500 毫秒内的数据。
+		var bufferSource = source.windowWithTime(1000, 1500);
+
+		// 三个方法（ onNext / onError / onCompleted  ）. 订阅 可观察对象.
+		var subscription = bufferSource.subscribe(
+			function (x) {
+				console.log('Root Next ======');
+				var xsubscription = x.subscribe(
+					function (xx) { console.log('Nex: ', xx); },
+					function (err) { console.log('Error: ', err); },
+					function () { console.log('Completed'); }
+				);
+			},
+			function (err) { console.log('Root Error: ', err); },
+			function () { console.log('Root Completed'); });
+
+		console.log("----- testWindowWithTime2 finish -----");
+	}
+
+
+
+	// 测试 windowWithTimeOrCount
+	function testWindowWithTimeOrCount() {
+		console.log("----- testWindowWithTimeOrCount start -----");
+
+		// 通过 Rx.Observable.interval 创建可观察对象.
+		// 这里累计共发送 10 个数据.
+		var source = Rx.Observable
+			.interval(500 /* ms */)
+			.timeInterval()
+			.take(10);
+
+		// 使用 windowWithTimeOrCount(900, 2).
+		// 就是 每 900 毫秒，必发送一次。
+		// 如果累计的数据，达到了2个， 就发送一次。（同时时间被重新开始计算）
+		var bufferSource = source.windowWithTimeOrCount(900, 2);
+
+		// 三个方法（ onNext / onError / onCompleted  ）. 订阅 可观察对象.
+		var subscription = bufferSource.subscribe(
+			function (x) {
+				console.log('Root Next ======');
+				var xsubscription = x.subscribe(
+					function (xx) { console.log('Nex: ', xx); },
+					function (err) { console.log('Error: ', err); },
+					function () { console.log('Completed'); }
+				);
+			},
+			function (err) { console.log('Root Error: ', err); },
+			function () { console.log('Root Completed'); });
+
+		console.log("----- testWindowWithTimeOrCount finish -----");
+	}
+
+</script>
+
+
+</body>
+</html>

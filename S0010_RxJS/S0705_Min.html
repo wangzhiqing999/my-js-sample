@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>  RxJS  - Min  </title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<script type="text/javascript" src="js/jquery-1.10.2.js"></script>
+	<script type="text/javascript" src="js/rx.all.js"></script>
+	<script type="text/javascript" src="js/rx.jquery.js"></script>
+</head>
+
+
+<body>
+
+	<h1>   RxJS  - Min   </h1>
+
+	<p>
+	文档： http://reactivex.io/documentation/operators/min.html
+	</p>
+
+
+	<p>
+	看控制台输出.
+	</p>
+
+
+	<ul>
+		<li>
+			<button onclick="testMin()">  测试 min </button>
+		</li>
+
+		<li>
+			<button onclick="testMinBy()">  测试 minBy </button>
+		</li>
+	</ul>
+
+
+
+<script>
+
+
+	// 测试 min
+	function testMin() {
+		console.log("----- testMin start -----");
+
+		// 通过 Rx.Observable.interval 创建可观察对象.
+		// 这里只获取前 10 个数据.
+		var source = Rx.Observable.interval(500).take(10).map(function(x) {console.log("S1:", x); return x;});
+
+		// 测试 min
+		var minSource = source.min();
+
+		// 三个方法（ onNext / onError / onCompleted  ）. 订阅 可观察对象.
+		var subscription = minSource.subscribe(
+			function (x) { console.log('Next: ', x); },
+			function (err) { console.log('Error: ', err); },
+			function () { console.log('Completed'); });
+
+		console.log("----- testMin finish -----");
+	}
+
+
+	// 测试 minBy
+	function testMinBy() {
+		console.log("----- testMinBy start -----");
+
+		// 通过 Rx.Observable.interval 创建可观察对象.
+		// 这里只获取前 10 个数据.
+		var source1 = Rx.Observable.interval(500).take(10).map(function(x) {console.log("S1:", x); return x;});
+		var source2 = Rx.Observable.interval(300).take(10).map(function(x) {console.log("S2:", x); return x;});
+		var source =  Rx.Observable.merge(source1, source2);
+
+		// 测试 minBy
+		var minBySource = source.minBy(function(x) {return x;});
+
+		// 三个方法（ onNext / onError / onCompleted  ）. 订阅 可观察对象.
+		var subscription = minBySource.subscribe(
+			function (x) { console.log('Next: ', x); },
+			function (err) { console.log('Error: ', err); },
+			function () { console.log('Completed'); });
+
+		console.log("----- testMinBy finish -----");
+	}
+
+
+
+</script>
+
+
+</body>
+</html>

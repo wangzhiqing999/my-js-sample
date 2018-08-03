@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>  RxJS  - Skip  </title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<script type="text/javascript" src="js/jquery-1.10.2.js"></script>
+	<script type="text/javascript" src="js/rx.all.js"></script>
+	<script type="text/javascript" src="js/rx.jquery.js"></script>
+</head>
+
+
+<body>
+
+	<h1>   RxJS  - Skip    </h1>
+
+	<p>
+	文档： http://reactivex.io/documentation/operators/skip.html
+	</p>
+
+
+	<p>
+	看控制台输出.
+	</p>
+
+
+	<ul>
+		<li>
+			<button onclick="testSkip()">  测试 skip  </button>
+		</li>
+		<li>
+			<button onclick="testSkipUntilWithTime()">  测试 skipUntilWithTime  </button>
+		</li>
+	</ul>
+
+
+
+<script>
+
+
+	// 测试 skip
+	function testSkip() {
+		console.log("----- testSkip start -----");
+
+		// 通过 Rx.Observable.interval 创建可观察对象.
+		// 这里累计共发送 10 个数据.
+		var source = Rx.Observable
+			.interval(500 /* ms */)
+			.take(10);
+
+		// 获取 skip(3)
+		var skipSource = source.skip(3);
+
+		// 三个方法（ onNext / onError / onCompleted  ）. 订阅 可观察对象.
+		var subscription = skipSource.subscribe(
+			function (x) { console.log('Next: ' + x); },
+			function (err) { console.log('Error: ' + err); },
+			function () { console.log('Completed'); });
+
+		console.log("----- testSkip finish -----");
+	}
+
+
+	// 测试 skipUntilWithTime
+	function testSkipUntilWithTime() {
+		console.log("----- testSkipUntilWithTime start -----");
+
+		// 通过 Rx.Observable.interval 创建可观察对象.
+		// 这里累计共发送 10 个数据.
+		var source = Rx.Observable
+			.interval(500 /* ms */)
+			.take(10);
+
+		// 获取 skipUntilWithTime(3000)
+		var skipSource = source.skipUntilWithTime(3000);
+
+		// 三个方法（ onNext / onError / onCompleted  ）. 订阅 可观察对象.
+		var subscription = skipSource.subscribe(
+			function (x) { console.log('Next: ' + x); },
+			function (err) { console.log('Error: ' + err); },
+			function () { console.log('Completed'); });
+
+		console.log("----- testSkipUntilWithTime finish -----");
+	}
+
+
+</script>
+
+
+</body>
+</html>

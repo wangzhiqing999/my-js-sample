@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>  RxJS  - TakeWhile  </title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<script type="text/javascript" src="js/jquery-1.10.2.js"></script>
+	<script type="text/javascript" src="js/rx.all.js"></script>
+	<script type="text/javascript" src="js/rx.jquery.js"></script>
+</head>
+
+
+<body>
+
+	<h1>   RxJS  - TakeWhile   </h1>
+
+	<p>
+	文档： http://reactivex.io/documentation/operators/takewhile.html
+	</p>
+
+
+	<p>
+	看控制台输出.
+	</p>
+
+
+	<ul>
+		<li>
+			<button onclick="testTakeWhile()">  测试 takeWhile       </button>
+		</li>
+	</ul>
+
+
+
+<script>
+
+
+	// 测试 takeWhile
+	function testTakeWhile() {
+		console.log("----- testTakeWhile start -----");
+
+		// 通过 Rx.Observable.interval 创建可观察对象.
+		// 这里只获取前 10 个数据.
+		var source = Rx.Observable.interval(500).take(10).map(function(x) {console.log("S1:", x); return x;});
+
+		// 测试 takeWhile
+		var takeWhileSource = source.takeWhile (function (x) { return x < 3; });
+
+		// 三个方法（ onNext / onError / onCompleted  ）. 订阅 可观察对象.
+		var subscription = takeWhileSource.subscribe(
+			function (x) { console.log('Next: ', x); },
+			function (err) { console.log('Error: ', err); },
+			function () { console.log('Completed'); });
+
+		console.log("----- testTakeWhile finish -----");
+	}
+
+
+
+</script>
+
+
+</body>
+</html>

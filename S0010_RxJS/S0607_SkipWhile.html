@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>  RxJS  - SkipWhile  </title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<script type="text/javascript" src="js/jquery-1.10.2.js"></script>
+	<script type="text/javascript" src="js/rx.all.js"></script>
+	<script type="text/javascript" src="js/rx.jquery.js"></script>
+</head>
+
+
+<body>
+
+	<h1>   RxJS  - SkipWhile   </h1>
+
+	<p>
+	文档： http://reactivex.io/documentation/operators/skipwhile.html
+	</p>
+
+
+	<p>
+	看控制台输出.
+	</p>
+
+
+	<ul>
+		<li>
+			<button onclick="testSkipWhile()">  测试 skipWhile      </button>
+		</li>
+	</ul>
+
+
+
+<script>
+
+
+	// 测试 skipWhile
+	function testSkipWhile() {
+		console.log("----- testSkipWhile start -----");
+
+		// 通过 Rx.Observable.interval 创建可观察对象.
+		// 这里只获取前 10 个数据.
+		var source = Rx.Observable.interval(500).take(10).map(function(x) {console.log("S1:", x); return x;});
+
+		// 测试 skipWhile
+		var skipWhileSource = source.skipWhile(function (x) { return x < 3; });
+
+		// 三个方法（ onNext / onError / onCompleted  ）. 订阅 可观察对象.
+		var subscription = skipWhileSource.subscribe(
+			function (x) { console.log('Next: ', x); },
+			function (err) { console.log('Error: ', err); },
+			function () { console.log('Completed'); });
+
+		console.log("----- testSkipWhile finish -----");
+	}
+
+
+
+</script>
+
+
+</body>
+</html>

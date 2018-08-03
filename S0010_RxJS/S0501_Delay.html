@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>  RxJS  - Delay  </title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<script type="text/javascript" src="js/jquery-1.10.2.js"></script>
+	<script type="text/javascript" src="js/rx.all.js"></script>
+	<script type="text/javascript" src="js/rx.jquery.js"></script>
+</head>
+
+
+<body>
+
+	<h1>   RxJS  - Delay    </h1>
+
+	<p>
+	文档： http://reactivex.io/documentation/operators/delay.html
+	</p>
+
+
+	<p>
+	看控制台输出.
+	</p>
+
+
+	<ul>
+		<li>
+			<button onclick="testDelay()">  测试 delay </button>
+		</li>
+		<li>
+			<button onclick="testDelaySubscription()">  测试 delaySubscription </button>
+		</li>
+		<li>
+			<button onclick="testDelayWithSelector()">  测试 delayWithSelector  </button>
+		</li>
+	</ul>
+
+
+
+<script>
+
+
+	// 测试 delay
+	function testDelay() {
+		console.log("----- testDelay start -----");
+		var start = Date.now();
+
+		// 通过 Rx.Observable.interval 创建可观察对象.
+		// 这里只获取前 10 个数据.
+		var source = Rx.Observable
+			.interval(500)
+			.select(function (x) {
+				console.log("select(x):", x,  Date.now() - start );
+				return x;
+			})
+			.take(10);
+
+		var delaySource = source.delay(2000);
+
+		// 三个方法（ onNext / onError / onCompleted  ）. 订阅 可观察对象.
+		var subscription = delaySource.subscribe(
+			function (x) { console.log('Next: ', x,  Date.now() - start); },
+			function (err) { console.log('Error: ', err); },
+			function () { console.log('Completed',  Date.now() - start); });
+
+		console.log("----- testDelay finish -----");
+	}
+
+
+	// 测试 delaySubscription
+	function testDelaySubscription() {
+		console.log("----- testDelaySubscription start -----");
+		var start = Date.now();
+
+		// 通过 Rx.Observable.interval 创建可观察对象.
+		// 这里只获取前 10 个数据.
+		var source = Rx.Observable
+			.interval(500)
+			.select(function (x) {
+				console.log("select(x):", x,  Date.now() - start );
+				return x;
+			})
+			.take(10);
+
+		var delaySource = source.delaySubscription(2000);
+
+		// 三个方法（ onNext / onError / onCompleted  ）. 订阅 可观察对象.
+		var subscription = delaySource.subscribe(
+			function (x) { console.log('Next: ', x,  Date.now() - start); },
+			function (err) { console.log('Error: ', err); },
+			function () { console.log('Completed',  Date.now() - start); });
+
+		console.log("----- testDelaySubscription finish -----");
+	}
+
+
+
+	// 测试 delayWithSelector
+	function testDelayWithSelector() {
+		console.log("----- testDelayWithSelector start -----");
+		var start = Date.now();
+
+		// 通过 Rx.Observable.interval 创建可观察对象.
+		// 这里只获取前 10 个数据.
+		var source = Rx.Observable
+			.interval(500)
+			.select(function (x) {
+				console.log("select(x):", x,  Date.now() - start );
+				return x;
+			})
+			.take(10);
+
+		var delaySource = source.delayWithSelector( function (x) {
+            return Rx.Observable.timer(x * 400);
+        });
+
+		// 三个方法（ onNext / onError / onCompleted  ）. 订阅 可观察对象.
+		var subscription = delaySource.subscribe(
+			function (x) { console.log('Next: ', x,  Date.now() - start); },
+			function (err) { console.log('Error: ', err); },
+			function () { console.log('Completed',  Date.now() - start); });
+
+		console.log("----- testDelayWithSelector finish -----");
+	}
+
+</script>
+
+
+</body>
+</html>

@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>  RxJS  - SkipLast  </title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<script type="text/javascript" src="js/jquery-1.10.2.js"></script>
+	<script type="text/javascript" src="js/rx.all.js"></script>
+	<script type="text/javascript" src="js/rx.jquery.js"></script>
+</head>
+
+
+<body>
+
+	<h1>   RxJS  - SkipLast    </h1>
+
+	<p>
+	文档： http://reactivex.io/documentation/operators/skiplast.html
+	</p>
+
+
+	<p>
+	看控制台输出.
+	</p>
+
+
+	<ul>
+		<li>
+			<button onclick="testSkipLast()">  测试 skipLast  </button>
+		</li>
+		<li>
+			<button onclick="testSkipLastWithTime ()">  测试 skipLastWithTime   </button>
+		</li>
+	</ul>
+
+
+
+<script>
+
+
+	// 测试 skipLast
+	function testSkipLast() {
+		console.log("----- testSkipLast start -----");
+
+		// 通过 Rx.Observable.interval 创建可观察对象.
+		// 这里累计共发送 10 个数据.
+		var source = Rx.Observable
+			.interval(500 /* ms */)
+			.take(10);
+
+		// 获取 skipLast(3)
+		var skipSource = source.skipLast(3);
+
+		// 三个方法（ onNext / onError / onCompleted  ）. 订阅 可观察对象.
+		var subscription = skipSource.subscribe(
+			function (x) { console.log('Next: ' + x); },
+			function (err) { console.log('Error: ' + err); },
+			function () { console.log('Completed'); });
+
+		console.log("----- testSkipLast finish -----");
+	}
+
+
+	// 测试 skipLastWithTime
+	function testSkipLastWithTime() {
+		console.log("----- testSkipLastWithTime start -----");
+
+		// 通过 Rx.Observable.interval 创建可观察对象.
+		// 这里累计共发送 10 个数据.
+		var source = Rx.Observable
+			.interval(500 /* ms */)
+			.take(10);
+
+		// 获取 skipLastWithTime(3000)
+		var skipSource = source.skipLastWithTime(3000);
+
+		// 三个方法（ onNext / onError / onCompleted  ）. 订阅 可观察对象.
+		var subscription = skipSource.subscribe(
+			function (x) { console.log('Next: ' + x); },
+			function (err) { console.log('Error: ' + err); },
+			function () { console.log('Completed'); });
+
+		console.log("----- testSkipLastWithTime finish -----");
+	}
+
+
+</script>
+
+
+</body>
+</html>

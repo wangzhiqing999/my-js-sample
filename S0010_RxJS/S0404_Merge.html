@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>  RxJS  - Merge </title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<script type="text/javascript" src="js/jquery-1.10.2.js"></script>
+	<script type="text/javascript" src="js/rx.all.js"></script>
+	<script type="text/javascript" src="js/rx.jquery.js"></script>
+</head>
+
+
+<body>
+
+	<h1>   RxJS  - Merge    </h1>
+
+	<p>
+	文档： http://reactivex.io/documentation/operators/merge.html
+	</p>
+
+
+	<p>
+	看控制台输出.
+	</p>
+
+
+	<ul>
+		<li>
+			<button onclick="testMerge()">  测试 merge   </button>
+		</li>
+
+		<li>
+			<button onclick="testMergeDelayError()">  测试 mergeDelayError   </button>
+		</li>
+	</ul>
+
+
+
+<script>
+
+
+	// 测试 merge
+	function testMerge() {
+		console.log("----- testMerge start -----");
+
+		// 500毫秒一次。10次.
+		var source1 = Rx.Observable
+			.interval(500)
+			.take(10)
+			.map(function (i) { return 'First: ' + i; });
+
+		// 1000毫秒一次。5次.
+		var source2 = Rx.Observable
+			.interval(1000)
+			.take(5)
+			.map(function (i) { return 'Second: ' + i; });
+
+		// merge
+		var source = Rx.Observable.merge(source1, source2);
+
+		// 三个方法（ onNext / onError / onCompleted  ）. 订阅 可观察对象.
+		var subscription = source.subscribe(
+			function (x) { console.log('Next: ', x); },
+			function (err) { console.log('Error: ', err); },
+			function () { console.log('Completed'); });
+
+		console.log("----- testMerge finish -----");
+	}
+
+
+
+	// 测试 mergeDelayError
+	function testMergeDelayError() {
+		console.log("----- testMergeDelayError start -----");
+
+		// 500毫秒一次。10次.
+		var source1 = Rx.Observable
+			.interval(500)
+			.take(10)
+			.map(function (i) { return 'First: ' + i; });
+
+		// 1000毫秒一次。5次.
+		var source2 = Rx.Observable
+			.interval(1000)
+			.take(5)
+			.map(function (i) { return 'Second: ' + i; });
+
+		// 抛出异常的处理.
+		var source3 = Rx.Observable.throw(new Error('whoops!'));
+
+		// mergeDelayError
+		var source = Rx.Observable.mergeDelayError(source1, source2, source3);
+
+		// 三个方法（ onNext / onError / onCompleted  ）. 订阅 可观察对象.
+		var subscription = source.subscribe(
+			function (x) { console.log('Next: ', x); },
+			function (err) { console.log('Error: ', err); },
+			function () { console.log('Completed'); });
+
+		console.log("----- testMergeDelayError finish -----");
+	}
+
+
+</script>
+
+
+</body>
+</html>

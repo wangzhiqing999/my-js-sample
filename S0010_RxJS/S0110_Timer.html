@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>  RxJS  - Timer  </title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<script type="text/javascript" src="js/jquery-1.10.2.js"></script>
+	<script type="text/javascript" src="js/rx.all.js"></script>
+	<script type="text/javascript" src="js/rx.jquery.js"></script>
+</head>
+
+
+<body>
+
+	<h1>   RxJS  - Timer    </h1>
+
+	<p>
+	文档： http://reactivex.io/documentation/operators/timer.html
+	</p>
+
+
+	<p>
+	看控制台输出.
+	</p>
+
+
+	<ul>
+		<li>
+			<button onclick="testTimer()">  测试 Timer </button>
+		</li>
+	</ul>
+
+
+
+<script>
+
+
+	// 测试 Timer
+	function testTimer() {
+		console.log("----- testTimer start -----");
+
+		// 通过 Rx.Observable.timer 创建可观察对象.
+		// 第一个参数：首次触发的时间.
+		// 第二个参数：后续处理的间隔时间.
+		var source = Rx.Observable.timer(200, 100)
+			.timeInterval()
+			.pluck('interval')
+			.take(5);
+
+		// 三个方法（ onNext / onError / onCompleted  ）. 订阅 可观察对象.
+		var subscription = source.subscribe(
+			function (x) { console.log('Next: ' + x); },
+			function (err) { console.log('Error: ' + err); },
+			function () { console.log('Completed'); });
+
+		console.log("----- testTimer finish -----");
+	}
+
+
+
+</script>
+
+
+</body>
+</html>
