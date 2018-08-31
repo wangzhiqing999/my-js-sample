@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title> 随机生成密码 </title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+	<script src="myPasswordCreater.js"></script>
+
+</head>
+
+<body>
+
+
+
+<script type="text/javascript">
+
+	document.write("<h3> 默认初始参数 </h3>");
+	for(var i = 0; i < 5; i ++) {
+		var  pwd = myPasswordCreater.createRandomPassword();
+		document.write("随机密码  = " + pwd );
+		document.write("<br/>");
+	}
+
+
+	document.write("<hr/>");
+	document.write("<h3> 字母Only </h3>");
+	myPasswordCreater.isUseNumber = false;
+	myPasswordCreater.isUseLowerCase = true;
+	myPasswordCreater.isUseUpperCase = true;
+	for(var i = 0; i < 5; i ++) {
+		var  pwd = myPasswordCreater.createRandomPassword();
+		document.write("随机密码  = " + pwd );
+		document.write("<br/>");
+	}
+
+
+	document.write("<hr/>");
+	document.write("<h3> 数字Only </h3>");
+	myPasswordCreater.isUseNumber = true;
+	myPasswordCreater.isUseLowerCase = false;
+	myPasswordCreater.isUseUpperCase = false;
+	for(var i = 0; i < 5; i ++) {
+		var  pwd = myPasswordCreater.createRandomPassword();
+		document.write("随机密码  = " + pwd );
+		document.write("<br/>");
+	}
+
+
+	document.write("<hr/>");
+	document.write("<h3> 数字字母符号，密码长度8位</h3>");
+	myPasswordCreater.isUseLowerCase = true;
+	myPasswordCreater.isUseUpperCase = true;
+	myPasswordCreater.isUseNonalphanumeric = true;
+	myPasswordCreater.passwordLength = 8;
+	for(var i = 0; i < 5; i ++) {
+		var  pwd = myPasswordCreater.createRandomPassword();
+		document.write("随机密码  = " + pwd );
+		document.write("<br/>");
+	}
+
+
+</script>
+
+
+
+
+</body>
+</html>
