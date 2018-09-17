@@ -112,6 +112,11 @@ cordova 模板创建项目的基本操作， 基本没写什么代码。
 ### S0402_cordovaFramework7
 cordova 与 Framework7 配合使用。
 
+
+### S2000_Seneca
+Seneca 学习的例子代码.
+
+
 ### U0001_CssFlexbox
 Css 中， Flex 的学习代码。
 

@@ -1,0 +1,28 @@
+{
+  "name": "s2000_seneca",
+  "version": "1.0.0",
+  "description": "study seneca",
+  "main": "index.js",
+  "scripts": {
+    "step1": "node js/step1.js",
+    "step2": "node js/step2.js",
+    "step3": "node js/step3.js",
+    "step4": "node js/step4.js",
+    "step5": "node js/step5.js",
+    "step6": "node js/step6.js",
+    "math-service": "node js/math-service.js",
+    "math-client": "node js/math-client.js",
+    "hapi-app": "node js/hapi-app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "hapi": "^16.1.0",
+    "seneca": "^3.2.2",
+    "seneca-basic": "^0.5.0",
+    "seneca-entity": "^1.3.0",
+    "seneca-web": "^2.0.0",
+    "seneca-web-adapter-hapi": "^1.0.2"
+  }
+}
