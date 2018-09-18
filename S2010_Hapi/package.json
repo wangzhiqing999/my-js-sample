@@ -1,0 +1,24 @@
+{
+  "name": "s2010_hapi",
+  "version": "1.0.0",
+  "description": "study code",
+  "main": "index.js",
+  "scripts": {
+    "helloworld": "node js/helloworld.js",
+    "routes": "node js/routes.js",
+    "static": "node js/static.js",
+    "hapipino": "node js/hapipino.js",
+    "routing": "node js/routing.js",
+	"views": "node js/views.js",
+	"validation": "node js/validation.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "hapi": "^17.5.4",
+    "hapi-swagger": "^9.1.1",
+    "inert": "^5.1.0",
+    "vision": "^5.4.0"
+  }
+}
