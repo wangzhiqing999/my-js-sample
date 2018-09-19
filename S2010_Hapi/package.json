@@ -9,8 +9,9 @@
     "static": "node js/static.js",
     "hapipino": "node js/hapipino.js",
     "routing": "node js/routing.js",
-	"views": "node js/views.js",
-	"validation": "node js/validation.js",
+    "views": "node js/views.js",
+    "validation": "node js/validation.js",
+	"swagger": "node js/swagger.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
