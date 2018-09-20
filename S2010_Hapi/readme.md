@@ -51,5 +51,8 @@ https://cnodejs.org/topic/56ed0cdf515e7305367f0df7
 	参数验证的处理.
 	npm run validation
 
-	使用 swagger 页面的处理 (启动后访问  http://localhost:3000/documentation)
+	使用 swagger 页面的处理，启动后访问  http://localhost:3000/documentation
 	npm run swagger
+
+	测试 jwt 的使用，使用 swagger 页面作测试，启动后访问  http://localhost:3000/documentation
+	npm run jwt

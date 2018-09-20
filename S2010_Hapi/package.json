@@ -11,13 +11,15 @@
     "routing": "node js/routing.js",
     "views": "node js/views.js",
     "validation": "node js/validation.js",
-	"swagger": "node js/swagger.js",
+    "swagger": "node js/swagger.js",
+    "jwt": "node js/jwt.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "hapi": "^17.5.4",
+    "hapi-auth-jwt2": "^8.1.0",
     "hapi-swagger": "^9.1.1",
     "inert": "^5.1.0",
     "vision": "^5.4.0"

@@ -1,0 +1,19 @@
+{
+  "name": "s2020_mysql",
+  "version": "1.0.0",
+  "description": "test js access mysql",
+  "main": "index.js",
+  "scripts": {
+    "selectAll": "node js/selectAll.js",
+    "selectOne": "node js/selectOne.js",
+    "insert": "node js/insert.js",
+    "update": "node js/update.js",
+    "transactions": "node js/transactions.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "mysql": "^2.16.0"
+  }
+}
