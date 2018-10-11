@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>面向对象 - 测试调用服务 (修改部分处理逻辑) </title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+	<script src="myTestService.js"></script>
+</head>
+
+<body>
+	<p>
+	F12 看控制台的输出！
+	</p>
+
+	<p>
+
+	</p>
+
+
+
+
+	<script type="text/javascript">
+
+		// 修改默认的 显示测试函数1 的处理结果 的方法.
+		myTestService.showTestFunc1Result = function(data) {
+			console.log("^_^ 我修改了默认的实现处理结果的方法.");
+			console.log("^_^ myShowTestFunc1Result: Result = ", data);
+		}
+
+		// 调用服务.
+		myTestService.testFunc1();
+
+	</script>
+
+
+
+</body>
+</html>
