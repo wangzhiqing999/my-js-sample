@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>  修改客户端浏览器URL.  </title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+
+<body>
+
+	<p>
+	Web网站想实现一个分享的功能，用户登录网站后可以把当前访问的页面分享出去，分享的页面链接中必须带上一个参数（根据当前登录用户名生成的唯一字符串）。
+	</p>
+
+	
+	<ul>
+		<li>
+			<button onclick="updateClientUrl('zhang3')">假设张三登录时的页面</button>
+		</li>
+		
+		<li>
+			<button onclick="updateClientUrl('li4')">假设李四登录时的页面</button>
+		</li>
+	</ul>
+	
+</body>
+
+
+
+
+
+<script>
+
+
+	function updateClientUrl(userCode) {
+	
+		var stateObject = {};
+		var title = "修改客户端浏览器URL (" + userCode + ")";
+		var newUrl = "index.html?ShareCode=" + userCode;
+		history.pushState(stateObject,title,newUrl);
+
+	}
+
+
+</script>
+
+
+
+
+</html>
