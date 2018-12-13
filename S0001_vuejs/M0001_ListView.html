@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>  vue.js  列表页	</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<script type="text/javascript" src="js/vue.js"></script>
+</head>
+
+
+<body>
+
+	<h1> 列表页  </h1>
+
+	<div id="app">
+
+		<ul>
+			<input v-model="inputItem" v-on:keyup.enter="newItem" placeholder="新追加一行" />
+			<button v-on:click="newItem"> 新增 </button>
+
+			<li v-for="(item, index) in items">
+
+				<button v-bind:disabled="index == 0"  v-on:click="moveItemTop(index, $event)">置顶</button>
+
+				<span> No. {{ index + 1 }} </span>
+
+				<span> {{ item.DisplayText }} </span>
+
+				&nbsp;&nbsp;&nbsp;
+
+				跳转地址： <input v-model="item.Url" />
+
+				&nbsp;&nbsp;&nbsp;
+
+				<button v-on:click="removeItem(index, $event)">删除</button>
+			</li>
+		</ul>
+
+	</div>
+
+
+
+	<script type="text/javascript">
+		var app = new Vue({
+			el: '#app',
+			data: {
+
+				// 输入的明细.
+				inputItem : "",
+
+				// 列表数据.
+				items: [
+					{ DisplayText: '百度',   Url: "https://www.baidu.com/" },
+					{ DisplayText: '京东',   Url: "http://www.jd.com/" },
+					{ DisplayText: '亚马逊', Url: "http://www.amazon.cn/" },
+					{ DisplayText: '淘宝',   Url: "http://www.taobao.com/" },
+					{ DisplayText: '雪球',   Url: "http://xueqiu.com/" },
+					{ DisplayText: '微博',   Url: "http://weibo.com/" },
+					{ DisplayText: 'github', Url: "https://github.com/" },
+				]
+			},
+			// 方法.
+			methods: {
+
+				// 新增一行明细.
+				newItem: function () {
+					if (this.inputItem === "") {
+						// 新增数据为空白时，不处理.
+						return;
+					}
+
+					var item = {
+						DisplayText: this.inputItem,
+						Url: ""
+					};
+					this.items.push(item);
+
+					// 将新增的数据设置为空白.
+					this.inputItem = '';
+				},
+
+				// 明细置顶.
+				moveItemTop: function (index, event) {
+
+					// 先删除.
+					var xItems = this.items.splice(index, 1);
+
+					// 后置顶.
+					this.items.splice(0, 0, xItems[0]);
+				},
+
+				// 移除一行明细.
+				removeItem: function (index, event) {
+					// 删除数据,
+					this.items.splice(index, 1);
+				}
+			}
+		})
+	</script>
+
+
+
+</body>
+</html>
