@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title> Vue Router  编程式的导航 </title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<script type="text/javascript" src="js/vue.js"></script>
+	<script type="text/javascript" src="js/vue-router.js"></script>
+
+
+
+
+</head>
+
+
+<body>
+
+	<h1> 编程式的导航  </h1>
+
+
+	<div id="app">
+		<h2>
+			Study Vue Router
+		</h2>
+
+		<ul>
+			<!--
+				除了使用 <router-link> 创建 a 标签来定义导航链接，
+				还可以借助 router 的实例方法，通过编写代码来实现。
+			-->
+			<li>
+				<button v-on:click="testPushByName('Zhang3')">Zhang3</button>
+			</li>
+			<li>
+				<button v-on:click="testPushByPath('Li4')">Li4</button>
+			</li>
+			<li>
+				<button v-on:click="testReplaceByName('Wang5')">Wang5</button>
+			</li>
+			<li>
+				<button v-on:click="testReplaceByPath('Zhao6')">Zhao6</button>
+			</li>
+
+
+		</ul>
+
+
+		<div>
+			<button v-on:click="testGo(-1)">后退</button>
+			|
+			<button v-on:click="testGo(1)">前进</button>
+		</div>
+
+		<!-- 路由出口 -->
+		<!-- 路由匹配到的组件将渲染在这里 -->
+		<router-view></router-view>
+
+	</div>
+
+
+	<script type="text/javascript">
+
+		// 1. 定义 (路由) 组件。
+		// 可以从其他文件 import 进来
+		const User = {
+			template: '<div> User Code is {{ $route.params.id }} </div>'
+		}
+
+		// 2. 定义路由
+		// 每个路由应该映射一个组件。 其中"component" 可以是
+		// 通过 Vue.extend() 创建的组件构造器，
+		// 或者，只是一个组件配置对象。
+		const routes = [
+			// 动态路径参数 以冒号开头
+			{
+				path: '/user/:id',
+				name: 'user',
+				component: User
+			}
+		]
+
+		// 3. 创建 router 实例，然后传 `routes` 配置
+		const router = new VueRouter({
+			routes // (缩写) 相当于 routes: routes
+		})
+
+		// 4. 创建和挂载根实例。
+		// 记得要通过 router 配置参数注入路由，
+		// 从而让整个应用都有路由功能
+		const app = new Vue({
+			router,
+			methods: {
+				testPushByName: function (userid) {
+					console.log("router.push. by name");
+					// 参数是 name， 也就是定义路由的时候，需要指定名称.
+					router.push({ name: 'user', params: { id: userid }})
+				},
+				testPushByPath: function (userid) {
+					console.log("router.push. by path");
+					// 参数是 path，这种情况下，参数的指定, 需要自己根据路由的定义，拼完整的路径.
+					router.push({ path: '/user/' + userid })
+				},
+				testReplaceByName: function (userid) {
+					console.log("router.replace. by name");
+					// router.replace 跟 router.push 很像.
+					// 唯一的不同就是，它不会向 history 添加新记录，
+					// 而是跟它的方法名一样 —— 替换掉当前的 history 记录
+					router.replace({ name: 'user', params: { id: userid }})
+				},
+				testReplaceByPath: function (userid) {
+					console.log("router.replace. by path");
+					// 参数是 path，这种情况下，参数的指定, 需要自己根据路由的定义，拼完整的路径.
+					router.replace({ path: '/user/' + userid })
+				},
+				testGo: function (n) {
+					router.go(n);
+				}
+			}
+		}).$mount('#app')
+	</script>
+
+
+
+
+
+
+
+</body>
+</html>
