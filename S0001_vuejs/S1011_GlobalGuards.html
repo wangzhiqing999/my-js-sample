@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title> Vue Router  全局守卫 </title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<script type="text/javascript" src="js/vue.js"></script>
+	<script type="text/javascript" src="js/vue-router.js"></script>
+
+
+
+
+</head>
+
+
+<body>
+
+	<h1> 全局守卫  </h1>
+
+
+	<div id="app">
+		<h2>
+			Study Vue Router
+		</h2>
+
+		<ul>
+			<!-- 使用 router-link 组件来导航. -->
+			<!-- 通过传入 `to` 属性指定链接. -->
+			<!-- <router-link> 默认会被渲染成一个 `<a>` 标签 -->
+			<li>
+				<router-link to="/user/Zhang3">Zhang3</router-link>
+			</li>
+			<li>
+				<router-link to="/user/Li4">Li4</router-link>
+			</li>
+			<li>
+				<router-link to="/user/Wang5">Wang5</router-link>
+			</li>
+			<li>
+				<router-link to="/user/Zhao6">Zhao6</router-link>
+			</li>
+
+
+
+			<li>
+				<router-link to="/hello">Hello</router-link>
+			</li>
+
+			<li>
+				<router-link to="/security">Security</router-link>
+			</li>
+		</ul>
+
+		<!-- 路由出口 -->
+		<!-- 路由匹配到的组件将渲染在这里 -->
+		<router-view></router-view>
+
+	</div>
+
+
+	<script type="text/javascript">
+
+		// 1. 定义 (路由) 组件。
+		// 可以从其他文件 import 进来
+		const User = {
+			template: '<div> User Code is {{ $route.params.id }} </div>'
+		}
+
+
+		// 用于测试的 普通页面.
+		const Hello = {
+			template: '<div> This is Hello Page ... </div>'
+		}
+		// 用于测试的 安全页面.
+		const Security = {
+			template: '<div> This is Security Page ... </div>'
+		}
+
+		// 用于测试的 登录页.
+		const Login = {
+			// 模板.
+			template: `<div>
+						<h3> This is Login Page ...  </h3>
+						<button v-on:click="testLogin()"> Test Do Login. </button>
+						<span> {{ loginResult }} </span>
+						<br/>
+						<span> {{ returnPath }} </span>
+					</div>`,
+			// 数据.
+			data: function () {
+				return {
+					loginResult: '',
+					// 这里是来自路由的参数.
+					returnPath: this.$route.params.returnPath
+				};
+			},
+			// 方法.
+			methods: {
+				testLogin: function () {
+					var storage=window.localStorage;
+					//写入 token 字段
+					storage["token"]="test";
+					this.loginResult = "Login Success..."
+
+					// 页面跳转.
+					router.replace({ path: this.returnPath });
+				}
+			}
+
+		}
+
+
+
+
+		// 2. 定义路由
+		// 每个路由应该映射一个组件。 其中"component" 可以是
+		// 通过 Vue.extend() 创建的组件构造器，
+		// 或者，只是一个组件配置对象。
+		const routes = [
+			// 动态路径参数 以冒号开头
+			{
+				name: 'User',
+				path: '/user/:id',
+				component: User,
+				meta: { title: '测试用户信息' }
+			},
+			{
+				name: 'Hello',
+				path: '/hello',
+				component: Hello,
+				meta: { title: '测试 Hello 页面' }
+			},
+			{
+				name: 'Security',
+				path: '/security',
+				component: Security,
+				meta: {
+					title: '测试 安全 页面',
+					isSecurity: true
+				}
+			},
+			{
+				name: 'Login',
+				path: '/login/:returnPath',
+				component: Login,
+				meta: { title: '测试 登录 页面' }
+			}
+		]
+
+
+
+		// 3. 创建 router 实例，然后传 `routes` 配置
+		const router = new VueRouter({
+			routes // (缩写) 相当于 routes: routes
+		})
+
+
+
+		// 使用 router.beforeEach 注册一个全局前置守卫
+		router.beforeEach((to, from, next) => {
+
+			console.log("# beforeEach to = ", to);
+			console.log("# beforeEach from = ", from);
+
+			// 修改页面的标题操作.
+			if(to.meta.title != undefined) {
+				window.document.title = to.meta.title;
+			}
+
+			// 这里模拟一个 检查 目标页面是否要求登录的操作.
+			if(to.meta.isSecurity === true) {
+				// 目标页要求登录.
+				if(window.localStorage.getItem('token')) {
+					next();
+				} else {
+					let loginPath = '/login/' + encodeURIComponent(to.path);
+					next(loginPath);
+				}
+				return;
+			}
+
+			next();
+		})
+
+
+		// 4. 创建和挂载根实例。
+		// 记得要通过 router 配置参数注入路由，
+		// 从而让整个应用都有路由功能
+		const app = new Vue({
+		  router
+		}).$mount('#app')
+	</script>
+
+
+
+
+
+
+
+</body>
+</html>

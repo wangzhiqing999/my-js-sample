@@ -38,6 +38,11 @@
 			<li>
 				<router-link to="/manager/Zhao6">Zhao6（重定向）</router-link>
 			</li>
+
+
+			<li>
+				<router-link to="/Test1234567"> 测试一个不存在的路径 </router-link>
+			</li>
 		</ul>
 
 		<!-- 路由出口 -->
@@ -51,15 +56,33 @@
 
 		// 1. 定义 (路由) 组件。
 		// 可以从其他文件 import 进来
+
+		const Home = {
+			template: '<div> Home Page </div>'
+		}
+
 		const User = {
 			template: '<div> User Code is {{ $route.params.id }} </div>'
 		}
+
+		// 页面不存在.
+		const PageNotFound = { template: '<div> <h3>404</h3> Page Not Found !!! </div>' }
+
+
 
 		// 2. 定义路由
 		// 每个路由应该映射一个组件。 其中"component" 可以是
 		// 通过 Vue.extend() 创建的组件构造器，
 		// 或者，只是一个组件配置对象。
 		const routes = [
+
+			// 首页.
+			{
+				name: 'Home',
+				path: '/',
+				component: Home
+			},
+
 			// 动态路径参数 以冒号开头
 			{
 				path: '/user/:id',
@@ -79,8 +102,18 @@
 			{
 				path: '/manager/:id',
 				redirect: { name: 'user' }
-			}
+			},
 
+
+			{
+				name: '404',
+				path: '/404',
+				component: PageNotFound
+			},
+			{
+				path: '*', // 此处需特别注意至于最底部
+				redirect: '/404'
+			}
 		]
 
 		// 3. 创建 router 实例，然后传 `routes` 配置

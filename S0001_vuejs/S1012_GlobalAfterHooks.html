@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title> Vue Router  Hello World </title>
+	<title> Vue Router  全局后置钩子 </title>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<script type="text/javascript" src="js/vue.js"></script>
 	<script type="text/javascript" src="js/vue-router.js"></script>
@@ -14,7 +14,7 @@
 
 <body>
 
-	<h1> Vue Router  Hello World  </h1>
+	<h1> 全局后置钩子  </h1>
 
 
 	<div id="app">
@@ -27,13 +27,20 @@
 			<!-- 通过传入 `to` 属性指定链接. -->
 			<!-- <router-link> 默认会被渲染成一个 `<a>` 标签 -->
 			<li>
+				<router-link to="/user/Zhang3">Zhang3</router-link>
+			</li>
+			<li>
+				<router-link to="/user/Li4">Li4</router-link>
+			</li>
+			<li>
+				<router-link to="/user/Wang5">Wang5</router-link>
+			</li>
+			<li>
+				<router-link to="/user/Zhao6">Zhao6</router-link>
+			</li>
+
+			<li>
 				<router-link to="/hello">Hello</router-link>
-			</li>
-			<li>
-				<router-link to="/world">World</router-link>
-			</li>
-			<li>
-				<router-link to="/myhelloworld">My Hello World</router-link>
 			</li>
 		</ul>
 
@@ -48,43 +55,54 @@
 
 		// 1. 定义 (路由) 组件。
 		// 可以从其他文件 import 进来
-		const Hello = { template: '<div><b>Hello</b> World !</div>' }
-		const World = { template: '<div>Hello <b>World</b> !!!</div>' }
-
-		// 上面是两个只有模板信息的组件， 下面这个是有模板，有数据，有事件的组件。
-		// 这里是 html 文件的测试.
-		// vuecli3 创建的项目里，可以使用 import vue 单文件组件的方式来操作.
-		const MyHelloWorld = {
-			// 模板.
-			template: '<div> <button v-on:click="addCount()"> Hello World !!! {{ counter }} </button> </div>',
-			// 数据.
-			data: function () {
-				return {
-					counter: 0
-				};
-			},
-			// 方法.
-			methods: {
-				addCount: function () {
-					this.counter += 1;
-				}
-			}
+		const User = {
+			template: '<div> User Code is {{ $route.params.id }} </div>'
 		}
+
+		// 用于测试的 普通页面.
+		const Hello = {
+			template: '<div> This is Hello Page ... </div>'
+		}
+
+
+
 
 		// 2. 定义路由
 		// 每个路由应该映射一个组件。 其中"component" 可以是
 		// 通过 Vue.extend() 创建的组件构造器，
 		// 或者，只是一个组件配置对象。
 		const routes = [
-			{ path: '/hello', component: Hello },
-			{ path: '/world', component: World },
-			{ path: '/myhelloworld', component: MyHelloWorld }
+			// 动态路径参数 以冒号开头
+			{
+				name: 'User',
+				path: '/user/:id',
+				component: User,
+				meta: { title: '测试用户信息' }
+			},
+			{
+				name: 'Hello',
+				path: '/hello',
+				component: Hello,
+				meta: { title: '测试 Hello 页面' }
+			},
 		]
+
+
 
 		// 3. 创建 router 实例，然后传 `routes` 配置
 		const router = new VueRouter({
-		  routes // (缩写) 相当于 routes: routes
+			routes // (缩写) 相当于 routes: routes
 		})
+
+
+
+		// 全局后置钩子
+		router.afterEach((to, from) => {
+			console.log("# afterEach to = ", to);
+			console.log("# afterEach from = ", from);
+		})
+
+
 
 		// 4. 创建和挂载根实例。
 		// 记得要通过 router 配置参数注入路由，
