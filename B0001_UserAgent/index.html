@@ -26,6 +26,16 @@ function isWeixin() {
 	}
 }
 
+// 是否是企业微信.
+function isWeixinWork() {
+	var ua = window.navigator.userAgent.toLowerCase();
+	if (ua.match(/wxwork/i) == 'wxwork') {
+		return true;
+	} else {
+		return false;
+	}
+}
+
 // 是否是 IOS 设备.
 function isIos() {
 	var u = navigator.userAgent;
@@ -126,6 +136,7 @@ function isWeiboApp() {
 document.write("window.navigator.userAgent = " + window.navigator.userAgent );
 
 document.write("<br/>isWeixin()  = " + isWeixin() );
+document.write("<br/>isWeixinWork()  = " + isWeixinWork() );
 document.write("<br/>isIos() = " + isIos());
 document.write("<br/>isAndroid() = " + isAndroid());
 document.write("<br/>isPC() = " + isPC());
