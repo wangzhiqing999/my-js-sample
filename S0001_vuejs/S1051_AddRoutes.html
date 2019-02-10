@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title> Vue Router 动态添加路由 </title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<script type="text/javascript" src="js/vue.js"></script>
+	<script type="text/javascript" src="js/vue-router.js"></script>
+
+
+
+
+</head>
+
+
+<body>
+
+	<h1> Vue Router 动态添加路由 </h1>
+
+
+	<div id="app">
+		<h2>
+			Study Vue Router
+		</h2>
+
+		<ul>
+			<!-- 使用 router-link 组件来导航. -->
+			<!-- 通过传入 `to` 属性指定链接. -->
+			<!-- <router-link> 默认会被渲染成一个 `<a>` 标签 -->
+			<li>
+				<router-link to="/hello">Hello</router-link>
+			</li>
+			<li>
+				<router-link to="/world">World</router-link>
+			</li>
+			<li>
+				<router-link to="/myhelloworld">My Hello World</router-link>
+			</li>
+
+			<li v-if="isLogin == false">
+				<button v-on:click="appendRouter">动态追加路由(模拟一个登录操作)</button>
+
+			</li>
+
+			<li v-if="isLogin">
+				<router-link to="/helloworld">动态追加的 Hello World</router-link>
+			</li>
+			<li v-if="isLogin">
+				<router-link to="/helloworld123456">动态追加的 Hello World 123456</router-link>
+			</li>
+		</ul>
+
+		<!-- 路由出口 -->
+		<!-- 路由匹配到的组件将渲染在这里 -->
+		<router-view></router-view>
+
+	</div>
+
+
+	<script type="text/javascript">
+
+		// 1. 定义 (路由) 组件。
+		// 可以从其他文件 import 进来
+		const Hello = { template: '<div><b>Hello</b> World !</div>' }
+		const World = { template: '<div>Hello <b>World</b> !!!</div>' }
+
+		// 上面是两个只有模板信息的组件， 下面这个是有模板，有数据，有事件的组件。
+		// 这里是 html 文件的测试.
+		// vuecli3 创建的项目里，可以使用 import vue 单文件组件的方式来操作.
+		const MyHelloWorld = {
+			// 模板.
+			template: '<div> <button v-on:click="addCount()"> Hello World !!! {{ counter }} </button> </div>',
+			// 数据.
+			data: function () {
+				return {
+					counter: 0
+				};
+			},
+			// 方法.
+			methods: {
+				addCount: function () {
+					this.counter += 1;
+				}
+			}
+		}
+
+		// 2. 定义路由
+		// 每个路由应该映射一个组件。 其中"component" 可以是
+		// 通过 Vue.extend() 创建的组件构造器，
+		// 或者，只是一个组件配置对象。
+		const routes = [
+			{ path: '/hello', component: Hello },
+			{ path: '/world', component: World },
+			{ path: '/myhelloworld', component: MyHelloWorld }
+		]
+
+		// 3. 创建 router 实例，然后传 `routes` 配置
+		const router = new VueRouter({
+		  routes // (缩写) 相当于 routes: routes
+		})
+
+		// 4. 创建和挂载根实例。
+		// 记得要通过 router 配置参数注入路由，
+		// 从而让整个应用都有路由功能
+		const app = new Vue({
+			router,
+
+			// 数据.
+			data: function () {
+				return {
+					isLogin: false
+				};
+			},
+			// 方法.
+			methods: {
+				// 尝试在已经构建好的路由基础上，动态增加一些路由配置.
+				// 此操作的预期，是登录之前，只有几个最基本的路由。
+				// 当登录完毕之后，根据当前用户的角色，动态加载新的路由。
+				appendRouter: function () {
+					console.log("新增路由 ");
+					let newRoutes = [
+						{ path: '/helloworld', component: { template: '<div><b>Hello World</b> !!!</div>' } },
+						{ path: '/helloworld123456', component: { template: '<div><b>Hello World 123456 </b> !!!</div>' } }
+					];
+					router.addRoutes(newRoutes);
+
+					this.isLogin = true;
+				}
+			}
+
+		}).$mount('#app')
+	</script>
+
+
+
+
+</body>
+</html>
