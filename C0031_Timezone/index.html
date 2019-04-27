@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>  时区.  </title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<script src="../common/jquery-1.10.2.js" type="text/javascript"></script>
+	<script type="text/javascript" src="myTimezoneService.js"></script>
+</head>
+
+<body>
+
+	<p>
+	时区的相关处理
+	</p>
+
+
+	<ul>
+		<li id="step1Result">
+		</li>
+
+
+		<li id="step2Result">
+
+		</li>
+
+		<li id="step00Result"></li>
+
+		<li id="step01Result"></li>
+		<li id="step02Result"></li>
+		<li id="step03Result"></li>
+		<li id="step04Result"></li>
+		<li id="step05Result"></li>
+		<li id="step06Result"></li>
+		<li id="step07Result"></li>
+		<li id="step08Result"></li>
+		<li id="step09Result"></li>
+		<li id="step10Result"></li>
+		<li id="step11Result"></li>
+		<li id="step12Result"></li>
+
+
+
+		<li id="step-01Result"></li>
+		<li id="step-02Result"></li>
+		<li id="step-03Result"></li>
+		<li id="step-04Result"></li>
+		<li id="step-05Result"></li>
+		<li id="step-06Result"></li>
+		<li id="step-07Result"></li>
+		<li id="step-08Result"></li>
+		<li id="step-09Result"></li>
+		<li id="step-10Result"></li>
+		<li id="step-11Result"></li>
+
+
+	</ul>
+
+</body>
+
+
+
+
+
+<script>
+
+
+// 显示时间.
+function showTime() {
+	var d = new Date();
+	$("#step2Result").html("当前时区时间：" + d.toLocaleString());
+
+
+	$("#step00Result").html("格林尼治标准时间:" + d.toUTCString());
+
+	var date01 = myTimezoneService.converTimezone(d, 1);
+	$("#step01Result").html("东一区:" + myTimezoneService.getDateTimeString(date01));
+
+	var date02 = myTimezoneService.converTimezone(d, 2);
+	$("#step02Result").html("东二区:" + myTimezoneService.getDateTimeString(date02));
+
+	var date03 = myTimezoneService.converTimezone(d, 3);
+	$("#step03Result").html("东三区:" + myTimezoneService.getDateTimeString(date03));
+
+	var date04 = myTimezoneService.converTimezone(d, 4);
+	$("#step04Result").html("东四区:" + myTimezoneService.getDateTimeString(date04));
+
+	var date05 = myTimezoneService.converTimezone(d, 5);
+	$("#step05Result").html("东五区:" + myTimezoneService.getDateTimeString(date05));
+
+	var date06 = myTimezoneService.converTimezone(d, 6);
+	$("#step06Result").html("东六区:" + myTimezoneService.getDateTimeString(date06));
+
+	var date07 = myTimezoneService.converTimezone(d, 7);
+	$("#step07Result").html("东七区:" + myTimezoneService.getDateTimeString(date07));
+
+	var date08 = myTimezoneService.converTimezone(d, 8);
+	$("#step08Result").html("东八区（北京）：" + myTimezoneService.getDateTimeString(date08));
+
+	var date09 = myTimezoneService.converTimezone(d, 9);
+	$("#step09Result").html("东九区（东京）：" + myTimezoneService.getDateTimeString(date09));
+
+	var date10 = myTimezoneService.converTimezone(d, 10);
+	$("#step10Result").html("东十区:" + myTimezoneService.getDateTimeString(date10));
+
+	var date11 = myTimezoneService.converTimezone(d, 11);
+	$("#step11Result").html("东十一区" + myTimezoneService.getDateTimeString(date11));
+
+	var date12 = myTimezoneService.converTimezone(d, 12);
+	$("#step12Result").html("东十二区" + myTimezoneService.getDateTimeString(date12));
+
+
+
+	var date01x = myTimezoneService.converTimezone(d, -1);
+	$("#step-01Result").html("西一区:" + myTimezoneService.getDateTimeString(date01x));
+
+	var date02x = myTimezoneService.converTimezone(d, -2);
+	$("#step-02Result").html("西二区:" + myTimezoneService.getDateTimeString(date02x));
+
+	var date03x = myTimezoneService.converTimezone(d, -3);
+	$("#step-03Result").html("西三区:" + myTimezoneService.getDateTimeString(date03x));
+
+	var date04x = myTimezoneService.converTimezone(d, -4);
+	$("#step-04Result").html("西四区:" + myTimezoneService.getDateTimeString(date04x));
+
+	var date05x = myTimezoneService.converTimezone(d, -5);
+	$("#step-05Result").html("西五区（纽约）:" + myTimezoneService.getDateTimeString(date05x));
+
+	var date06x = myTimezoneService.converTimezone(d, -6);
+	$("#step-06Result").html("西六区:" + myTimezoneService.getDateTimeString(date06x));
+
+	var date07x = myTimezoneService.converTimezone(d, -7);
+	$("#step-07Result").html("西七区:" + myTimezoneService.getDateTimeString(date07x));
+
+	var date08x = myTimezoneService.converTimezone(d, -8);
+	$("#step-08Result").html("西八区:" + myTimezoneService.getDateTimeString(date08x));
+
+	var date09x = myTimezoneService.converTimezone(d, -9);
+	$("#step-09Result").html("西九区（ 阿拉斯加）:" + myTimezoneService.getDateTimeString(date09x));
+
+	var date10x = myTimezoneService.converTimezone(d, -10);
+	$("#step-10Result").html("西十区:" + myTimezoneService.getDateTimeString(date10x));
+
+	var date11x = myTimezoneService.converTimezone(d, -11);
+	$("#step-11Result").html("西十一区:" + myTimezoneService.getDateTimeString(date11x));
+
+	setTimeout("showTime()", 1000);
+}
+
+
+
+$(document).ready(function(){
+
+	var currentTimezone = myTimezoneService.getCurrentTimezone();
+	$("#step1Result").html("当前时区：" + currentTimezone);
+
+
+	// 显示时间.
+	showTime();
+});
+
+
+
+
+
+
+</script>
+
+
+
+
+</html>
