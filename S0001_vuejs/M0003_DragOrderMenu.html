@@ -1,45 +1,59 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>  vue.js  拖动排序	</title>
+	<title>  vue.js  拖动图标排序	</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<script type="text/javascript" src="js/vue.js"></script>
-	
+
 	<style>
-        ul{
-            list-style:none;
-            padding-bottom:20px;
-        }
-        .item{
-            cursor: pointer;
-            height:24px;
-            line-height:24px;
-            background-color:#9c9c9c;
-            border:1px solid #d9d9d9;
-            border-radius:4px;
-            color:#fff;
-            padding:10px;
-        }
+		.menu-list {
+			width: 80%;
+			display: flex;
+			justify-content: space-between;
+			flex-wrap: wrap;
+			padding: .16em 0 1.5em;
+			background: #ffffff;
+			margin-bottom: .83em;
+		}
+
+		.menu-item {
+			width: 22.5%;
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			align-items: center;
+			font-weight: 300;
+			font-size: 1.08em;
+			color: rgba(51, 51, 51, 1);
+			margin-top: 1.25em;
+			border:1px solid #d9d9d9;
+		}
+
     </style>
 </head>
 
 
 <body>
 
-	<h1>  拖动排序  </h1>
+	<h1>  拖动图标排序  </h1>
 
-	<div id="app">
+	<div id="app" >
 
-		<ul @dragstart="onDragStart" 
+		<ul @dragstart="onDragStart"
 			@dragover="onDragOver"
 			@dragend="onDragEnd"
-			ref="parentNode">			
-            <li v-for="(item,index) in data" :key="index" class="item" draggable="true">{{item}}</li>			
+			ref="parentNode"
+			class="menu-list">
+
+            <li v-for="(item,index) in data" :key="index" class="menu-item" draggable="true" v-bind:data-id="item.menuID">
+				<img v-bind:src="item.menuIcon" v-bind:alt="item.menuText">
+				{{ item.menuText }}
+			</li>
+
         </ul>
 
-		
 		<button v-on:click="showDataInfo">控制台输出当前数据</button>
-		
+
 	</div>
 
 
@@ -48,7 +62,7 @@
 		var app = new Vue({
         el: '#app',
         data: {
-            data:['A','B','C','D','E','F','G'],
+            data: new Array(),
             draging:null,//被拖拽的对象
             target:null,//目标对象
         },
@@ -59,11 +73,27 @@
                 event.stopPropagation();
             }
         },
+		created :  function () {
+			// 这里是初始化 8 个图标按钮.
+			// 实际业务中，理论上是 ajax 请求，获取数据.
+			// menuID 是用于排序完毕后，按保存按钮的时候， 向后台提交的数据.
+			// menuText 与 menuIcon 则是单纯用于显示的。
+			for(var i = 1; i <= 8; i ++) {
+				var item = {
+					menuID:i,
+					menuText:"测试" + i,
+					menuIcon:"images/test" + i + ".png"
+				};
+				this.data.push(item);
+			}
+		},
         methods:{
+			// 拖动开始.
             onDragStart: function(event){
                 console.log("drag start");
                 this.draging=event.target;
             },
+			// 拖动过程中.
             onDragOver: function(event){
                 console.log('drag move');
                 this.target=event.target;
@@ -75,12 +105,24 @@
                             return;
                         }
                     }
- 
-                    if(this._index(this.draging)<this._index(this.target)){
-                        this.target.parentNode.insertBefore(this.draging,this.target.nextSibling);
-                    }else{
-                        this.target.parentNode.insertBefore(this.draging, this.target);
-                    }
+
+					// 这里是判断， 当前拖动的，是 <li>  还是  <li> 中的 <img> 或者文字.
+					if(this.draging.nodeName === "LI") {
+						// 拖动的是 <li> ， 直接移动当前对象.
+						if(this._index(this.draging)<this._index(this.target)){
+							this.target.parentNode.insertBefore(this.draging,this.target.nextSibling);
+						}else{
+							this.target.parentNode.insertBefore(this.draging, this.target);
+						}
+					} else {
+						// 拖动的是 <li> 里面的 <img> 或者文字， 需要移动 父节点.
+						if(this._index(this.draging)<this._index(this.target)){
+							this.target.parentNode.insertBefore(this.draging.parentNode,this.target.nextSibling);
+						}else{
+							this.target.parentNode.insertBefore(this.draging.parentNode, this.target);
+						}
+					}
+
                     this._anim(targetTop,this.target);
                     this._anim(dragingTop,this.draging);
                 }
@@ -89,14 +131,14 @@
                 let offset=startPos-dom.getBoundingClientRect().top;
                 dom.style.transition="none";
                 dom.style.transform=`translateY(${offset}px)`;
- 
+
                 //触发重绘
                 dom.offsetWidth;
 　　　　　　　　　　dom.style.transition="transform .3s";
 　　　　　　　　　　dom.style.transform=``;
 
                 clearTimeout(dom.animated);
- 
+
                 dom.animated=setTimeout(()=>{
                     dom.style.transition="";
                     dom.style.transform=``;
@@ -106,9 +148,9 @@
             onDragEnd: function(event){
                 console.log('drag end')
                 let currentNodes=Array.from(this.$refs.parentNode.childNodes);
-                 
+
                 let data=currentNodes.map((i,index)=>{
-                    let item=this.data.find(c=>c==i.innerText);
+                    let item = this.data.find(c=>c.menuID == i.getAttribute("data-id"));
                     return item
                 });
                 console.log(data)
@@ -118,10 +160,12 @@
                 return domData.findIndex(i=>i.innerText==el.innerText);
             },
 			showDataInfo: function() {
-				let currentNodes=Array.from(this.$refs.parentNode.childNodes);                
+				// 这里是单纯的显示排序后的结果。
+				// 实际业务中，是将显示排序后的结果，提交到后台，去更新数据的操作。
+				let currentNodes=Array.from(this.$refs.parentNode.childNodes);
 				let resultData = currentNodes.map((i,index)=>{
-                    let item=this.data.find(c=>c==i.innerText);
-                    return item
+                    let item = this.data.find(c=>c.menuID == i.getAttribute("data-id"));
+                    return item.menuID;
                 });
 				console.log(resultData.join(','));
 			}
