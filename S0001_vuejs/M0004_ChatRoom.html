@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>  vue.js  聊天室	</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<script type="text/javascript" src="js/vue.js"></script>
+</head>
+
+
+<body>
+
+	<h1> 聊天室滚动条处理.  </h1>
+
+	<p>
+	滚动条处理逻辑
+	<ul>
+		<li>初始化的时候， 先滚动到底。</li>
+
+		<li>如果用户不拖动滚动条， 新消息来了之后， 滚动条自动向下滚动到底。</li>
+
+		<li>如果用户，拖动了滚动条，向上翻看某个特定的内容，新消息来了之后，滚动条不自动向下滚动。 </li>
+
+		<li>如果用户，拖动了滚动条，向上翻看某个特定的内容之后， 又翻到底查看最新的消息，新消息来了之后， 滚动条自动向下滚动到底。</li>
+	</ul>
+
+
+	</p>
+
+
+	<div id="app" style="display:block;">
+
+		<ul id="messageList" style="width:320px; height:240px; overflow-x:auto; overflow-y:scroll;">
+			<li v-for="item in dataList">
+				{{ item }}
+			</li>
+		</ul>
+
+	</div>
+
+
+
+	<script type="text/javascript">
+
+		var userIndex = 0;
+		var messageIndex = 0;
+		function dummyAjaxRequest() {
+			messageIndex = messageIndex + 1;
+			userIndex = userIndex + 1;
+			if(userIndex > 5) {
+				userIndex = 1;
+			}
+			return "用户" + userIndex + " : 消息【" + messageIndex + "】";
+		}
+
+
+		var app = new Vue({
+			el: '#app',
+			data: {
+				dataList: []
+			},
+			created: function () {
+				for(var i = 1; i <= 15; i ++){
+					this.dataList.push("【初始化消息" + i + "】")
+				}
+				this.getLastMessage();
+			},
+			// 方法.
+			methods: {
+				getLastMessage: function () {
+
+					// 是否有新消息.
+					let hasNew = false;
+
+					// 滚动条是否到了底部.
+                    let isLast = false;
+
+					// 获得容器.
+					let divMessageList = document.getElementById('messageList');
+					console.log("### scrollTop = " + divMessageList.scrollTop);
+                    console.log("### scrollHeight = " + divMessageList.scrollHeight);
+                    console.log("### offsetHeight = " + divMessageList.offsetHeight);
+
+
+                    if (divMessageList.scrollTop == 0 && divMessageList.scrollHeight == divMessageList.offsetHeight) {
+                        // 页面初始化的时候.
+                        isLast = true;
+                    } else if (divMessageList.scrollTop === (divMessageList.scrollHeight - divMessageList.offsetHeight)) {
+                        // 翻到底了.
+                        isLast = true;
+                    }
+
+
+
+					var messageText = dummyAjaxRequest();
+
+					if(messageText != "") {
+						// 有新数据.
+						hasNew = true;
+						// 添加.
+						this.dataList.push(messageText);
+					}
+
+
+					// 5秒后再次加载数据.
+					var _this = this;
+					setTimeout(function () { _this.getLastMessage() }, 5000);
+
+
+					console.log("是否有新数据：" + hasNew);
+                    console.log("滚动条是否在底部：" + isLast);
+					if (hasNew && isLast) {
+						// 有新的数据， 并且滚动条在底部.
+                        _this.$nextTick(function () {
+							console.log("Vue 渲染完毕.");
+
+							// 当 Vue 页面渲染完之后，滚动条到最底部.
+							let div = document.getElementById('messageList');
+                            div.scrollTop = div.scrollHeight;
+							console.log("=== scrollTop = " + div.scrollTop);
+							console.log("=== scrollHeight = " + div.scrollHeight);
+                        });
+                    }
+
+				}
+			}
+		});
+
+
+
+
+	</script>
+
+
+
+</body>
+</html>
