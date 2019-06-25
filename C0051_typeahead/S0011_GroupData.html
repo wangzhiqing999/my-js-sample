@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>  Typeahead. 分组的数据  </title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+	<link rel="stylesheet" href="css/jquery.typeahead.min.css">
+    <script src="../common/jquery-1.10.2.js"></script>
+    <script src="js/jquery.typeahead.min.js"></script>
+</head>
+
+<body>
+
+	<form name="form-country_v1" id="form-country_v1">
+		<div class="typeahead__container">
+            <div class="typeahead__field">
+                <div class="typeahead__query">
+                    <input class="js-typeahead"
+                           name="q"
+                           type="search"
+                           autofocus
+                           autocomplete="off">
+                </div>
+                <div class="typeahead__button">
+                    <button type="submit">
+                        <span class="typeahead__search-icon"></span>
+                    </button>
+                </div>
+            </div>
+        </div>
+	</form>
+
+<p>
+测试分组数据，如下：
+<br/>
+
+<h3>沪市A股</h3>
+<ul>
+	<li> 601388 怡球资源 </li>
+	<li> 600075 新疆天业 </li>
+	<li> 600540 新赛股份 </li>
+	<li> 603356 华菱精工 </li>
+	<li> 600006 东风汽车 </li>
+</ul>
+
+
+<h3>创业板</h3>
+<ul>
+	<li> 300023 宝得股份 </li>
+	<li> 300301 长方集团 </li>
+	<li> 300156 神雾环保 </li>
+	<li> 300622 恒立实业 </li>
+	<li> 300354 东华测试 </li>
+</ul>
+
+
+<h3>中小版</h3>
+<ul>
+	<li> 002447 晨鑫科技 </li>
+	<li> 002170 芭田股份 </li>
+	<li> 002329 皇氏集团 </li>
+	<li> 002902 铭普光磁 </li>
+	<li> 002869 金溢科技 </li>
+</ul>
+
+
+主要测试目标，数据是否正确的进行分组。
+
+</p>
+
+<script>
+
+	var data = {
+		SH: [
+			"601388 怡球资源",
+			"600075 新疆天业",
+			"600540 新赛股份",
+			"603356 华菱精工",
+			"600006 东风汽车"
+		],
+
+		CYB: [
+			"300023 宝得股份",
+			"300301 长方集团",
+			"300156 神雾环保",
+			"300622 恒立实业",
+			"300354 东华测试"
+		],
+
+		ZXB: [
+			"002447 晨鑫科技",
+			"002170 芭田股份",
+			"002329 皇氏集团",
+			"002902 铭普光磁",
+			"002869 金溢科技"
+		]
+	};
+
+
+	typeof $.typeahead === 'function' && $.typeahead({
+		input: '.js-typeahead',
+		minLength: 1,
+		maxItem: 15,
+		order: "asc",
+		hint: true,
+		group: {
+			template: "---{{group}}---"
+		},
+		maxItemPerGroup: 3,
+		dropdownFilter: "所有",
+		emptyTemplate: '未检索到 "{{query}}" 相关的数据.',
+		source: {
+			"沪市A股": {
+				data: data.SH
+			},
+			"创业板": {
+				data: data.CYB
+			},
+			"中小版": {
+				data: data.ZXB
+			}
+		},
+		callback: {
+			onInit: function (node) {
+				console.log('Typeahead Initiated on ' + node.selector);
+			},
+			onClickAfter: function(node, a, item, event) {
+				console.log('onClickAfter  ', item);
+			}
+		}
+	});
+</script>
+
+</body>
+</html>

@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>  Typeahead. 两个联动  </title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+	<link rel="stylesheet" href="css/jquery.typeahead.min.css">
+    <script src="../common/jquery-1.10.2.js"></script>
+    <script src="js/jquery.typeahead.min.js"></script>
+</head>
+
+<body>
+
+    <table>
+        <tr>
+            <td>
+                <strong>分类</strong>
+                <div class="typeahead__container">
+                    <div class="typeahead__field">
+                        <div class="typeahead__query">
+                            <input class="js-typeahead-group"
+                                   name="q"
+                                   type="search"
+                                   autofocus
+                                   autocomplete="off">
+                        </div>
+                    </div>
+                </div>
+            </td>
+            <td>
+                <strong>股票</strong>
+                <div class="typeahead__container">
+                    <div class="typeahead__field">
+                        <div class="typeahead__query">
+                            <input class="js-typeahead-stock"
+                                   name="q"
+                                   type="search"
+                                   autocomplete="off">
+                        </div>
+                    </div>
+                </div>
+            </td>
+        </tr>
+    </table>
+
+<p>
+
+主要测试目标，是否能正常的联动.
+
+</p>
+
+<script>
+
+	// 父选项数据.
+	var groupData = [
+		"沪市A股",
+		"创业板",
+		"中小版"
+	];
+
+	// 子选项数据.
+	var data = {
+		SH: [
+			"601388 怡球资源",
+			"600075 新疆天业",
+			"600540 新赛股份",
+			"603356 华菱精工",
+			"600006 东风汽车"
+		],
+
+		CYB: [
+			"300023 宝得股份",
+			"300301 长方集团",
+			"300156 神雾环保",
+			"300622 恒立实业",
+			"300354 东华测试"
+		],
+
+		ZXB: [
+			"002447 晨鑫科技",
+			"002170 芭田股份",
+			"002329 皇氏集团",
+			"002902 铭普光磁",
+			"002869 金溢科技"
+		]
+	};
+
+
+	// 父选项的基本定义.
+	typeof $.typeahead === 'function' && $.typeahead({
+		input: ".js-typeahead-group",
+		minLength: 0,
+		searchOnFocus: true,
+		blurOnTab: false,
+		hint: true,
+		emptyTemplate: '未检索到 "{{query}}" 相关的数据.',
+		source: {
+			data: groupData
+		},
+		callback: {
+			onInit: function (node) {
+				console.log('Typeahead Initiated on ' + node.selector);
+			},
+			onClickAfter: function(node, a, item, event) {
+				console.log('onClickAfter  ', item);
+			}
+		}
+	});
+
+
+
+
+	// 子选项的基本定义.
+	// 联动的情况下
+	// dynamic: true.
+	// source.data 需要使用 function 来动态的获取数据.
+	typeof $.typeahead === 'function' && $.typeahead({
+		input: '.js-typeahead-stock',
+		minLength: 0,
+		searchOnFocus: true,
+		blurOnTab: false,
+		hint: true,
+
+		dynamic: true,
+		emptyTemplate: '未检索到 "{{query}}" 相关的数据.',
+		source: {
+			data: function() {
+				return getStockData();
+			}
+		},
+		callback: {
+			onInit: function (node) {
+				console.log('Typeahead Initiated on ' + node.selector);
+			},
+			onClickAfter: function(node, a, item, event) {
+				console.log('onClickAfter  ', item);
+			}
+		}
+	});
+
+	// 获取子选项数据的方法.
+	function getStockData() {
+		var stockData;
+		switch($(".js-typeahead-group").val()) {
+			case groupData[0]:
+				stockData = data.SH;
+				break;
+			case groupData[1]:
+				stockData = data.CYB;
+				break;
+			case groupData[2]:
+				stockData = data.ZXB;
+				break;
+			default:
+				stockData = [];
+				break;
+		}
+		return stockData;
+	}
+
+
+
+</script>
+
+</body>
+</html>

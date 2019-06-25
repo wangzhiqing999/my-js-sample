@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>  Typeahead. 最简单的使用  </title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+	<link rel="stylesheet" href="css/jquery.typeahead.min.css">
+    <script src="../common/jquery-1.10.2.js"></script>
+    <script src="js/jquery.typeahead.min.js"></script>
+</head>
+
+<body>
+
+	<form name="form-country_v1" id="form-country_v1">
+		<div class="typeahead__container">
+            <div class="typeahead__field">
+                <div class="typeahead__query">
+                    <input class="js-typeahead"
+                           name="q"
+                           type="search"
+                           autofocus
+                           autocomplete="off">
+                </div>
+                <div class="typeahead__button">
+                    <button type="submit">
+                        <span class="typeahead__search-icon"></span>
+                    </button>
+                </div>
+            </div>
+        </div>
+	</form>
+
+<p>
+测试数据，如下：
+<br/>
+
+<ul>
+	<li> 601388 怡球资源 </li>
+	<li> 600075 新疆天业 </li>
+	<li> 300023 宝得股份 </li>
+	<li> 600540 新赛股份 </li>
+	<li> 300301 长方集团 </li>
+	<li> 603356 华菱精工 </li>
+</ul>
+
+主要测试目标，中文能不能正确的处理.
+
+</p>
+
+<script>
+	typeof $.typeahead === 'function' && $.typeahead({
+		input: '.js-typeahead',
+		order: "desc",
+		source: {
+			data: [
+				"601388 怡球资源",
+				"600075 新疆天业",
+				"300023 宝得股份",
+				"600540 新赛股份",
+				"300301 长方集团",
+				"603356 华菱精工"
+			]
+		},
+		callback: {
+			onInit: function (node) {
+				console.log('Typeahead Initiated on ' + node.selector);
+			},
+			onClickAfter: function(node, a, item, event) {
+				console.log('onClickAfter  ', item);
+			}
+		}
+	});
+</script>
+
+</body>
+</html>

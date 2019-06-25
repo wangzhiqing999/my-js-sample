@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>  判断函数是否存在.  </title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<script src="../common/jquery-1.10.2.js" type="text/javascript"></script>
+</head>
+
+<body>
+
+	<p>
+	判断函数是否存在
+	</p>
+
+
+	<button onclick="oldFunc()"> 旧功能 </button>
+	<p id="oldResult"> </p>
+
+
+	<hr/>
+	<h3> 新功能1 </h3>
+	<p id="newResult1"> </p>
+
+
+	<hr/>
+	<h3> 新功能2 </h3>
+	<p id="newResult2"> </p>
+
+</body>
+
+
+
+
+
+<script>
+
+
+
+	function oldFunc() {
+		console.log("旧功能执行开始.");
+		$("#oldResult").html("旧功能执行结果......");
+		console.log("旧功能执行结束.");
+
+
+		// 上面假定是旧模块的功能.
+
+		// 下面假定是 需要在 旧模块的基础上， 加 新模块的处理.
+		// 新模块存在的情况下， 才执行， 不存在的情况下， 不执行.
+
+		// newFunc1 是存在的.
+		if(typeof newFunc1 === "function") {
+			console.log('newFunc1 Exists.');
+			newFunc1(123);
+		}
+
+
+		// newFunc2 是不存在的.
+		if(typeof 'newFunc2' === "function") {
+			console.log('newFunc2 Exists.');
+			newFunc2();
+		}
+	}
+
+
+
+	function newFunc1(test) {
+		console.log("新功能1执行开始.", test);
+		$("#newResult1").html("新功能1执行结果......");
+		console.log("新功能1执行结束.");
+	}
+
+</script>
+
+
+
+
+</html>

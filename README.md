@@ -48,6 +48,18 @@
 动态变更客户端浏览器 URL 的例子
 
 
+### C0031_Timezone
+时区处理的例子.
+
+
+### C0041_FuncExists
+检查函数是否存在，并执行的例子.
+
+
+### C0051_typeahead
+使用 typeahead 的例子.
+
+
 ### E0001_ES6_HelloWorld
 es6 的 hello world 的例子。  包含 es6 转 es5 的处理方法。
 

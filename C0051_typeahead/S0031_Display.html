@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>  Typeahead. Display的使用  </title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+	<link rel="stylesheet" href="css/jquery.typeahead.min.css">
+    <script src="../common/jquery-1.10.2.js"></script>
+    <script src="js/jquery.typeahead.min.js"></script>
+</head>
+
+<body>
+
+	<form name="form-country_v1" id="form-country_v1">
+		<div class="typeahead__container">
+            <div class="typeahead__field">
+                <div class="typeahead__query">
+                    <input class="js-typeahead"
+                           name="q"
+                           type="search"
+                           autofocus
+                           autocomplete="off">
+                </div>
+                <div class="typeahead__button">
+                    <button type="submit">
+                        <span class="typeahead__search-icon"></span>
+                    </button>
+                </div>
+            </div>
+        </div>
+	</form>
+
+<p>
+测试数据，如下：
+<br/>
+
+<ul>
+	<li> { M:"SH", C:"601388", N:"怡球资源", Desc:"画面不可见，选择后，触发事件获得。" } </li>
+	<li> { M:"SH", C:"600075", N:"新疆天业", Desc:"画面不可见，选择后，触发事件获得。" } </li>
+	<li> { M:"SH", C:"600540", N:"新赛股份", Desc:"画面不可见，选择后，触发事件获得。" } </li>
+	<li> { M:"SZ", C:"002447", N:"晨鑫科技", Desc:"画面不可见，选择后，触发事件获得。" } </li>
+	<li> { M:"SZ", C:"002170", N:"芭田股份", Desc:"画面不可见，选择后，触发事件获得。" } </li>
+	<li> { M:"SZ", C:"002329", N:"皇氏集团", Desc:"画面不可见，选择后，触发事件获得。" } </li>
+</ul>
+
+主要测试目标，Display 是否生效.
+以及选择以后，触发事件的时候，获得的是对象的全部数据.
+
+<br/>
+注意事项：
+这里 Display 了两个属性. 
+需要设置  templateValue 也是两个属性。
+
+<br/>
+
+如果不设置 templateValue 的话，将导致：
+输入 股票代码，选择后，输入框将仅显示股票代码.
+输入 股票名称，选择后，输入框将仅显示股票名称.
+
+</p>
+
+<script>
+
+	var data = [
+		{ M:"SH", C:"601388", N:"怡球资源", Desc:"画面不可见，选择后，触发事件获得。" },
+		{ M:"SH", C:"600075", N:"新疆天业", Desc:"画面不可见，选择后，触发事件获得。" },
+		{ M:"SH", C:"600540", N:"新赛股份", Desc:"画面不可见，选择后，触发事件获得。" },
+		{ M:"SZ", C:"002447", N:"晨鑫科技", Desc:"画面不可见，选择后，触发事件获得。" },
+		{ M:"SZ", C:"002170", N:"芭田股份", Desc:"画面不可见，选择后，触发事件获得。" },
+		{ M:"SZ", C:"002329", N:"皇氏集团", Desc:"画面不可见，选择后，触发事件获得。" },
+	];
+
+
+	typeof $.typeahead === 'function' && $.typeahead({
+		input: '.js-typeahead',
+		display: ["C", "N"],
+		
+		// 下面这行很重要.
+		templateValue: "{{C}} {{N}}",
+		source: {
+			data: data
+		},
+		callback: {
+			onInit: function (node) {
+				console.log('Typeahead Initiated on ' + node.selector);
+			},
+			onClickAfter: function(node, a, item, event) {
+				console.log('onClickAfter  ', item);
+			}
+		}
+	});
+</script>
+
+</body>
+</html>
