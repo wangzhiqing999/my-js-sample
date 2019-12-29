@@ -4,6 +4,19 @@
 	<title>  vue.js  聊天室	</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<script type="text/javascript" src="js/vue.js"></script>
+
+<style>
+	/* 管理员的样式. */
+	.admin {
+		color:red;
+	}
+
+	/* 当前用户 “我的” 样式. */
+	.me {
+		font-size: large;
+		font-style: oblique;
+	}
+</style>
 </head>
 
 
@@ -30,8 +43,10 @@
 	<div id="app" style="display:block;">
 
 		<ul id="messageList" style="width:320px; height:240px; overflow-x:auto; overflow-y:scroll;">
-			<li v-for="item in dataList">
-				{{ item }}
+			<li v-for="item in dataList"  v-bind:class="{ 'admin': item.IsAdmin, 'me': isMyMessage(item) }" >
+				<div >
+					{{ item.MessageSender }} : {{ item.MessageContent }}
+				</div>
 			</li>
 		</ul>
 
@@ -49,23 +64,53 @@
 			if(userIndex > 5) {
 				userIndex = 1;
 			}
-			return "用户" + userIndex + " : 消息【" + messageIndex + "】";
+
+			var messgaeData = {
+						IsAdmin : (userIndex % 3) === 0,
+						MessageSenderID : userIndex,
+						MessageSender : "用户" + userIndex,
+						MessageContent : "【消息" + userIndex + "】",
+					};
+
+			return messgaeData;
 		}
 
+
+		// 当前用户ID.
+		var myUserID = 1;
 
 		var app = new Vue({
 			el: '#app',
 			data: {
-				dataList: []
+				// 消息数据.
+				dataList: [],
+
+				// 画面上，最多显示的消息数.
+				maxLength: 20
 			},
 			created: function () {
 				for(var i = 1; i <= 15; i ++){
-					this.dataList.push("【初始化消息" + i + "】")
+
+					var messgaeData = {
+						IsAdmin : (i % 3) === 0,
+						MessageSenderID : (i % 5),
+						MessageSender : "用户" + (i % 5),
+						MessageContent : "【初始化消息" + i + "】",
+					};
+
+					this.dataList.push(messgaeData);
 				}
 				this.getLastMessage();
 			},
 			// 方法.
 			methods: {
+
+				// 信息是不是 当前用户的.
+				isMyMessage: function(pMessage) {
+					return pMessage.MessageSenderID === myUserID;
+				},
+
+				// 获取最新的消息.
 				getLastMessage: function () {
 
 					// 是否有新消息.
@@ -91,13 +136,21 @@
 
 
 
-					var messageText = dummyAjaxRequest();
+					var messageData = dummyAjaxRequest();
 
-					if(messageText != "") {
+					if(messageData != "") {
 						// 有新数据.
 						hasNew = true;
 						// 添加.
-						this.dataList.push(messageText);
+						this.dataList.push(messageData);
+					}
+
+
+					console.log("this.dataList.length = ", this.dataList.length);
+					if(this.dataList.length > this.maxLength) {
+						this.dataList.splice(0,1);
+
+						console.log("After splice. this.dataList.length = ", this.dataList.length);
 					}
 
 

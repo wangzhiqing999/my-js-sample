@@ -131,6 +131,11 @@ function isWeiboApp() {
 
 
 
+// 判断浏览器， 是否支持 Cookie.
+function isCookieEnabled() {
+	return navigator.cookieEnabled;
+}
+
 
 
 document.write("window.navigator.userAgent = " + window.navigator.userAgent );
@@ -149,6 +154,7 @@ document.write("<br/>isSafariApp() = " + isSafariApp());
 document.write("<br/>isQQApp() = " + isQQApp());
 document.write("<br/>isWeiboApp() = " + isWeiboApp());
 
+document.write("<br/>isCookieEnabled() = " + isCookieEnabled());
 
 
 
