@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+	<title> 根据 AndroidManifest 定义实现 </title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no">
+    <meta http-equiv="Expires" content="-1">
+    <meta http-equiv="Cache-Control" content="no-cache">
+    <meta http-equiv="Pragma" content="no-cache">
+	<meta http-equiv="Content-Security-Policy" content="default-src * gap://ready file:; style-src 'self' 'unsafe-inline'; img-src 'self' data:; script-src * 'unsafe-inline' 'unsafe-eval'">
+</head>
+
+<body>
+
+
+
+
+
+
+<div>
+
+	<p>
+	需要使用安卓手机打开看执行效果.
+	</p>
+
+	<h3> Universal Links 进行处理. </h3>
+
+	<ul>
+
+		<li>
+			<a href="spdbbank://wap.spdb.com.cn">浦发银行</a>
+		</li>
+		
+
+
+		
+	</ul>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+<div>
+
+处理机制：
+
+<ul>
+
+	<li>
+		自己开发的 App
+		<br/>
+		在AndroidManifest的清单文件里的intent-filte中加入元素
+		action android:name="android.intent.action.VIEW" 
+		category android:name="android.intent.category.DEFAULT" 
+		category android:name="android.intent.category.BROWSABLE" 
+		data android:host="这个是域名" android:scheme="这个是协议" 
+	</li>
+
+	
+	<li>
+		别人的 App
+		<br/>
+		下载别人的apk，解压缩，打开 AndroidManifest 文件，尝试找到
+		category android:name="android.intent.category.DEFAULT" 
+        category android:name="android.intent.category.BROWSABLE" 
+		android:host="这个是域名"
+		android:scheme="这个是协议" 		
+	</li>
+
+	
+	
+</ul>
+
+
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

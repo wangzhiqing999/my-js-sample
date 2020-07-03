@@ -21,6 +21,8 @@
 关于 Promise 的例子.
 
 
+### A0081_OpenApp
+手机页面， 打开手机中安装的 App 的例子。
 
 
 ### B0001_UserAgent

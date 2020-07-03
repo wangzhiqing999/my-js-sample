@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+	<title> 使用 URL Schemes， 网页中，打开 App </title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no">
+    <meta http-equiv="Expires" content="-1">
+    <meta http-equiv="Cache-Control" content="no-cache">
+    <meta http-equiv="Pragma" content="no-cache">
+	<meta http-equiv="Content-Security-Policy" content="default-src * gap://ready file:; style-src 'self' 'unsafe-inline'; img-src 'self' data:; script-src * 'unsafe-inline' 'unsafe-eval'">
+</head>
+
+<body>
+
+
+
+
+
+
+<div>
+
+	<p>
+	需要使用苹果手机打开看执行效果.
+	</p>
+
+
+	<h3> 增加 如果失败， 则跳转 App 下载页面的处理. </h3>
+
+	<ul>
+
+		<li>
+			<a href="javascript:openorpheuswidgetApp()">网易云音乐</a>
+		</li>
+
+
+		<li>
+			<a href="javascript:opendingtalkApp()">钉钉</a>
+		</li>
+
+	</ul>
+
+</div>
+
+
+
+
+<div>
+
+存在的问题：
+
+<ul>
+
+	<li>
+		只能在苹果自带的 Safari 浏览器中使用。
+
+		微信中无法使用。
+
+		安卓是 无论有没有安装， 都强制跳转到 App 下载页.
+	</li>
+
+
+	<li>
+		处理机制， 是先加载。
+		失败的情况下，  跳转至 App 下载页面。
+
+		问题在于， 当用户安装了指定 App，  在弹出  在“App名称”中打开？ 的对话框时，  按了 【否】，  结果将依然跳转至 App 下载页面。
+	</li>
+
+</ul>
+
+
+
+</div>
+
+
+
+
+
+<script>
+
+var opendingtalkApp=function(){
+
+    var localUrl="dingtalk://";
+	window.location.href = localUrl;
+	var loadDateTime = Date.now();
+
+	setTimeout(function () {
+		var timeOutDateTime = Date.now();
+		if (timeOutDateTime - loadDateTime < 1000) {
+			window.location.href = "https://www.dingtalk.com/download";
+		}
+	}, 25);
+}
+
+
+
+var openorpheuswidgetApp=function(){
+
+    var localUrl="orpheuswidget://";
+	window.location.href = localUrl;
+	var loadDateTime = Date.now();
+
+	setTimeout(function () {
+		var timeOutDateTime = Date.now();
+		if (timeOutDateTime - loadDateTime < 1000) {
+			window.location.href = "https://music.163.com/#/download";
+		}
+	}, 25);
+}
+
+</script>
+
+
+
+
+
+
+</body>
+</html>
