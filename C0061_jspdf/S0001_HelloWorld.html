@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>jsPDF - Hello World</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="description" content="">
+	<meta name="author" content="">
+	
+    <script src="../common/jquery-1.10.2.js"></script>	
+	<script type="text/javascript" src="js/jspdf.min.js"></script>
+</head>
+<body>
+
+
+
+	<div>
+		<iframe id="iframe123" class="preview-pane" width="100%" height="500" frameborder="0" style="position:relative;z-index:999"></iframe>
+	</div>
+
+
+
+
+
+	<p>
+		存在中文的问题。
+		
+		虽然可以通过
+		
+		var doc = new jsPDF();
+        doc.addFont("msyh-normal.ttf", "msyh", "normal");
+        doc.setFont('msyh');
+		doc.text(20, 20, '你好！');
+		
+		来完成。
+		
+		但是，那个 字库的文件太大了。
+		
+		对于浏览器，访问页面的情况，上来就加载一个 几十兆的 字库 js 文件。
+		恐怕是不能接收的。
+	</p>
+
+
+
+	<script>
+	
+		function showHelloWorld() {
+			var pdf = new jsPDF();
+			
+			pdf.text(20, 20, 'Hello world.');
+
+			
+			pdf.text(20, 60, '测试中文！');
+			
+			
+			
+			
+			document.getElementById("iframe123").src = pdf.output('datauristring');
+		}
+	
+
+		$(document).ready(function(){
+			showHelloWorld();
+		});
+
+	</script>
+
+
+</body>
+</html>

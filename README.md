@@ -62,6 +62,10 @@
 使用 typeahead 的例子.
 
 
+### C0061_jspdf
+使用 jspdf 的例子.
+
+
 ### E0001_ES6_HelloWorld
 es6 的 hello world 的例子。  包含 es6 转 es5 的处理方法。
 
