@@ -50,6 +50,10 @@
 动态变更客户端浏览器 URL 的例子
 
 
+### C0022_Location
+获取 window.location 相关属性的例子.
+
+
 ### C0031_Timezone
 时区处理的例子.
 
@@ -151,6 +155,10 @@ Hapi 学习的例子代码.
 
 ### U0001_CssFlexbox
 Css 中， Flex 的学习代码。
+
+
+### U0002_layerMobile
+layer.mobile-v2.0 使用的一些例子.
 
 
 

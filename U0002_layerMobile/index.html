@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta charset="utf-8" />
+	
+    <title>layer.mobile-v2.0 使用例子</title>
+    <meta name="keywords" content="" />
+    <meta name="description" content="" />
+
+
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no">
+    <meta http-equiv="Expires" content="-1">
+    <meta http-equiv="Cache-Control" content="no-cache">
+    <meta http-equiv="Pragma" content="no-cache">
+	
+	<link href="./layer_mobile/need/layer.css" rel="stylesheet" />
+	<script src="./layer_mobile/layer.js"></script>
+	
+	<script src="../common/jquery-1.10.2.js"></script>
+
+</head>
+
+
+<body>
+
+
+
+	<div id="displayDiv" style="display:none;">
+		<table>
+			<tr>
+				<td>姓名：</td>
+				<td id="displayName"></td>
+			</tr>
+			
+			<tr>
+				<td>证件号：</td>
+				<td id="displayNo"></td>
+			</tr>
+			
+			<tr>
+				<td>证件有效期：</td>
+				<td id="displayTime"></td>
+			</tr>
+			
+			<tr>
+				<td>银行卡：</td>
+				<td id="displayCard"></td>
+			</tr>
+			
+			<tr>
+				<td>银行预留手机号：</td>
+				<td id="displayPhone"></td>
+			</tr>
+			
+			<tr>
+				<td colspan="2" style="color:red;">
+				信息一旦提交无法再次修改，请确认。
+				</td>
+			</tr>
+		</table>
+	</div>
+
+
+	<hr/>
+	
+	
+	<button onclick="doTest()"> 一个较为复杂的确认对话框 </button>
+
+
+
+	<button onclick="doTestFooter()"> 一个显示在页面底部的确认对话框 </button>
+
+
+
+	<hr/>
+	
+	<button onclick="doTestAlert()">  替换 Alert </button>
+
+
+
+
+
+	<hr/>
+	
+	<button onclick="doTestToast()">  toast 提示信息 </button>
+	<button onclick="doTestToastFooter()">  toast 底部提示信息 </button>
+
+
+
+
+	<hr/>
+	
+	<button onclick="doTestLoading()">  loading </button>
+	
+	<button onclick="doTestLoadingError()">  loading 过程中，失败了！ </button>
+
+
+
+
+
+<script>
+
+	// 文档地址
+	// https://layer.layui.com/mobile/api.html
+
+
+	function doTest() {
+	
+		$("#displayName").html("张三");
+		$("#displayNo").html("123456789012345678");
+		$("#displayTime").html("2030-01-01");
+		$("#displayCard").html("1234567890123456 测试银行");
+		$("#displayPhone").html("13012345678");
+		
+		let dataDiv = $("#displayDiv");
+		
+		// console.log(dataDiv.html());
+		
+		//询问框
+		layer.open({
+			shadeClose: false,
+			content: dataDiv.html(),
+			btn: ['确认提交', '取消'],
+			yes: function(index){
+				console.log("点击了【确认提交】之后， 需要执行的代码！");
+				layer.close(index);
+			}
+		});	
+	
+	}
+	
+	
+	function doTestFooter() {
+		
+		layer.open({
+			shadeClose: false,
+			content: "确定要执行某某操作么？",
+			btn: ['确认执行', '取消'],
+			skin: 'footer',
+			yes: function(index){
+				console.log("点击了【确认执行】之后， 需要执行的代码！");
+				layer.close(index);
+			}
+		});	
+		
+	}
+	
+	
+	
+	
+	
+	
+	function doTestAlert() {
+		
+		layer.open({
+			shadeClose: false,
+			content: '需要 Alert 的内容.',
+			btn: '我知道了',
+			yes: function(index){
+				layer.close(index);
+				console.log("用户点击了 【我知道了】 之后， 需要执行的代码！");
+			}
+		});
+	  
+		console.log("Alert 之后， 需要执行的代码！");
+		
+		// 默认的 alert(); 执行过程，会在当前行停住。等待用户确认后，继续执行。
+		// 这里的 layer.open();  是非阻塞的。
+		// 需要根据具体的业务逻辑， 来判断， 代码是写在 layer.open() 的后门， 还是写在 yes 里面。
+	}
+
+
+
+
+
+
+	function doTestToast() {
+		//提示
+		layer.open({
+			content: '添加购物车成功～'
+			,skin: 'msg'
+			,time: 2 //2秒后自动关闭
+		});	
+	}
+	
+	function doTestToastFooter() {
+		//提示
+		layer.open({
+			content: '添加购物车成功～'
+			,skin: 'footer'
+			,time: 2 //2秒后自动关闭
+		});	
+	}
+
+
+
+	function doTestLoading() {
+		console.log("加载开始！");
+		layer.open({
+			type: 2,
+			shadeClose: false,
+			content: '加载中... 时间5秒',
+		});
+		setTimeout("doTestLoadingFinish()",5000);		
+	}
+	
+	
+	function doTestLoadingFinish() {
+		layer.closeAll();
+		console.log("加载完成！");
+	}
+	
+
+
+
+
+	function doTestLoadingError() {
+		console.log("加载开始！");
+		layer.open({
+			type: 2,
+			shadeClose: false,
+			content: '加载中... 时间5秒',
+		});
+		setTimeout("doTestLoadingErrorFinish()",2500);
+	}
+
+
+	function doTestLoadingErrorFinish() {
+		layer.closeAll();
+		
+		layer.open({
+			content: '加载过程中，发生了错误.'
+			,btn: '我知道了'
+			,yes: function(index){
+				layer.close(index);
+				console.log("加载失败！");
+			}
+		});
+	}
+
+  
+  
+</script>
+
+</body>
+</html>

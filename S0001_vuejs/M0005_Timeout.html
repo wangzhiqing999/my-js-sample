@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	
+	
+	<title>  vue.js  限定时间完成确认操作  </title>
+	
+	
+
+	<script type="text/javascript" src="js/vue.js"></script>
+
+
+
+
+</head>
+
+
+<body>
+
+	<h1> 限定时间完成确认操作 </h1>
+
+
+	<h3> 购买.</h3>
+	
+	<div id="app">
+		
+
+		
+		<ul v-if="step == 1">
+			<li> 价格：(2位小数)
+				<input v-model="price" @input="oninputprice" placeholder="价格"> 
+			</li>
+			
+			<li> 数量：(1位小数)
+				<input v-model="num" @input="oninputnum" placeholder="(1起步，步长0.1)">
+			</li>
+			
+			<li>
+				
+				<button v-on:click="doBuyStep1"> 购买 </button>
+			</li>
+		</ul>
+	
+
+		
+		
+		<div v-if="step == 2">
+
+            <h3>确定要完成购买操作么？</h3>
+			
+			
+			<ul>
+				<li>
+					价格: {{ price }}
+				</li>
+				<li>
+					数量：{{ num }}
+				</li>
+			</ul>
+			
+			
+			<span> 请在30秒内确认，剩余时间： {{ lockTime }} </span>
+
+			<br/>
+			<button v-on:click="doCancel"> 取消 </button>
+            <button v-bind:disabled="lockTime == 0"   v-on:click="doBuyStep2"> 确定购买 </button>
+        </div>
+		
+		
+	</div>
+
+
+
+	<script type="text/javascript">
+		var app = new Vue({
+			el: '#app',
+			data: {
+				// 处理步骤： 1=预查询，2=购买
+                step: 1,
+
+				price: "123.45",
+				num: "1",
+				
+				
+				// 锁定时间.
+				lockTime: 0
+			},
+			
+			// 计算属性.
+            computed: {
+				
+			},
+			
+			methods: {
+
+				oninputprice: function() {
+					// 通过正则过滤小数点后2位
+					this.price  = (this.price.match(/^\d*(\.?\d{0,2})/g)[0]) || null;
+					console.log("price", this.price)    
+				},
+
+				oninputnum: function() {
+					// 通过正则过滤小数点后1位
+					this.num  = (this.num.match(/^\d*(\.?\d{0,1})/g)[0]) || null;
+					console.log("num", this.num)    
+				},
+			
+			
+				doBuyStep1: function () {
+					let _this = this;
+					
+					if(_this.price <= 0) {
+						alert("请输入有效的价格！");
+						return;
+					}
+					
+					if(_this.num <= 0) {
+						alert("请输入有效的数量！");
+						return;
+					}
+					
+					
+					
+					_this.lockTime = 31;
+					
+					_this.step = 2;
+					
+					_this.startLockTime();
+				},
+				
+				
+				
+				startLockTime:  function () {
+					this.lockTime = this.lockTime - 1;
+					
+					if(this.lockTime > 0 && this.step === 2) {
+						setTimeout(this.startLockTime, 1000);
+					}
+				},
+				
+				
+				doBuyStep2: function () {
+					
+					alert("buy Finish!");
+					
+					console.log("buy Finish!");
+					
+					this.step = 1;
+				},
+				
+				
+				
+				doCancel: function () {
+					this.step = 1;
+				}
+				
+			}
+			
+		})
+	</script>
+
+
+
+
+
+
+</body>
+</html>

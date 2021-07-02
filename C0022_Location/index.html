@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title> Location 信息.  </title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<script src="../common/jquery-1.10.2.js" type="text/javascript"></script>
+</head>
+
+<body>
+	
+	
+	
+	<table border="1">
+	
+		<tr>
+			<td>window.location.hash</td>
+			<td id="hash"></td>
+		</tr>
+			
+	
+		<tr>
+			<td>window.location.host </td>
+			<td id="host"></td>
+		</tr>
+
+		<tr>
+			<td>window.location.hostname </td>
+			<td id="hostname"></td>
+		</tr>
+		
+		
+		
+		<tr>
+			<td>window.location.href</td>
+			<td id="href"></td>
+		</tr>
+		
+		
+		
+		<tr>
+			<td>window.location.pathname </td>
+			<td id="pathname"></td>
+		</tr>
+		
+		<tr>
+			<td>window.location.port </td>
+			<td id="port"></td>
+		</tr>
+		
+		
+		<tr>
+			<td>window.location.protocol</td>
+			<td id="protocol"></td>
+		</tr>
+		
+		<tr>
+			<td>window.location.search</td>
+			<td id="search"></td>
+		</tr>		
+
+
+
+		<tr>
+			<td>用于登录的 URL </td>
+			<td id="loginUrl"></td>
+		</tr>
+
+	</table>
+	
+
+
+
+
+
+<script>
+
+	$(function () {
+	
+		$("#hash").html(window.location.hash);
+		
+		$("#host").html(window.location.host);		
+		$("#hostname").html(window.location.hostname);
+
+		$("#href").html(window.location.href);		
+		$("#pathname").html(window.location.pathname);
+		$("#port").html(window.location.port);
+		
+		$("#protocol").html(window.location.protocol);
+		$("#search").html(window.location.search);
+		
+		
+		$("#loginUrl").html("/Account/Login?returnUrl=" + encodeURIComponent(window.location.pathname));
+	});
+
+
+</script>
+
+	
+</body>
+
+
+
+</html>
