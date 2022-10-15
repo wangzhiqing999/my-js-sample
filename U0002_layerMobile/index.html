@@ -81,7 +81,7 @@
 	
 	<button onclick="doTestAlert()">  替换 Alert </button>
 
-
+	<button onclick="alert('测试调用系统的 alert')">  系统的 Alert </button>
 
 
 
@@ -96,6 +96,8 @@
 	<hr/>
 	
 	<button onclick="doTestLoading()">  loading </button>
+	
+	<button onclick="doTestLoadingCount()">  loading 显示进度 </button>
 	
 	<button onclick="doTestLoadingError()">  loading 过程中，失败了！ </button>
 
@@ -145,6 +147,10 @@
 			yes: function(index){
 				console.log("点击了【确认执行】之后， 需要执行的代码！");
 				layer.close(index);
+			},
+			no: function(index){
+				console.log("点击了【取消】之后， 需要执行的代码！");
+				layer.close(index);
 			}
 		});	
 		
@@ -174,6 +180,26 @@
 		// 需要根据具体的业务逻辑， 来判断， 代码是写在 layer.open() 的后门， 还是写在 yes 里面。
 	}
 
+
+	
+	
+	// 尝试替换掉系统的 alert.
+	// 当修改已有的功能页面时，如果 页面/js 中存在 alert, 但是又不方便修改的情况下.
+	// 使用下面的代码，替换掉.
+	// 可以变更显示的效果。
+	// 但是遇到中断代码运行的情况下， 就需要注意了。
+	alert = function(msg) {
+	
+		layer.open({
+			shadeClose: false,
+			content: msg,
+			btn: '我知道了',
+			yes: function(index){
+				layer.close(index);
+			}
+		});
+		
+	}
 
 
 
@@ -215,6 +241,39 @@
 		console.log("加载完成！");
 	}
 	
+
+
+
+
+	var index = 0;
+	var count = 10;
+
+	function doTestLoadingCount() {
+		console.log("处理开始！");
+		layer.open({
+			type: 2,
+			shadeClose: false,
+			content: '处理中... ',
+		});	
+		
+		index = 0;
+		updateLoadingInfo();
+	}
+
+
+	function updateLoadingInfo() {
+		index ++;
+		$('.layui-m-layercont').children("p").html('处理中... ' + index + '/' + count);
+
+		if(index < count) {
+			setTimeout("updateLoadingInfo()",1000);	
+		} else {
+			layer.closeAll();
+		}
+	}
+
+
+
 
 
 
