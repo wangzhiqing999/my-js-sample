@@ -121,13 +121,37 @@
 			}
 		},
 		callback: {
+			// 初始化.
 			onInit: function (node) {
 				console.log('Typeahead Initiated on ' + node.selector);
 			},
+			
+			// 点击了具体的一个项目.
 			onClickAfter: function(node, a, item, event) {
 				console.log('onClickAfter  ', item);
+			},
+			
+			
+			onResult: function (node, query, result, resultCount) {
+				// 输入，或者删除，会触发这个事件。
+				console.log('onResult  ');
+				console.log('node = ', node);
+				console.log('query = ', query);
+				console.log('result = ', result);
+				console.log('resultCount = ', resultCount);
+			},
+
+			onMouseEnter: function (node, a, item, event) {			
+				console.log('onMouseEnter  ', item);
+			},
+
+			onMouseLeave: function (node, a, item, event) {
+				console.log('onMouseLeave  ', item);
 			}
-		}
+			
+			
+		},
+		debug: true
 	});
 </script>
 

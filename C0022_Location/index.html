@@ -65,6 +65,11 @@
 			<td id="loginUrl"></td>
 		</tr>
 
+		<tr>
+			<td>用于登录的 URL 2 </td>
+			<td id="loginUrl2"></td>
+		</tr>
+
 	</table>
 	
 
@@ -90,6 +95,8 @@
 		
 		
 		$("#loginUrl").html("/Account/Login?returnUrl=" + encodeURIComponent(window.location.pathname));
+		
+		$("#loginUrl2").html("/Account/Login?returnUrl=" + encodeURIComponent(window.location.pathname) + encodeURIComponent(window.location.search));
 	});
 
 

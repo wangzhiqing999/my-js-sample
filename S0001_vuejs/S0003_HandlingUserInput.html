@@ -53,10 +53,14 @@
 
 	<div id="app-6">
 		<p>{{ message }}</p>
+		<p>{{ ischecked }}</p>
 
 		<p> 修改输入框的文本信息， 观察上面的文字变化. </p>
 
 		<input v-model="message">
+		
+		<br/>
+		<input type="checkbox" v-model="ischecked">
 	</div>
 
 
@@ -64,7 +68,8 @@
 		var app6 = new Vue({
 			el: '#app-6',
 			data: {
-				message: 'Hello Vue!'
+				message: 'Hello Vue!',
+				ischecked: false
 			}
 		});
 	</script>
