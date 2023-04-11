@@ -3,7 +3,7 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <meta charset="utf-8" />
-	
+
     <title>layer.mobile-v2.0 使用例子</title>
     <meta name="keywords" content="" />
     <meta name="description" content="" />
@@ -17,10 +17,10 @@
     <meta http-equiv="Expires" content="-1">
     <meta http-equiv="Cache-Control" content="no-cache">
     <meta http-equiv="Pragma" content="no-cache">
-	
+
 	<link href="./layer_mobile/need/layer.css" rel="stylesheet" />
 	<script src="./layer_mobile/layer.js"></script>
-	
+
 	<script src="../common/jquery-1.10.2.js"></script>
 
 </head>
@@ -36,27 +36,27 @@
 				<td>姓名：</td>
 				<td id="displayName"></td>
 			</tr>
-			
+
 			<tr>
 				<td>证件号：</td>
 				<td id="displayNo"></td>
 			</tr>
-			
+
 			<tr>
 				<td>证件有效期：</td>
 				<td id="displayTime"></td>
 			</tr>
-			
+
 			<tr>
 				<td>银行卡：</td>
 				<td id="displayCard"></td>
 			</tr>
-			
+
 			<tr>
 				<td>银行预留手机号：</td>
 				<td id="displayPhone"></td>
 			</tr>
-			
+
 			<tr>
 				<td colspan="2" style="color:red;">
 				信息一旦提交无法再次修改，请确认。
@@ -67,8 +67,8 @@
 
 
 	<hr/>
-	
-	
+
+
 	<button onclick="doTest()"> 一个较为复杂的确认对话框 </button>
 
 
@@ -77,8 +77,36 @@
 
 
 
+
+
 	<hr/>
-	
+
+
+
+	<div id="displayInputDiv" style="display:none;">
+		<table style="width:100%">
+			<tr>
+				<td style="width:100px;">推荐信息：</td>
+				<td>
+					<input style="width:100%;" id="newMsgText" type="text" onchange="newMsgTextChange(this.value)" />
+				</td>
+			</tr>
+			<tr>
+				<td>推荐网址：</td>
+				<td>
+					<input style="width:100%;" id="newMsgUrl" type="text" onchange="newMsgUrlChange(this.value)" placeholder="这里填写推荐的网址" />
+				</td>
+			</tr>
+		</table>
+	</div>
+	<button onclick="doTestInput()"> 测试输入对话框 </button>
+
+
+
+
+
+	<hr/>
+
 	<button onclick="doTestAlert()">  替换 Alert </button>
 
 	<button onclick="alert('测试调用系统的 alert')">  系统的 Alert </button>
@@ -86,7 +114,7 @@
 
 
 	<hr/>
-	
+
 	<button onclick="doTestToast()">  toast 提示信息 </button>
 	<button onclick="doTestToastFooter()">  toast 底部提示信息 </button>
 
@@ -94,11 +122,11 @@
 
 
 	<hr/>
-	
+
 	<button onclick="doTestLoading()">  loading </button>
-	
+
 	<button onclick="doTestLoadingCount()">  loading 显示进度 </button>
-	
+
 	<button onclick="doTestLoadingError()">  loading 过程中，失败了！ </button>
 
 
@@ -112,17 +140,17 @@
 
 
 	function doTest() {
-	
+
 		$("#displayName").html("张三");
 		$("#displayNo").html("123456789012345678");
 		$("#displayTime").html("2030-01-01");
 		$("#displayCard").html("1234567890123456 测试银行");
 		$("#displayPhone").html("13012345678");
-		
+
 		let dataDiv = $("#displayDiv");
-		
+
 		// console.log(dataDiv.html());
-		
+
 		//询问框
 		layer.open({
 			shadeClose: false,
@@ -132,13 +160,13 @@
 				console.log("点击了【确认提交】之后， 需要执行的代码！");
 				layer.close(index);
 			}
-		});	
-	
+		});
+
 	}
-	
-	
+
+
 	function doTestFooter() {
-		
+
 		layer.open({
 			shadeClose: false,
 			content: "确定要执行某某操作么？",
@@ -152,17 +180,51 @@
 				console.log("点击了【取消】之后， 需要执行的代码！");
 				layer.close(index);
 			}
-		});	
-		
+		});
+
 	}
-	
-	
-	
-	
-	
-	
+
+
+
+
+
+
+	// 注意：组件在点了按钮后，基本没法通过 id 获取数据了。
+	// 现在的处理机制，是输入框上增加事件， 变更时，将数据存储到变量上。
+	// 点击了【确认提交】之后，直接获取变量的数值。
+
+	let inputNewMsgText = "";
+	let inputNewMsgUrl = "";
+
+	function newMsgTextChange(newVal){
+		inputNewMsgText = newVal;
+	}
+	function newMsgUrlChange(newVal){
+		inputNewMsgUrl = newVal;
+	}
+
+	function doTestInput() {
+		let dataDiv = $("#displayInputDiv");
+		//询问框
+		layer.open({
+			content: dataDiv.html()
+			,btn: ['确认提交', '取消']
+			,yes: function(index){
+				console.log("inputNewMsgText = ", inputNewMsgText);
+				console.log("inputNewMsgUrl = ", inputNewMsgUrl);
+				layer.close(index);
+			}
+		});
+	}
+
+
+
+
+
+
+
 	function doTestAlert() {
-		
+
 		layer.open({
 			shadeClose: false,
 			content: '需要 Alert 的内容.',
@@ -172,24 +234,24 @@
 				console.log("用户点击了 【我知道了】 之后， 需要执行的代码！");
 			}
 		});
-	  
+
 		console.log("Alert 之后， 需要执行的代码！");
-		
+
 		// 默认的 alert(); 执行过程，会在当前行停住。等待用户确认后，继续执行。
 		// 这里的 layer.open();  是非阻塞的。
 		// 需要根据具体的业务逻辑， 来判断， 代码是写在 layer.open() 的后门， 还是写在 yes 里面。
 	}
 
 
-	
-	
+
+
 	// 尝试替换掉系统的 alert.
 	// 当修改已有的功能页面时，如果 页面/js 中存在 alert, 但是又不方便修改的情况下.
 	// 使用下面的代码，替换掉.
 	// 可以变更显示的效果。
 	// 但是遇到中断代码运行的情况下， 就需要注意了。
 	alert = function(msg) {
-	
+
 		layer.open({
 			shadeClose: false,
 			content: msg,
@@ -198,7 +260,7 @@
 				layer.close(index);
 			}
 		});
-		
+
 	}
 
 
@@ -211,16 +273,16 @@
 			content: '添加购物车成功～'
 			,skin: 'msg'
 			,time: 2 //2秒后自动关闭
-		});	
+		});
 	}
-	
+
 	function doTestToastFooter() {
 		//提示
 		layer.open({
 			content: '添加购物车成功～'
 			,skin: 'footer'
 			,time: 2 //2秒后自动关闭
-		});	
+		});
 	}
 
 
@@ -232,15 +294,15 @@
 			shadeClose: false,
 			content: '加载中... 时间5秒',
 		});
-		setTimeout("doTestLoadingFinish()",5000);		
+		setTimeout("doTestLoadingFinish()",5000);
 	}
-	
-	
+
+
 	function doTestLoadingFinish() {
 		layer.closeAll();
 		console.log("加载完成！");
 	}
-	
+
 
 
 
@@ -254,8 +316,8 @@
 			type: 2,
 			shadeClose: false,
 			content: '处理中... ',
-		});	
-		
+		});
+
 		index = 0;
 		updateLoadingInfo();
 	}
@@ -266,7 +328,7 @@
 		$('.layui-m-layercont').children("p").html('处理中... ' + index + '/' + count);
 
 		if(index < count) {
-			setTimeout("updateLoadingInfo()",1000);	
+			setTimeout("updateLoadingInfo()",1000);
 		} else {
 			layer.closeAll();
 		}
@@ -291,7 +353,7 @@
 
 	function doTestLoadingErrorFinish() {
 		layer.closeAll();
-		
+
 		layer.open({
 			content: '加载过程中，发生了错误.'
 			,btn: '我知道了'
@@ -302,8 +364,8 @@
 		});
 	}
 
-  
-  
+
+
 </script>
 
 </body>

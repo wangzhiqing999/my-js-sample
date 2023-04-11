@@ -8,6 +8,7 @@
 
 <body>
 	
+	<h2>我是一个用于测试的明细页面</h2>
 	
 	
 	<table border="1">
@@ -70,23 +71,42 @@
 			<td id="loginUrl2"></td>
 		</tr>
 
-
-
-		
-		
-		<tr>
-			<td> 假设本页面是 列表页 </td>
-			<td> <a href="detail.html">前往明细页面</a> </td>
-		</tr>
-
-
 	</table>
 	
 
 
-<hr/>
+	<hr/>
+
+	<p>
+	点击下面的 上一集/下一集之后， 点击浏览器的后退， 将不会直接返回列表页面。
+	<br/>
+	而是先返回之前访问的明细页面，点击多次后退后，才返回列表页面.
+	</p>
+	<ul>
+		<li> 
+			<a href="detail.html?id=3"> 上一集 </a>
+		</li>
+		<li>
+			<a href="detail.html?id=5"> 下一集 </a>
+		</li>
+	</ul>
 
 
+
+	<hr/>
+	
+	<p>
+	点击下面的 上一集/下一集之后， 点击浏览器的后退， 将直接返回列表页面。
+	</p>
+
+	<ul>
+		<li> 
+			<a href="javascript:void(0);" class="other-data" data-id="3" > 上一集 </a>
+		</li>
+		<li>
+			<a href="javascript:void(0);" class="other-data" data-id="5" > 下一集 </a>
+		</li>
+	</ul>
 
 
 
@@ -110,6 +130,24 @@
 		$("#loginUrl").html("/Account/Login?returnUrl=" + encodeURIComponent(window.location.pathname));
 		
 		$("#loginUrl2").html("/Account/Login?returnUrl=" + encodeURIComponent(window.location.pathname) + encodeURIComponent(window.location.search));
+	});
+
+
+
+	// 上一集/下一集 的处理.
+	$(function () {
+		$(".other-data").click(function () {
+			let vid = $(this).attr("data-id");
+			let newUrl = 'detail.html?id=' + vid;
+			
+			window.location.replace(newUrl);
+			
+			
+			
+			// 注：如果明细页面，是 iframe 里面的话，可以尝试
+			// top.location.replace(newUrl);
+			
+		});
 	});
 
 
