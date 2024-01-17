@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>  vue.js  列表页 - 批量删除数据.	</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<script type="text/javascript" src="../common/jquery-1.10.2.js"></script>
+
+	<script type="text/javascript" src="js/vue.js"></script>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        .floating-window {
+            position: fixed;
+            width: 250px;
+            background-color: #f1f1f1;
+            border: 1px solid #d3d3d3;
+            z-index: 9999;
+        }
+
+        .floating-window-header {
+            padding: 10px;
+            cursor: move;
+            background-color: #2196F3;
+            color: #fff;
+            font-weight: bold;
+        }
+
+        .floating-window-content {
+            padding: 10px;
+        }
+		
+        .wait-remove {
+            text-decoration: line-through;
+        }		
+    </style>
+</head>
+
+
+<body>
+
+<h1> 列表页  </h1>
+
+<p>
+这里的例子，是用于，在已有的后端渲染的页面上， 增加 vue 的批量删除的功能。
+<br/>
+旧有的功能页面，是使用 jquery 的.
+<br/>
+在这个页面额外增加的功能，是使用 vue 的。
+</p>
+
+
+<div class="box-body table-responsive no-padding">
+	<table class="table table-bordered table-striped dataTable" role="grid"  border="1">
+        <thead>
+            <tr role="row">
+                <th class="my-title sorting" data-name="ImportBatch">
+                    导入批次
+                </th>
+                <th class="my-title sorting" data-name="CreateDate">
+                    导入日期
+                </th>
+                <th class="my-title sorting" data-name="Quantity">
+                    导入数量
+                </th>
+
+				<th>
+					操作处理
+				</th>
+            </tr>
+        </thead>
+
+        <tbody>
+			<tr id="tr_202401010001">
+				<td>
+					202401010001
+				</td>
+				<td>
+					20240101
+				</td>
+				<td>
+					123
+				</td>
+				<td>
+					<button id="btnAddToRemove202401010001" class="btn btn-default btn-sm btn-add-to-remove" data-id="202401010001">
+                    加入待删除列表
+                    </button>
+				</td>
+			</tr>
+
+			<tr id="tr_202401020001">
+				<td>
+					202401020001
+				</td>
+				<td>
+					20240102
+				</td>
+				<td>
+					234
+				</td>
+				<td>
+					<button id="btnAddToRemove202401020001" class="btn btn-default btn-sm btn-add-to-remove" data-id="202401020001">
+                    加入待删除列表
+                    </button>
+				</td>
+			</tr>
+
+
+			<tr id="tr_202401030001">
+				<td>
+					202401030001
+				</td>
+				<td>
+					20240103
+				</td>
+				<td>
+					345
+				</td>
+				<td>
+					<button id="btnAddToRemove202401030001" class="btn btn-default btn-sm btn-add-to-remove" data-id="202401030001">
+                    加入待删除列表
+                    </button>
+				</td>
+			</tr>
+
+			<tr id="tr_202401040001">
+				<td>
+					202401040001
+				</td>
+				<td>
+					20240104
+				</td>
+				<td>
+					456
+				</td>
+				<td>
+					<button id="btnAddToRemove202401040001" class="btn btn-default btn-sm btn-add-to-remove" data-id="202401040001">
+                    加入待删除列表
+                    </button>
+				</td>
+			</tr>
+
+			<tr id="tr_202401050001">
+				<td>
+					202401050001
+				</td>
+				<td>
+					20240105
+				</td>
+				<td>
+					567
+				</td>
+				<td>
+					<button id="btnAddToRemove202401050001" class="btn btn-default btn-sm btn-add-to-remove" data-id="202401050001">
+                    加入待删除列表
+                    </button>
+				</td>
+			</tr>
+
+        </tbody>
+    </table>
+</div>
+
+
+
+
+<div id="floatingWindow" class="floating-window" style="top: 100px; left: 500px;">
+    <div id="floatingWindowHeader" class="floating-window-header">
+        待删除列表
+    </div>
+
+    <div id="app" class="floating-window-content">
+		<ul>
+			<li v-for="(item, index) in items">
+				<span> {{ item }} </span>
+				<button v-on:click="removeItem(index, $event)">x</button>
+			</li>
+		</ul>
+
+		<button v-on:click="batchRemove()">执行批量移除</button>
+    </div>
+
+
+</div>
+
+
+
+	
+	<script>
+		// 针对已有页面，jquery 的相关代码.
+		
+		$(document).ready(function () {
+			// 加入待删除列表.
+            $(".btn-add-to-remove").click(function () {
+                let _this = $(this);
+                let id = _this.attr("data-id");
+
+				// 这里是调用 vue 的增加数据的方法.
+                app.newItem(id);
+
+				// 这里是使用 jquery, 修改已有的 html 样式.
+                removeBatch(id);
+            });
+        });
+
+
+		// 加入待删除列表后，需要修改表格的样式.
+        function removeBatch(batchCode) {
+            let tr = $("#tr_" + batchCode);
+            tr.addClass("wait-remove");
+
+            let btn2 = $("#btnAddToRemove" + batchCode);
+            btn2.attr("disabled", "disabled");
+        }
+
+		// 从待删除列表取消删除后，需要恢复表格的样式.
+        function unremoveBatch(batchCode) {
+            let tr = $("#tr_" + batchCode);
+            tr.removeClass("wait-remove");
+
+            let btn2 = $("#btnAddToRemove" + batchCode);
+            btn2.removeAttr("disabled");
+        }
+
+
+		// 完成删除后，需要从画面上物理清除掉.
+        function deleteBatch(batchCode) {
+            let tr = $("#tr_" + batchCode);
+            tr.remove();            
+        }
+
+
+		
+		// 调用 ajax， 向后台提交删除数据的处理.
+		function doRemoveBatch(batchCode) {
+			/*
+            $.ajax({
+                url: "/....../DeleteBatch?batch=" + batchCode,
+                type: "POST",
+                success: function (result) {
+
+                    if (result.IsSuccess === false) {
+                        alert(result.ResultMessage);
+                        return;
+                    }
+
+                    deleteBatch(batchCode);
+                }
+            });
+			*/
+			
+			setTimeout("deleteBatch('" + batchCode + "')", 3000);
+        }
+
+	</script>
+
+
+
+
+
+	<script>
+		// 可拖动悬浮窗
+		const floatingWindow = document.getElementById("floatingWindow");
+		const floatingWindowHeader = document.getElementById("floatingWindowHeader");
+
+		let offsetX = 0;
+		let offsetY = 0;
+		let isMouseDown = false;
+
+		floatingWindowHeader.addEventListener("mousedown", (e) => {
+			offsetX = e.clientX - floatingWindow.getBoundingClientRect().left;
+			offsetY = e.clientY - floatingWindow.getBoundingClientRect().top;
+			isMouseDown = true;
+		});
+
+		document.addEventListener("mousemove", (e) => {
+			if (!isMouseDown) return;
+			floatingWindow.style.left = e.clientX - offsetX + "px";
+			floatingWindow.style.top = e.clientY - offsetY + "px";
+		});
+
+		document.addEventListener("mouseup", () => {
+			isMouseDown = false;
+		});
+	</script>
+
+
+
+	<script type="text/javascript">
+		var app = new Vue({
+			el: '#app',
+			data: {
+				// 删除列表数据.
+				items: []
+			},
+			// 方法.
+			methods: {
+
+				// 新增一行明细.
+				newItem: function (item) {
+					this.items.push(item);
+				},
+
+
+				// 移除一行明细.
+				removeItem: function (index, event) {
+					
+					// 取得 批次代码.
+					let batchCode = this.items[index];
+
+					// 恢复表格的样式.
+					unremoveBatch(batchCode);
+				
+					// 从待删除列表中删除数据,
+					this.items.splice(index, 1);
+				},
+
+				// 批量移除.
+				batchRemove: function (index, event) {
+				
+					var r = confirm("确定要删除这" + this.items.length + "个批次的数据么？");
+					if (r == false) {
+						return;
+					}
+				
+					// 执行后台删除操作.
+					for(let i = 0, c = this.items.length; i < c; i ++) {
+						
+						let batchCode = this.items[i];
+						console.log("移除：" + batchCode);
+						doRemoveBatch(batchCode);
+						
+					}
+
+					this.items = [];
+				}
+			}
+		})
+	</script>
+
+
+
+</body>
+</html>

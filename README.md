@@ -161,4 +161,7 @@ Css 中， Flex 的学习代码。
 layer.mobile-v2.0 使用的一些例子.
 
 
+### U0003_floating
+浮动窗口的例子.
+
 

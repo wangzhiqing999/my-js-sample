@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Draggable and Auto-moving Floating Windows</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        .floating-window {
+            position: fixed;
+            width: 200px;
+            background-color: #f1f1f1;
+            border: 1px solid #d3d3d3;
+            z-index: 9999;
+        }
+
+        .floating-window-header {
+            padding: 10px;
+            cursor: move;
+            background-color: #2196F3;
+            color: #fff;
+            font-weight: bold;
+        }
+
+        .floating-window-content {
+            padding: 10px;
+        }
+    </style>
+</head>
+<body>
+
+
+	<table border="1">
+		<tr>
+			<td>
+				标题
+			</td>
+			<td>
+				内容
+			</td>
+		</tr>
+
+
+		<tr>
+			<td>
+				测试目的1.
+			</td>
+			<td>
+				当页面数据挺多，<br/> 存在滚动条的情况下，<br/>这个浮动窗口，<br/>会不会跟着滚动。
+			</td>
+		</tr>
+
+
+
+		<tr>
+			<td>
+				测试.
+			</td>
+			<td>
+	<p>
+<pre><code>
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+</code></pre>
+	</p>
+			</td>
+		</tr>
+
+		<tr>
+			<td>
+				测试.
+			</td>
+			<td>
+	<p>
+<pre><code>
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+</code></pre>
+	</p>
+			</td>
+		</tr>
+
+		<tr>
+			<td>
+				测试.
+			</td>
+			<td>
+	<p>
+<pre><code>
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+</code></pre>
+	</p>
+			</td>
+		</tr>
+
+		<tr>
+			<td>
+				测试.
+			</td>
+			<td>
+	<p>
+<pre><code>
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+</code></pre>
+	</p>
+			</td>
+		</tr>
+
+		<tr>
+			<td>
+				测试.
+			</td>
+			<td>
+	<p>
+<pre><code>
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+</code></pre>
+	</p>
+			</td>
+		</tr>
+
+		<tr>
+			<td>
+				测试.
+			</td>
+			<td>
+	<p>
+<pre><code>
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+</code></pre>
+	</p>
+			</td>
+		</tr>
+
+	</table>
+
+
+
+
+
+    <div id="floatingWindow" class="floating-window" style="top: 100px; left: 100px;">
+        <div id="floatingWindowHeader" class="floating-window-header">
+            悬浮窗1
+        </div>
+        <div class="floating-window-content">
+            这是一个可拖动的悬浮窗口。
+        </div>
+    </div>
+	
+	
+	
+	
+    <div id="autoMovingWindow" class="floating-window" style="top: 200px; left: 200px;">
+        <div class="floating-window-header">
+            悬浮窗2
+        </div>
+        <div class="floating-window-content">
+            这是一个自动改变位置的悬浮窗口。
+        </div>
+    </div>
+
+
+
+
+    <script>
+        // 可拖动悬浮窗
+        const floatingWindow = document.getElementById("floatingWindow");
+        const floatingWindowHeader = document.getElementById("floatingWindowHeader");
+
+        let offsetX = 0;
+        let offsetY = 0;
+        let isMouseDown = false;
+
+        floatingWindowHeader.addEventListener("mousedown", (e) => {
+            offsetX = e.clientX - floatingWindow.getBoundingClientRect().left;
+            offsetY = e.clientY - floatingWindow.getBoundingClientRect().top;
+            isMouseDown = true;
+        });
+
+        document.addEventListener("mousemove", (e) => {
+            if (!isMouseDown) return;
+            floatingWindow.style.left = e.clientX - offsetX + "px";
+            floatingWindow.style.top = e.clientY - offsetY + "px";
+        });
+
+        document.addEventListener("mouseup", () => {
+            isMouseDown = false;
+        });
+	</script>
+	
+
+
+	
+	<script>
+        // 自动移动悬浮窗
+        const autoMovingWindow = document.getElementById("autoMovingWindow");
+        let deltaX = 1;
+        let deltaY = 1;
+
+        function moveAutoMovingWindow() {
+            const rect = autoMovingWindow.getBoundingClientRect();
+            if (rect.left + rect.width >= window.innerWidth || rect.left <= 0) {
+                deltaX = -deltaX;
+            }
+            if (rect.top + rect.height >= window.innerHeight || rect.top <= 0) {
+                deltaY = -deltaY;
+            }
+            autoMovingWindow.style.left = rect.left + deltaX + "px";
+            autoMovingWindow.style.top = rect.top + deltaY + "px";
+        }
+
+        setInterval(moveAutoMovingWindow, 20);
+    </script>
+</body>
+</html>
