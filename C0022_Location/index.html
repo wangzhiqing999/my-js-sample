@@ -7,17 +7,17 @@
 </head>
 
 <body>
-	
-	
-	
+
+
+
 	<table border="1">
-	
+
 		<tr>
 			<td>window.location.hash</td>
 			<td id="hash"></td>
 		</tr>
-			
-	
+
+
 		<tr>
 			<td>window.location.host </td>
 			<td id="host"></td>
@@ -27,42 +27,46 @@
 			<td>window.location.hostname </td>
 			<td id="hostname"></td>
 		</tr>
-		
-		
-		
+
+
+
 		<tr>
 			<td>window.location.href</td>
 			<td id="href"></td>
 		</tr>
-		
-		
-		
+
+
+
 		<tr>
 			<td>window.location.pathname </td>
 			<td id="pathname"></td>
 		</tr>
-		
+
 		<tr>
 			<td>window.location.port </td>
 			<td id="port"></td>
 		</tr>
-		
-		
+
+
 		<tr>
 			<td>window.location.protocol</td>
 			<td id="protocol"></td>
 		</tr>
-		
+
 		<tr>
 			<td>window.location.search</td>
 			<td id="search"></td>
 		</tr>
-		
+
 		<tr>
 			<td>URLSearchParams</td>
 			<td id="searchParams"> </td>
 		</tr>
 
+		<tr>
+			<td>落地页</td>
+			<td id="searchLDY"> </td>
+		</tr>
 
 
 		<tr>
@@ -77,12 +81,19 @@
 
 
 
-		
+
 		<tr>
 			<td> 模拟一个查询的 url </td>
 			<td> <a href="index.html?x=1&y=2&z=3">查询操作</a> </td>
 		</tr>
-		
+
+
+		<tr>
+			<td> 模拟一个落地页的 url </td>
+			<td> <a href="index.html?adid=__AID__&creativeid=__CID__&creativetype=__CTYPE__&clickid=__CLICKID__">落地页查询操作</a> </td>
+		</tr>
+
+
 		<tr>
 			<td> 假设本页面是 列表页 </td>
 			<td> <a href="detail.html">前往明细页面</a> </td>
@@ -90,7 +101,7 @@
 
 
 	</table>
-	
+
 
 
 <hr/>
@@ -102,38 +113,49 @@
 <script>
 
 	$(function () {
-	
+
 		$("#hash").html(window.location.hash);
-		
-		$("#host").html(window.location.host);		
+
+		$("#host").html(window.location.host);
 		$("#hostname").html(window.location.hostname);
 
-		$("#href").html(window.location.href);		
+		$("#href").html(window.location.href);
 		$("#pathname").html(window.location.pathname);
 		$("#port").html(window.location.port);
-		
+
 		$("#protocol").html(window.location.protocol);
 		$("#search").html(window.location.search);
-		
-		
+
+
 		let urlSearch = new URLSearchParams(window.location.search);
-		let searchParams = '<ul>'		
-		searchParams = searchParams + '<li>' + 'x=' + urlSearch.getAll('x') + '</li>'
-		searchParams = searchParams + '<li>' + 'y=' + urlSearch.getAll('y') + '</li>'
-		searchParams = searchParams + '<li>' + 'z=' + urlSearch.getAll('z') + '</li>'		
-		searchParams += '</ul>'
+		let searchParams = '<ul>';
+		searchParams = searchParams + '<li>' + 'x=' + urlSearch.getAll('x') + '</li>';
+		searchParams = searchParams + '<li>' + 'y=' + urlSearch.getAll('y') + '</li>';
+		searchParams = searchParams + '<li>' + 'z=' + urlSearch.getAll('z') + '</li>';
+		searchParams += '</ul>';
 		$("#searchParams").html(searchParams);
-		
-		
+
+
+
+		let searchLDY = '<ul>';
+		searchLDY = searchLDY + '<li>' + 'adid=' + urlSearch.getAll('adid') + '</li>';
+		searchLDY = searchLDY + '<li>' + 'creativeid=' + urlSearch.getAll('creativeid') + '</li>';
+		searchLDY = searchLDY + '<li>' + 'creativetype=' + urlSearch.getAll('creativetype') + '</li>';
+		searchLDY = searchLDY + '<li>' + 'clickid=' + urlSearch.getAll('clickid') + '</li>';
+		searchLDY += '</ul>';
+		$("#searchLDY").html(searchLDY);
+
+
+
 		$("#loginUrl").html("/Account/Login?returnUrl=" + encodeURIComponent(window.location.pathname));
-		
+
 		$("#loginUrl2").html("/Account/Login?returnUrl=" + encodeURIComponent(window.location.pathname) + encodeURIComponent(window.location.search));
 	});
 
 
 </script>
 
-	
+
 </body>
 
 
