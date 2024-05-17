@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover" />
+  <title>页面底部弹出菜单</title>
+  <link rel="stylesheet" href="./css/base.css">
+</head>
+<body>
+<div class="top-card">
+  <div>
+    <div style="font-size: 22px;">页面底部弹出菜单</div>
+    <div style="margin-top: 14px">点击右边的切换弹出菜单</div>
+  </div>
+  <div class="top-card-button">
+    <span style="display: inline-block; margin-right: 8px">切换</span>
+    <img src="./images/switch.png" style="height: 20px; width: 20px;" alt="">
+  </div>
+</div>
+
+<div class="van-overlay" tabindex="0" style="z-index: 2001;display: none;"></div>
+<div class="van-popup van-popup--round van-popup--bottom van-safe-area-bottom van-action-sheet" style="z-index: 2001;display: none;">
+  <div class="van-action-sheet__header border-bottom">我的权益</div>
+  <div class="van-action-sheet__content">
+    <div class="action-sheet-content">
+      <div class="action-sheet-item border-bottom">选项一</div>
+      <div class="action-sheet-item border-bottom">选项2</div>
+      <div class="action-sheet-item border-bottom">选项3</div>
+    </div>
+  </div>
+  <div class="van-action-sheet__footer">取消</div>
+</div>
+<script src="../common/jquery-1.10.2.js"></script>
+<script>
+  var $topCard = $('.top-card');
+  var $vanoverlay = $('.van-overlay');
+  var $vanpopup = $('.van-popup');
+
+  function popup(display) {
+    $vanoverlay.css({display: display});
+    $vanpopup.css({display: display})
+  }
+  $topCard.click(function() {
+    popup('inherit')
+  })
+
+  $('body').on('click', '.van-overlay', function() {
+    popup('none');
+  })
+
+  $vanpopup.on('click', '.van-action-sheet__footer', function(e) {
+    popup('none');
+  })
+  $vanpopup.on('click', '.action-sheet-item', function(e) {
+    alert(e.target.innerText);
+    popup('none');
+  })
+</script>
+</body>
+</html>

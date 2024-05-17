@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover" />
+  <title>测试对话框</title>
+  <link rel="stylesheet" href="./css/base.css">
+  <style>
+    body * {
+      color: #3D3D3D !important;
+    }
+
+    .swiper-container {
+      height: 108px !important;
+    }
+
+    .touchBox .touchItem {
+      height: 100px !important;
+    }
+
+    .touchBox {
+      height: 116px !important;
+    }
+
+    .head-name {
+      font-size: 1.16em !important;
+    }
+
+    .more {
+      font-size: 1.16em !important;
+      color: #979797 !important;
+      font-weight: 300 !important;
+    }
+
+    .courTitle {
+      font-size: 1.16em !important;
+      color: #171717 !important;
+      font-weight: 300 !important;
+    }
+
+    .courTimeNum {
+      color: #9E9E9E !important;
+    }
+
+
+    .touchBox-content{
+      height: inherit !important;
+    }
+
+    .touchBox-content .touchItem {margin-left: 0 !important;width: 100% !important;height: inherit !important;}
+
+    .r-con {
+      position: relative;
+      padding-left: 0 !important;
+      display: flex;
+      align-items: center;
+      height: inherit !important;
+      padding: 7px 0;
+    }
+
+    .r-con:before {
+      content:  '';
+      background-image: url(./images/yanbao.png);
+      width: 27px;
+      height: 27px;
+      display: inline-block;
+      background-size: contain;
+      margin-top: 10px;
+    }
+
+    .r-con .courTitle {
+      flex: 1;
+      margin-left: 10px;
+    }
+  </style>
+  <style>
+    .hidden {
+      display: none !important;
+    }
+
+    .noLogin {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      background-size: cover;
+      z-index: 9999999;
+    }
+
+    .loginBox {
+      width: 82%;
+      height: 14em;
+      box-shadow: 0px 2px 7px 1px rgba(0, 0, 0, 0.2);
+      position: absolute;
+      top: 14em;
+      left: 9%;
+      background-color: #FFFFFF;
+      border-radius: 13px;
+    }
+
+    .openState {
+      color: #3D3D3D;
+      font-weight: 600;
+      font-size: 1.5em;
+      padding-top: 1.2em;
+      padding-bottom: 0.9em;
+      text-align: center;
+    }
+
+    .connect {
+      font-size: 1.2em;
+      color: #333333;
+      margin-left: 1em;
+    }
+
+    .openDl {
+      width: 100%;
+      position: absolute;
+      bottom: 0;
+      height: 2.5em;
+      font-size: 1.5em;
+      border-top: 1px solid #EBEBEB;
+    }
+
+    .openDl dd {
+      display: block;
+      width: 50%;
+      float: left;
+      height: 2.5em;
+      line-height: 2.5em;
+      position: relative;
+      text-align: center;
+      box-sizing: border-box;
+    }
+
+    .openDl dd a {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      color: #E73C37;
+    }
+
+    .openDl dd:first-child {
+      border-right: 1px solid #EBEBEB;
+    }
+    .border-none {
+      border: none !important;
+    }
+
+    .openDl .enter-btn-confirm,
+    .openDl .enter-btn-cancel {
+      color: #3D3D3D;
+      border: 1px solid #ED732E;
+      width: 107px;
+      height: 36px;
+      font-size: 14px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-radius: 4px;
+    }
+
+    .openDl .enter-btn-confirm {
+      background: #ED732E;
+      color: white !important;
+    }
+
+    .openDl-footer dd {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding-bottom: 20px;
+    }
+  </style>
+</head>
+<body>
+<div class="noLogin">
+  <div class="loginBox">
+    <p class="openState">测试对话框</p>
+    <div class="connect" style="text-align:center;">点取消关闭 <br> 或点击下方购买</div>
+    <dl class="openDl openDl-footer border-none" style="display: flex">
+      <dd class="border-none">
+        <div class="enter-btn-cancel">取消</div>
+      </dd>
+      <dd class="border-none">
+        <div class="enter-btn-confirm">购买</div>
+      </dd>
+    </dl>
+  </div>
+</div>
+<script src="../common/jquery-1.10.2.js"></script>
+<script>
+  var $dialog = $(".noLogin");
+
+  $dialog.on("click", ".enter-btn-cancel", function() {
+    hideDialog();
+  });
+
+  $dialog.on("click", ".enter-btn-confirm", function() {
+    alert('购买');
+    hideDialog();
+  });
+
+  function showDialog() {
+    $dialog.removeClass("hidden");
+  }
+
+  function hideDialog() {
+    $dialog.addClass("hidden");
+  }
+</script>
+</body>
+</html>

@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>  xm-select  例子 - 主题  </title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<script type="text/javascript" src="js/xm-select.js"></script>
+</head>
+
+
+<body>
+
+	<h1>   xm-select  例子 - 主题   </h1>
+
+	<p>
+		<ul>
+			<li>
+				1. 默认
+				<br/>
+				<div id="demo1"></div>
+			</li>
+
+			<li>
+				2. 嫣红 ( #e54d42 )
+				<br/>
+				<div id="demo2"></div>
+			</li>
+
+			<li>
+				3. 桔橙 ( #f37b1d )
+				<br/>
+				<div id="demo3"></div>
+			</li>
+
+			<li>
+				4. 明黄 ( #fbbd08 )
+				<br/>
+				<div id="demo4"></div>
+			</li>
+
+
+			<li>
+				5. 橄榄 ( #8dc63f )
+				<br/>
+				<div id="demo5"></div>
+			</li>
+
+			<li>
+				6. 天青 ( #1cbbb4 )
+				<br/>
+				<div id="demo6"></div>
+			</li>
+
+
+			<li>
+				7.海蓝 ( #0081ff )
+				<br/>
+				<div id="demo7"></div>
+			</li>
+			<li>
+				8.姹紫 ( #6739b6 )
+				<br/>
+				<div id="demo8"></div>
+			</li>
+			<li>
+				9.木槿 ( #9c26b0 )
+				<br/>
+				<div id="demo9"></div>
+			</li>
+			<li>
+				10.桃粉 ( #e03997 )
+				<br/>
+				<div id="demo10"></div>
+			</li>
+
+
+			<li>
+				11.棕褐 ( #a5673f )
+				<br/>
+				<div id="demo11"></div>
+			</li>
+			<li>
+				12.玄灰 ( #8799a3 )
+				<br/>
+				<div id="demo12"></div>
+			</li>
+			<li>
+				13.草灰 ( #aaaaaa )
+				<br/>
+				<div id="demo13"></div>
+			</li>
+			<li>
+				14. 墨黑 ( #333333 )
+				<br/>
+				<div id="demo14"></div>
+			</li>
+
+		</ul>
+	</p>
+
+
+	<script>
+		var datas = [
+				{name: '张三', value: '0003', selected: true},
+				{name: '李四', value: '0004'},
+				{name: '王五', value: '0005'},
+				{name: '赵六', value: '0006'}
+			];
+	</script>
+
+
+
+
+	<script>
+		var demo1 = xmSelect.render({
+			el: '#demo1',
+			data: function () {
+				return datas;
+			}
+	    });
+	</script>
+
+
+	<script>
+		var demo2 = xmSelect.render({
+			el: '#demo2',
+			theme: {
+				color: '#e54d42',
+			},
+			data: function () {
+				return datas;
+			}
+	    });
+	</script>
+
+
+	<script>
+		var demo3 = xmSelect.render({
+			el: '#demo3',
+			theme: {
+				color: '#f37b1d',
+			},
+			data: function () {
+				return datas;
+			}
+		});
+	</script>
+
+	<script>
+		var demo4 = xmSelect.render({
+			el: '#demo4',
+			theme: {
+				color: '#fbbd08',
+			},
+			data: function () {
+				return datas;
+			}
+		});
+	</script>
+
+	<script>
+		var demo5 = xmSelect.render({
+			el: '#demo5',
+			theme: {
+				color: '#8dc63f',
+			},
+			data: function () {
+				return datas;
+			}
+		});
+	</script>
+
+	<script>
+		var demo6 = xmSelect.render({
+			el: '#demo6',
+			theme: {
+				color: '#1cbbb4',
+			},
+			data: function () {
+				return datas;
+			}
+		});
+	</script>
+
+
+
+	<script>
+		var demo7 = xmSelect.render({
+			el: '#demo7',
+			theme: {
+				color: '#0081ff',
+			},
+			data: function () {
+				return datas;
+			}
+		});
+
+		var demo8 = xmSelect.render({
+			el: '#demo8',
+			theme: {
+				color: '#6739b6',
+			},
+			data: function () {
+				return datas;
+			}
+		});
+
+		var demo9 = xmSelect.render({
+			el: '#demo9',
+			theme: {
+				color: '#9c26b0',
+			},
+			data: function () {
+				return datas;
+			}
+		});
+
+		var demo10 = xmSelect.render({
+			el: '#demo10',
+			theme: {
+				color: '#e03997',
+			},
+			data: function () {
+				return datas;
+			}
+		});
+
+
+
+		var demo11 = xmSelect.render({
+			el: '#demo11',
+			theme: {
+				color: '#a5673f',
+			},
+			data: function () {
+				return datas;
+			}
+		});
+		var demo12 = xmSelect.render({
+			el: '#demo12',
+			theme: {
+				color: '#8799a3',
+			},
+			data: function () {
+				return datas;
+			}
+		});
+		var demo13 = xmSelect.render({
+			el: '#demo13',
+			theme: {
+				color: '#aaaaaa',
+			},
+			data: function () {
+				return datas;
+			}
+		});
+		var demo14 = xmSelect.render({
+			el: '#demo14',
+			theme: {
+				color: '#333333',
+			},
+			data: function () {
+				return datas;
+			}
+		});
+	</script>
+
+
+</body>
+</html>

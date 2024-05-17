@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>  xm-select  例子 - 搜索模式  </title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<script type="text/javascript" src="js/xm-select.js"></script>
+</head>
+
+
+<body>
+
+	<h1>   xm-select  例子 - 搜索模式   </h1>
+	
+	
+	<p>
+		<ul>
+			<li>
+				1. 默认搜索
+				<br/>
+				<div id="demo1"></div>
+			</li>
+			
+			<li>
+				2. 重写搜索方法
+				<br/>
+				<div id="demo2"></div>
+			</li>
+			
+			<li>
+				3. 搜索延迟
+				<br/>
+				<div id="demo3"></div>
+			</li>
+
+		</ul>
+	</p>
+	
+	
+	
+	
+	
+	
+	
+	<script>
+		var demo1 = xmSelect.render({
+			el: '#demo1', 
+			filterable: true,
+			data: [
+				{name: '张三', value: '0003'},
+				{name: '李四', value: '0004'},
+				{name: '王五', value: '0005'},
+				{name: '赵六', value: '0006'}
+			],
+	    });	   
+	</script>
+
+
+	<script>
+		var demo2 = xmSelect.render({
+			el: '#demo2', 
+			filterable: true,
+			filterMethod: function(val, item, index, prop){
+				if(val == item.value){//把value相同的搜索出来
+					return true;
+				}
+				if(item.name.indexOf(val) != -1){//名称中包含的搜索出来
+					return true;
+				}
+				return false;//不知道的就不管了
+			},
+			data: [
+				{name: '张三', value: '0003'},
+				{name: '李四', value: '0004'},
+				{name: '王五', value: '0005'},
+				{name: '赵六', value: '0006'}
+			],
+	    });	   
+	</script>
+
+
+	<script>
+		var demo3 = xmSelect.render({
+			el: '#demo3', 
+			filterable: true,
+			delay: 2000,
+			data: [
+				{name: '张三', value: '0003'},
+				{name: '李四', value: '0004'},
+				{name: '王五', value: '0005'},
+				{name: '赵六', value: '0006'}
+			],
+		});
+	</script>
+
+</body>
+</html>

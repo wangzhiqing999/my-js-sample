@@ -70,6 +70,10 @@
 使用 jspdf 的例子.
 
 
+### C0071_xm-select
+使用 xm-select 的例子.
+
+
 ### E0001_ES6_HelloWorld
 es6 的 hello world 的例子。  包含 es6 转 es5 的处理方法。
 
@@ -164,4 +168,7 @@ layer.mobile-v2.0 使用的一些例子.
 ### U0003_floating
 浮动窗口的例子.
 
+
+### U0004_menu_dialog
+手机页面，底部弹出菜单与对话框的例子。
 

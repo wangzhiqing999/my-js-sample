@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>  xm-select  例子 - 隐藏图标  </title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<script type="text/javascript" src="js/xm-select.js"></script>
+</head>
+
+
+<body>
+
+	<h1>   xm-select  例子 - 隐藏图标    </h1>
+	
+
+	<h3> 隐藏单选图标 </h3>
+
+<div id="demo1" class="xm-select-demo"></div>
+<div id="demo2" class="xm-select-demo"></div>
+
+<script>
+var demo1 = xmSelect.render({
+	el: '#demo1', 
+	radio: true,
+	clickClose: true,
+	model: {
+		icon: 'hidden',
+		label: {
+			type: 'text'
+		}
+	},
+	data: [
+		{name: '张三1', value: 1, selected: true},
+		{name: '李四1', value: 2},
+		{name: '王五1', value: 3, disabled: true},
+		{name: '苹果2', value: 4},
+	]
+})
+
+var demo2 = xmSelect.render({
+	el: '#demo2', 
+	radio: true,
+	clickClose: true,
+	theme: {
+		color: '#5FB878',
+	},
+	model: {
+		icon: 'hidden',
+		label: {
+			type: 'text'
+		}
+	},
+	data: [
+		{name: '张三1', value: 1, selected: true},
+		{name: '李四1', value: 2},
+		{name: '王五1', value: 3, disabled: true},
+		{name: '苹果2', value: 4},
+	]
+})
+</script>
+
+
+
+
+
+<h3> 隐藏多选图标 </h3>
+
+<div id="demo3" class="xm-select-demo"></div>
+
+<script>
+var demo3 = xmSelect.render({
+	el: '#demo3', 
+	model: {
+		icon: 'hidden',
+	},
+	data: [
+		{name: '张三1', value: 1, selected: true, disabled: true},
+		{name: '李四1', value: 2, selected: true},
+		{name: '王五1', value: 3, disabled: true},
+		{name: '苹果2', value: 4},
+	]
+})
+</script>
+
+
+
+</body>
+</html>

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>  xm-select  例子 - 设置/获取 Value  </title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<script type="text/javascript" src="js/xm-select.js"></script>
+</head>
+
+
+<body>
+
+	<h1>   xm-select  例子 - 设置/获取 Value    </h1>
+	
+	
+	<div id="demo1"></div>
+	
+	
+	<ul>
+		<li>
+			<button onclick='testGetValue()'>测试获取当前选中的值</button>
+		</li>
+		
+		<li>
+			<button onclick='testSetValue()'>测试设置当前选中的值</button>
+		</li>
+	</ul>
+	
+	
+
+	<script>
+		var demo1 = xmSelect.render({
+			el: '#demo1', 
+			data: [
+				{name: '张三', value: 1, selected: true},
+				{name: '李四', value: 2, selected: true},
+				{name: '王五', value: 3},
+				{name: '赵六', value: 4},
+			],
+	    });
+	   
+	   
+		
+	    function testGetValue() {
+			alert('当前的选中的值 = ' + demo1.getValue());
+			console.log(demo1.getValue());
+	    }
+		
+		
+		// 页面初始化的时候，可以使用 setValue 来设置初始的数值.
+		// 但是要避免，填写了 画面上没有的数据。
+		// 否则这个数据，一旦删除， 就再也加不上了。
+		function testSetValue() {
+			demo1.setValue([{ name: '王五', value: 3 }, {name: '赵六', value: 4}, {name: '初始值中没有的', value: 999} ]);
+		}
+		
+	
+	</script>
+
+</body>
+</html>

@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>  xm-select  例子 - 分页  </title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<script type="text/javascript" src="js/xm-select.js"></script>
+</head>
+
+
+<body>
+
+	<h1>   xm-select  例子 - 分页   </h1>
+
+	<p>
+		<ul>
+			<li>
+				1. 简单 paging: true,
+				<br/>
+				<div id="demo1"></div>
+			</li>
+
+			<li>
+				2. 再设置 pageSize: 3,
+				<br/>
+				<div id="demo2"></div>
+			</li>
+
+			<li>
+				3. 搜索+分页
+				<br/>
+				<div id="demo3"></div>
+			</li>
+
+			<li>
+				4. 搜索+分页+无数据 不展示分页
+				<br/>
+				<div id="demo4"></div>
+			</li>
+		</ul>
+	</p>
+
+
+
+
+
+
+
+	<script>
+		var demo1 = xmSelect.render({
+			el: '#demo1',
+			paging: true,
+			data: [
+				{name: '张三', value: 1,},
+				{name: '李四', value: 2,},
+				{name: '王五', value: 3,},
+				{name: '赵六', value: 4,},
+				{name: '苹果', value: 5},
+				{name: '香蕉', value: 6},
+				{name: '凤梨', value: 7},
+				{name: '葡萄', value: 8},
+				{name: '樱桃', value: 9},
+				{name: '车厘子', value: 10},
+				{name: '火龙果', value: 11},
+			],
+	    });
+	</script>
+
+
+	<script>
+		var demo2 = xmSelect.render({
+			el: '#demo2',
+			paging: true,
+			pageSize: 3,
+			data: [
+				{name: '张三', value: 1,},
+				{name: '李四', value: 2,},
+				{name: '王五', value: 3,},
+				{name: '赵六', value: 4,},
+				{name: '苹果', value: 5},
+				{name: '香蕉', value: 6},
+				{name: '凤梨', value: 7},
+				{name: '葡萄', value: 8},
+				{name: '樱桃', value: 9},
+				{name: '车厘子', value: 10},
+				{name: '火龙果', value: 11},
+			],
+	    });
+	</script>
+
+
+	<script>
+		var demo3 = xmSelect.render({
+			el: '#demo3',
+			filterable: true,
+			paging: true,
+			pageSize: 3,
+			data: [
+				{name: '张三', value: 1,},
+				{name: '李四', value: 2,},
+				{name: '王五', value: 3,},
+				{name: '赵六', value: 4,},
+				{name: '苹果', value: 5},
+				{name: '香蕉', value: 6},
+				{name: '凤梨', value: 7},
+				{name: '葡萄', value: 8},
+				{name: '樱桃', value: 9},
+				{name: '车厘子', value: 10},
+				{name: '火龙果', value: 11},
+			],
+		});
+	</script>
+
+
+	<script>
+		var demo4 = xmSelect.render({
+			el: '#demo4',
+			filterable: true,
+			pageEmptyShow: false,
+			paging: true,
+			pageSize: 3,
+			data: [
+				{name: '张三', value: 1,},
+				{name: '李四', value: 2,},
+				{name: '王五', value: 3,},
+				{name: '赵六', value: 4,},
+				{name: '苹果', value: 5},
+				{name: '香蕉', value: 6},
+				{name: '凤梨', value: 7},
+				{name: '葡萄', value: 8},
+				{name: '樱桃', value: 9},
+				{name: '车厘子', value: 10},
+				{name: '火龙果', value: 11},
+			],
+		});
+	</script>
+
+</body>
+</html>

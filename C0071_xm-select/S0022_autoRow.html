@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>  xm-select  例子 - 自动换行  </title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<script type="text/javascript" src="js/xm-select.js"></script>
+</head>
+
+
+<body>
+
+	<h1>   xm-select  例子 - 自动换行    </h1>
+	
+
+
+<h3>开启换行</h3>
+
+<div id="demo1" class="xm-select-demo"></div>
+
+<script>
+var demo1 = xmSelect.render({
+	el: '#demo1', 
+	toolbar:{
+		show: true,
+	},
+	autoRow: true,
+	height: '500px',
+	data: [
+		{name: '张三1', value: 11, selected: true},
+		{name: '李四1', value: 12, selected: true},
+		{name: '王五1', value: 13},
+		{name: '赵六1', value: 14},
+		
+		{name: '张三2', value: 21, selected: true},
+		{name: '李四2', value: 22, selected: true},
+		{name: '王五2', value: 23},
+		{name: '赵六2', value: 24},
+		
+		{name: '张三3', value: 31, selected: true},
+		{name: '李四3', value: 32, selected: true},
+		{name: '王五3', value: 33},
+		{name: '赵六3', value: 34},
+		
+		{name: '张三4', value: 41, selected: true},
+		{name: '李四4', value: 42, selected: true},
+		{name: '王五4', value: 43},
+		{name: '赵六4', value: 44},
+		
+		{name: '张三5', value: 51, selected: true},
+		{name: '李四5', value: 52, selected: true},
+		{name: '王五5', value: 53},
+		{name: '赵六5', value: 54},
+		
+		
+		{name: '苹果1', value: 15, selected: true, disabled: true},
+		{name: '香蕉1', value: 16, selected: true},
+		{name: '葡萄1', value: 17},
+		
+		{name: '苹果2', value: 25, selected: true, disabled: true},
+		{name: '香蕉2', value: 26, selected: true},
+		{name: '葡萄2', value: 27},
+	]
+})
+</script>
+
+
+
+</body>
+</html>

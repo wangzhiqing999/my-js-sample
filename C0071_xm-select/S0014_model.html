@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>  xm-select  例子 - 显示方式  </title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<script type="text/javascript" src="js/xm-select.js"></script>
+</head>
+
+
+<body>
+
+	<h1>   xm-select  例子 - 显示方式   </h1>
+
+	<p>
+		<ul>
+			<li>
+				1. 默认
+				<br/>
+				<div id="demo1"></div>
+			</li>
+
+			<li>
+				2. 方块形状, 隐藏删除图标
+				<br/>
+				<div id="demo2"></div>
+			</li>
+
+			<li>
+				3. 方块形状, 超过1个隐藏
+				<br/>
+				<div id="demo3"></div>
+			</li>
+
+			<li>
+				4. 简单拼接形式
+				<br/>
+				<div id="demo4"></div>
+			</li>
+
+
+			<li>
+				5. 自定义显示
+				<br/>
+				<div id="demo5"></div>
+			</li>
+
+			<li>
+				6. 自定义显示HTML
+				<br/>
+				<div id="demo6"></div>
+			</li>
+
+
+			<li>
+				7.直接显示下拉
+				<br/>
+				<div id="demo7"></div>
+			</li>
+
+		</ul>
+	</p>
+
+
+	<script>
+		var datas = [
+				{name: '张三', value: '0003', selected: true},
+				{name: '李四', value: '0004', selected: true},
+				{name: '王五', value: '0005'},
+				{name: '赵六', value: '0006'}
+			];
+	</script>
+
+
+
+
+	<script>
+		var demo1 = xmSelect.render({
+			el: '#demo1',
+			data: function () {
+				return datas;
+			}
+	    });
+	</script>
+
+
+	<script>
+		// 方块形状, 隐藏删除图标
+		var demo2 = xmSelect.render({
+			el: '#demo2',
+			model: {
+				label: {
+					type: 'block',
+					block: {
+						//最大显示数量, 0:不限制
+						showCount: 0,
+						//是否显示删除图标
+						showIcon: false,
+					}
+				}
+			},
+			data: function () {
+				return datas;
+			}
+	    });
+	</script>
+
+
+	<script>
+		// 方块形状, 超过1个隐藏
+		var demo3 = xmSelect.render({
+			el: '#demo3',
+			model: {
+				label: {
+					type: 'block',
+					block: {
+						//最大显示数量, 0:不限制
+						showCount: 1,
+						//是否显示删除图标
+						showIcon: true,
+					}
+				}
+			},
+			data: function () {
+				return datas;
+			}
+		});
+	</script>
+
+	<script>
+		// 简单拼接形式
+		var demo4 = xmSelect.render({
+			el: '#demo4',
+			model: {
+				label: {
+					type: 'text',
+					//使用字符串拼接的方式
+					text: {
+						//左边拼接的字符
+						left: '【',
+						//右边拼接的字符
+						right: '】',
+						//中间的分隔符
+						separator: '，',
+					},
+				}
+			},
+			data: function () {
+				return datas;
+			}
+		});
+	</script>
+
+	<script>
+		// 自定义显示
+		var demo5 = xmSelect.render({
+			el: '#demo5',
+			model: {
+				label: {
+					type: 'xxxx', //自定义与下面的对应
+					xxxx: {
+						template(data, sels){
+							return "已选中 " + sels.length + " 项, 共 " + data.length + " 项"
+						}
+					},
+				}
+			},
+			data: function () {
+				return datas;
+			}
+		});
+	</script>
+
+	<script>
+		// 自定义显示HTML
+		var demo6 = xmSelect.render({
+			el: '#demo6',
+			model: {
+				label: {
+					type: 'xxxx', //自定义与下面的对应
+					xxxx: {
+						template(data, sels){
+							//也可以是html
+							return `<div style="color: red;">${sels.length} / ${data.length}</div>`
+						}
+					},
+				}
+			},
+			data: function () {
+				return datas;
+			}
+		});
+	</script>
+
+
+
+	<script>
+		// 直接显示下拉
+		var demo7 = xmSelect.render({
+			el: '#demo7',
+			model: {
+				type: 'relative',
+			},
+			filterable: true,
+			toolbar: { show: true },
+			data: function () {
+				return datas;
+			}
+		});
+	</script>
+
+
+</body>
+</html>

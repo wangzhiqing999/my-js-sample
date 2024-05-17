@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>  xm-select  例子 - 工具条 </title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<script type="text/javascript" src="js/xm-select.js"></script>
+</head>
+
+
+<body>
+
+	<h1>   xm-select  例子 - 工具条   </h1>
+	
+	
+
+
+<h3>默认工具条</h3>
+
+<div id="demo1" class="xm-select-demo"></div>
+
+<script>
+var demo1 = xmSelect.render({
+	el: '#demo1', 
+	toolbar: {
+		show: true,
+	},
+	filterable: true,
+	paging: true,
+	pageSize: 3,
+	data: [
+		{name: '张三', value: 1, selected: true},
+		{name: '李四', value: 2, selected: true},
+		{name: '王五', value: 3},
+		{name: '赵六', value: 4},
+		{name: '苹果', value: 5},
+		{name: '香蕉', value: 6},
+		{name: '凤梨', value: 7},
+		{name: '葡萄', value: 8},
+		{name: '樱桃', value: 9},
+		{name: '车厘子', value: 10},
+		{name: '火龙果', value: 11},
+	]
+})
+</script>
+
+
+
+
+
+<h3>隐藏图标</h3>
+
+<div id="demo2" class="xm-select-demo"></div>
+
+<script>
+var demo2 = xmSelect.render({
+	el: '#demo2', 
+	toolbar: {
+		show: true,
+		showIcon: false,
+	},
+	filterable: true,
+	paging: true,
+	pageSize: 3,
+	data: [
+		{name: '张三', value: 1, selected: true},
+		{name: '李四', value: 2, selected: true},
+		{name: '王五', value: 3},
+		{name: '赵六', value: 4},
+		{name: '苹果', value: 5},
+		{name: '香蕉', value: 6},
+		{name: '凤梨', value: 7},
+		{name: '葡萄', value: 8},
+		{name: '樱桃', value: 9},
+		{name: '车厘子', value: 10},
+		{name: '火龙果', value: 11},
+	]
+})
+</script>
+
+
+
+
+
+<h3>自定义工具条</h3>
+
+<div id="demo3" class="xm-select-demo"></div>
+
+<script>
+var demo3 = xmSelect.render({
+	el: '#demo3', 
+	toolbar: {
+		show: true,
+		list: ['ALL', {
+			name: '自定义',
+			icon: 'el-icon-star-off',
+			method(data){
+				for (let key in data) {
+					let oneData = data[key];
+					
+					// 暂时不确定，在那里修改已选择的数据。
+					// 如果是用来做 数据检查的按钮，应该是可以的。
+					console.log(oneData);
+				}
+				alert('我是自定义的');
+			}
+		}]
+	},
+	filterable: true,
+	paging: true,
+	pageSize: 3,
+	data: [
+		{name: '张三', value: 1, selected: true},
+		{name: '李四', value: 2, selected: true},
+		{name: '王五', value: 3},
+		{name: '赵六', value: 4},
+		{name: '苹果', value: 5},
+		{name: '香蕉', value: 6},
+		{name: '凤梨', value: 7},
+		{name: '葡萄', value: 8},
+		{name: '樱桃', value: 9},
+		{name: '车厘子', value: 10},
+		{name: '火龙果', value: 11},
+	]
+})
+</script>
+
+
+
+
+<h3>全部工具条</h3>
+
+<div id="demo4" class="xm-select-demo"></div>
+
+<script>
+var demo4 = xmSelect.render({
+	el: '#demo4', 
+	toolbar: {
+		show: true,
+		list: [ 'ALL', 'CLEAR', 'REVERSE' ]
+	},
+	filterable: true,
+	paging: true,
+	pageSize: 3,
+	data: [
+		{name: '张三', value: 1, selected: true},
+		{name: '李四', value: 2, selected: true},
+		{name: '王五', value: 3},
+		{name: '赵六', value: 4},
+		{name: '苹果', value: 5},
+		{name: '香蕉', value: 6},
+		{name: '凤梨', value: 7},
+		{name: '葡萄', value: 8},
+		{name: '樱桃', value: 9},
+		{name: '车厘子', value: 10},
+		{name: '火龙果', value: 11},
+	]
+})
+</script>
+
+
+</body>
+</html>

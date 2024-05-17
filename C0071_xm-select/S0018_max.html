@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>  xm-select  例子 - 多选上限  </title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<script type="text/javascript" src="js/xm-select.js"></script>
+</head>
+
+
+<body>
+
+	<h1>   xm-select  例子 - 多选上限   </h1>
+	
+	
+	<p>
+		<ul>
+			<li>
+				1. 最多选择2个
+				<br/>
+				<div id="demo1"></div>
+			</li>
+			
+			<li>
+				2. 自定义选超的提示
+				<br/>
+				<div id="demo2"></div>
+			</li>
+			
+			<li>
+				3. 自定义选超的闪烁颜色
+				<br/>
+				<div id="demo3"></div>
+			</li>
+		</ul>
+	</p>
+	
+	
+	
+	
+	
+	
+	
+	<script>
+		var demo1 = xmSelect.render({
+			el: '#demo1', 
+			max: 2,
+			data: [
+				{name: '张三', value: 1, selected: true},
+				{name: '李四', value: 2, selected: true},
+				{name: '王五', value: 3},
+				{name: '赵六', value: 4}
+			],
+	    });	   
+	</script>
+
+
+	<script>
+		var demo2 = xmSelect.render({
+			el: '#demo2', 
+			max: 2,
+			maxMethod(seles, item){
+				alert(`${item.name}不能选了, 已经超了`)
+			},
+			data: [
+				{name: '张三', value: 1, selected: true},
+				{name: '李四', value: 2, selected: true},
+				{name: '王五', value: 3},
+				{name: '赵六', value: 4}
+			],
+	    });	   
+	</script>
+	
+	<script>
+		var demo3 = xmSelect.render({
+			el: '#demo3', 
+			max: 2,
+			theme: {
+				maxColor: 'orange',
+			},
+			data: [
+				{name: '张三', value: 1, selected: true},
+				{name: '李四', value: 2, selected: true},
+				{name: '王五', value: 3},
+				{name: '赵六', value: 4}
+			]
+		});
+	</script>
+
+</body>
+</html>

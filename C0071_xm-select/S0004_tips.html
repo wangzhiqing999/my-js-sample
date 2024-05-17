@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>  xm-select  例子 - 修改选项提示文字  </title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<script type="text/javascript" src="js/xm-select.js"></script>
+</head>
+
+
+<body>
+
+	<h1>   xm-select  例子 - 修改选项提示文字   </h1>
+	
+	
+	<p>
+		<ul>
+			<li>
+				1. 修改选项提示文字
+				<br/>
+				<div id="demo1"></div>
+			</li>
+			
+			<li>
+				2. 修改空数据提示文字
+				<br/>
+				<div id="demo2"></div>
+			</li>
+			
+			<li>
+				3. 修改搜索提示文字
+				<br/>
+				<div id="demo3"></div>
+			</li>
+		</ul>
+	</p>
+	
+	
+	
+	
+	
+	
+	
+	<script>
+		var demo1 = xmSelect.render({
+			el: '#demo1', 
+			tips: '请选择指定的用户！',
+			data: [
+				{name: '张三', value: 1, disabled: true},
+				{name: '李四', value: 2},
+				{name: '王五', value: 3},
+				{name: '赵六', value: 4}
+			],
+	    });	   
+	</script>
+
+
+	<script>
+		var demo2 = xmSelect.render({
+			el: '#demo2', 
+			empty: '呀, 没有数据呢',
+			data: []
+	    });	   
+	</script>
+	
+	<script>
+		var demo3 = xmSelect.render({
+			el: '#demo3', 
+			filterable: true,
+			searchTips: '搜索姓名或代码',
+			data: [
+				{name: '0003：张三', value: 1, disabled: true},
+				{name: '0004：李四', value: 2},
+				{name: '0005：王五', value: 3},
+				{name: '0006：赵六', value: 4}
+			]
+		});
+	</script>
+
+</body>
+</html>

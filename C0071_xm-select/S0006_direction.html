@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>  xm-select  例子 - 下拉方向  </title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<script type="text/javascript" src="js/xm-select.js"></script>
+</head>
+
+
+<body>
+
+	<h1>   xm-select  例子 - 下拉方向   </h1>
+	
+	
+	<div style="height: 500px">占位div, 演示效果使用, 底部空间不足时会自动向上展开</div>
+	
+	<p>
+		<ul>
+			<li>
+				1. 自动auto
+				<br/>
+				<div id="demo1"></div>
+			</li>
+			
+			<li>
+				2. 向上up
+				<br/>
+				<div id="demo2"></div>
+			</li>
+			
+			<li>
+				3. 向下down
+				<br/>
+				<div id="demo3"></div>
+			</li>
+
+		</ul>
+	</p>
+	
+	
+	
+	
+	
+	
+	
+	<script>
+		var demo1 = xmSelect.render({
+			el: '#demo1', 
+			direction: 'auto',
+			data: [
+				{name: '张三', value: '0003'},
+				{name: '李四', value: '0004'},
+				{name: '王五', value: '0005'},
+				{name: '赵六', value: '0006'}
+			],
+	    });	   
+	</script>
+
+
+	<script>
+		var demo2 = xmSelect.render({
+			el: '#demo2', 
+			direction: 'up',
+			data: [
+				{name: '张三', value: '0003'},
+				{name: '李四', value: '0004'},
+				{name: '王五', value: '0005'},
+				{name: '赵六', value: '0006'}
+			],
+	    });	   
+	</script>
+
+
+	<script>
+		var demo3 = xmSelect.render({
+			el: '#demo3', 
+			direction: 'down',
+			data: [
+				{name: '张三', value: '0003'},
+				{name: '李四', value: '0004'},
+				{name: '王五', value: '0005'},
+				{name: '赵六', value: '0006'}
+			],
+		});
+	</script>
+
+</body>
+</html>

@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>  xm-select  例子 - 警告  </title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<script type="text/javascript" src="js/xm-select.js"></script>
+</head>
+
+
+<body>
+
+	<h1>   xm-select  例子 - 警告    </h1>
+	
+
+
+<h3>警告提示</h3>
+
+
+<div id="demo1" class="xm-select-demo"></div>
+<button class="btn" id="demo1-warning">警告</button>
+
+<script>
+var demo1 = xmSelect.render({
+	el: '#demo1', 
+	data: [
+		{name: '张三', value: 1, selected: true},
+		{name: '李四', value: 2},
+		{name: '王五', value: 3, disabled: true},
+	]
+})
+
+document.getElementById('demo1-warning').onclick = function(){
+	demo1.warning();
+}
+</script>
+
+
+
+
+<h3>自定义闪烁颜色</h3>
+
+<div id="demo2" class="xm-select-demo"></div>
+<button class="btn" id="demo2-warning">警告</button>
+
+<script>
+var demo2 = xmSelect.render({
+	el: '#demo2', 
+	data: [
+		{name: '张三', value: 1, selected: true},
+		{name: '李四', value: 2},
+		{name: '王五', value: 3, disabled: true},
+	]
+})
+
+document.getElementById('demo2-warning').onclick = function(){
+	demo2.warning('#6739b6');
+}
+</script>
+
+
+
+
+<h3>持续显示</h3>
+
+<div id="demo3" class="xm-select-demo"></div>
+<button class="btn" id="demo3-warning">警告</button>
+
+<script>
+var demo3 = xmSelect.render({
+	el: '#demo3', 
+	data: [
+		{name: '张三', value: 1, selected: true},
+		{name: '李四', value: 2},
+		{name: '王五', value: 3, disabled: true},
+	]
+})
+
+document.getElementById('demo3-warning').onclick = function(){
+	demo3.warning('#6739b6', true);
+}
+</script>
+
+
+</body>
+</html>

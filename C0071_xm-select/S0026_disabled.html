@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>  xm-select  例子 - 禁用  </title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<script type="text/javascript" src="js/xm-select.js"></script>
+</head>
+
+
+<body>
+
+	<h1>   xm-select  例子 - 禁用    </h1>
+	
+
+
+<h3>渲染禁用</h3>
+
+<div id="demo1" class="xm-select-demo"></div>
+
+<script>
+var demo1 = xmSelect.render({
+	el: '#demo1', 
+	disabled: true,
+	data: [
+		{name: '张三', value: 1, selected: true},
+		{name: '李四', value: 2},
+		{name: '王五', value: 3, disabled: true},
+	]
+})
+</script>
+
+
+
+<h3>动态启用禁用</h3>
+
+<div id="demo2" class="xm-select-demo"></div>
+<button class="btn" id="demo21">禁用</button>
+<button class="btn" id="demo22">启用</button>
+
+<script>
+var demo2 = xmSelect.render({
+	el: '#demo2', 
+	data: [
+		{name: '张三', value: 1, selected: true},
+		{name: '李四', value: 2},
+		{name: '王五', value: 3, disabled: true},
+	]
+})
+
+document.getElementById('demo21').onclick = function(){
+	demo2.update({ disabled: true });
+}
+document.getElementById('demo22').onclick = function(){
+	demo2.update({ disabled: false });
+}
+</script>
+
+
+
+</body>
+</html>

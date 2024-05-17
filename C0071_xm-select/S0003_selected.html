@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>  xm-select  例子 - 默认选中  </title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<script type="text/javascript" src="js/xm-select.js"></script>
+</head>
+
+
+<body>
+
+	<h1>   xm-select  例子 - 默认选中   </h1>
+	
+	
+	<p>
+		2种办法
+		
+		<ul>
+			<li>
+				1. data 中， selected是选中，disabled是禁用。
+				<br/>
+				<div id="demo1"></div>
+			</li>
+			
+			<li>
+				2. 使用initValue进行初始化
+				<br/>
+				<div id="demo2"></div>
+			</li>
+		</ul>
+	</p>
+	
+	
+	
+	
+	
+	
+	
+	<script>
+		var demo1 = xmSelect.render({
+			el: '#demo1', 
+			data: [
+				{name: '张三', value: 1, selected: true, disabled: true},
+				{name: '李四', value: 2, selected: true},
+				{name: '王五', value: 3},
+				{name: '赵六', value: 4},
+			],
+	    });	   
+	</script>
+
+
+	<script>
+		var demo2 = xmSelect.render({
+			el: '#demo2', 
+			initValue: [4],
+			data: [
+				{name: '张三', value: 1, selected: true, disabled: true},
+				{name: '李四', value: 2, selected: true},
+				{name: '王五', value: 3},
+				{name: '赵六', value: 4},
+			],
+	    });	   
+	</script>
+
+</body>
+</html>
