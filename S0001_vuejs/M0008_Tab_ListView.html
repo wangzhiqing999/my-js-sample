@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>  vue.js  Tab 与 列表页	</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	
+    <style>
+
+        .current {
+            color: orange;
+        }
+
+        .master-link {
+            position: relative;
+            height: 32px;
+            line-height: 32px;
+            margin-left: 19px;
+            text-decoration: underline;
+            outline: none;
+            display: inline-block;
+            text-shadow: none;
+        }
+    </style>	
+	
+	<script type="text/javascript" src="js/vue.js"></script>
+</head>
+
+
+<body>
+
+	<h1> Tab 与 列表页  </h1>
+
+	<div id="app">		
+		<a class='master-link' 
+			v-for="(item, index) in masterData.data"
+			v-on:click="selectItem(item)" >
+			<span v-bind:class="{ current: item.key == selectedServiceKey }"> {{ item.name }} </span>
+		</a>
+		
+		<hr/>
+		
+		<a class='master-link'
+			v-for="(flag, index) in currentFlags"
+			v-on:click="selectFlag(flag)" >
+			<span v-bind:class="{ current: flag == selectedFlag }"> {{ getFlagName(flag) }} </span>
+		</a>
+
+		<hr/>
+		
+		<ul>
+			<li v-for="(data, index) in currentDetailDatas">
+				{{ data.user_site }} - {{ data.link_name }} - {{ data.flag }}
+			</li>
+		</ul>
+
+	</div>
+
+
+
+	<script type="text/javascript">
+	
+		var testData = {
+  "code": 200,
+  "data": [
+    {
+      "data": [
+        {
+          "available": true,
+          "delay": 0,
+          "flag": 1,
+          "ip_port": "1.2.3.4:5555",
+          "link_name": "测试柜台1",
+          "user_site": "测试业务1"
+        },
+        {
+          "available": true,
+          "delay": 7.37,
+          "flag": 1,
+          "ip_port": "2.3.4.5:6666",
+          "link_name": "测试柜台2(专线)",
+          "user_site": "测试业务1"
+        },
+        {
+          "available": true,
+          "delay": 7.37,
+          "flag": 1,
+          "ip_port": "3.4.5.6:7777",
+          "link_name": "测试柜台3(专线)",
+          "user_site": "测试业务1"
+        },
+        {
+          "available": true,
+          "delay": 7.38,
+          "flag": 1,
+          "ip_port": "4.5.6.7:8888",
+          "link_name": "测试柜台4(专线)",
+          "user_site": "测试业务1"
+        },
+        {
+          "available": true,
+          "delay": 7.32,
+          "flag": 1,
+          "ip_port": "5.6.7.8:9999",
+          "link_name": "测试柜台5(专线)",
+          "user_site": "测试业务1"
+        },
+        {
+          "available": true,
+          "delay": 0,
+          "flag": 3,
+          "ip_port": "7.8.9.10:1111",
+          "link_name": "测试柜台6(直连)",
+          "user_site": "测试业务1"
+        },
+        {
+          "available": true,
+          "delay": 7.38,
+          "flag": 3,
+          "ip_port": "8.9.10.11:2222",
+          "link_name": "测试柜台7(专线)",
+          "user_site": "测试业务1"
+        },
+        {
+          "available": true,
+          "delay": 7.54,
+          "flag": 3,
+          "ip_port": "9.10.11.12:3333",
+          "link_name": "测试柜台8(专线)",
+          "user_site": "测试业务1"
+        },
+        {
+          "available": true,
+          "delay": 7.9,
+          "flag": 3,
+          "ip_port": "10.11.12.13:4444",
+          "link_name": "测试柜台9(专线)",
+          "user_site": "测试业务1"
+        },
+        {
+          "available": true,
+          "delay": 7.2,
+          "flag": 3,
+          "ip_port": "11.12.13.14:5555",
+          "link_name": "测试柜台10(专线)",
+          "user_site": "测试业务1"
+        }
+      ],
+      "key": "links_status_test_1",
+      "name": "测试服务-1"
+    },
+    {
+      "data": [
+        {
+          "available": true,
+          "delay": 3.2,
+          "flag": 1,
+          "ip_port": "101.102.103.104:5555",
+          "link_name": "测试柜台A",
+          "user_site": "测试业务2"
+        },
+        {
+          "available": true,
+          "delay": 2.96,
+          "flag": 1,
+          "ip_port": "102.103.104.105:6666",
+          "link_name": "测试柜台B",
+          "user_site": "测试业务2"
+        },
+        {
+          "available": true,
+          "delay": 3.31,
+          "flag": 1,
+          "ip_port": "103.104.105.106:7777",
+          "link_name": "测试柜台C",
+          "user_site": "测试业务2"
+        },
+        {
+          "available": true,
+          "delay": 3.2,
+          "flag": 2,
+          "ip_port": "104.105.106.107:8888",
+          "link_name": "测试柜台D",
+          "user_site": "测试业务2"
+        },
+        {
+          "available": true,
+          "delay": 7.28,
+          "flag": 3,
+          "ip_port": "105.106.107.108:9999",
+          "link_name": "测试柜台E",
+          "user_site": "测试业务2"
+        }
+      ],
+      "key": "links_status_test_2",
+      "name": "测试服务-2"
+    }
+  ],
+  "message": "",
+  "success": true
+}
+	
+	
+	
+		var app = new Vue({
+			el: '#app',
+			data: {
+				// 主数据.
+				masterData: testData,
+				
+				// 选择的 key.
+				selectedServiceKey: "",
+				// 选择的数据.
+				selectedServiceData: [],
+				
+				
+				// 选择的标签.
+				selectedFlag: "",
+
+			},
+			
+			computed: {
+				// 当前可用的 Flag.
+				currentFlags: function() {
+					if(this.selectedServiceData.length === 0) {
+						// 还没有做选择，忽略.
+						return;
+					}
+					let allFlags = [...new Set(this.selectedServiceData.map(obj => obj.flag))];					
+					return allFlags;
+				},
+				
+				// 当前选择的列表数据.
+				currentDetailDatas: function() {
+					if(this.selectedServiceData.length === 0) {
+						// 还没有做选择，忽略.
+						return;
+					}
+					if(this.selectedFlag === "") {
+						// 还没有做选择，忽略.
+						return;
+					}
+					
+					let detailDatas = this.selectedServiceData.filter(obj => obj.flag === this.selectedFlag);
+					return detailDatas;
+				}
+			},
+			
+			mounted :  function () {
+				this.initSelectItem();
+			},
+			
+			// 方法.
+			methods: {
+				
+				// 初始化.
+				initSelectItem: function() {				
+					if(this.masterData != null 
+						&& this.masterData.data != null 
+						&& this.masterData.data.length > 0
+						&& this.selectedServiceKey === "") {
+						// 现在啥数据也没有选择.
+						// 选择第一个.
+						this.selectItem(this.masterData.data[0]);
+					}
+				},
+				
+				// 选择项目.
+				selectItem: function(item) {
+					this.selectedServiceKey = item.key;
+					this.selectedServiceData = item.data;
+					if(this.selectedServiceData.length > 0) 
+					{
+						this.selectFlag(this.selectedServiceData[0].flag);
+					}
+				},
+				
+				
+				// 选择标签.
+				selectFlag: function(flag) {
+					this.selectedFlag = flag;
+				},
+				
+				// 获取标签名.
+				getFlagName: function(flag) {
+					if(flag === 1) {
+						return "标签A";
+					} else if(flag === 2) {
+						return "标签B";
+					} else if(flag === 3) {
+						return "标签C";
+					}
+					return "标签" + flag
+				}
+				
+				
+				
+			}
+		})
+	</script>
+
+
+
+</body>
+</html>
