@@ -1,0 +1,30 @@
+{
+  "name": "view-ui-project-vite",
+  "private": true,
+  "version": "1.0.0",
+  "description": "a template project for vue3, ViewUIPlus and Vite.",
+  "scripts": {
+    "serve": "npm run dev",
+    "dev": "vite serve",
+    "dev:staging": "vite serve --mode=staging",
+    "dev:prod": "vite serve --mode=production",
+    "build": "vite build",
+    "build:staging": "vite build --mode=staging",
+    "preview": "npm run build && vite preview",
+    "preview:staging": "npm run build:staging && vite preview --mode=staging"
+  },
+  "dependencies": {
+    "pinia": "^3.0.3",
+    "view-ui-plus": "^1.3.1",
+    "vue": "^3.4.0",
+    "vue-router": "^4.2.0"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^5.0.0",
+    "@vitejs/plugin-vue-jsx": "^4.2.0",
+    "autoprefixer": "^10.4.16",
+    "less": "^4.2.0",
+    "vite": "^6.0.0",
+    "vite-plugin-html": "^3.2.2"
+  }
+}

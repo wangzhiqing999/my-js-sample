@@ -1,0 +1,19 @@
+参考文档：
+https://www.iviewui.com/view-ui-plus/guide/start#project
+
+使用推荐工程
+View UI Plus Project（基于 Vite）
+
+前往
+https://github.com/view-design/view-ui-project-vite
+下载 view-ui-project-vite-main.zip 文件。
+
+
+解压缩之后，先安装
+npm install
+
+编译.
+npm run build
+
+运行
+npm run serve
