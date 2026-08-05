@@ -1,14 +1,8 @@
 <template>
-  <Menu mode="horizontal">
-    <MenuItem name="SetUp API" to="/">
-      <Icon type="ios-home" />
-      SetUp API
-    </MenuItem>
-    <MenuItem name="OptionApi" to="/option-api">
-      <Icon type="ios-cube" />
-      Option API
-    </MenuItem>
-  </Menu>
+  <AppMenu />
+  
+  <div> 我是首页的内容！ </div>
+  
   <div style="margin-top: 20px;">
       <Alert show-icon>{{ msg }}</Alert>
       <Input v-model="msg" />
@@ -36,7 +30,7 @@
 defineOptions({
   name: 'Home'
 })
-import { Menu } from 'view-ui-plus';
+import AppMenu from '@/components/AppMenu.vue'
 import { ref } from 'vue'
 const msg = ref('Hello View UI Plus!')
 </script>
